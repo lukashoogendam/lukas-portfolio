@@ -1,0 +1,103 @@
+<div class="contact-page">
+  <div class="contact-container">
+    <div class="contact-info">
+      <h1 class="contact-title">Neem contact op</h1>
+      <p class="contact-subtitle">
+        Heb je een vraag of wil je samenwerken? Stuur een bericht via het formulier
+        of gebruik het <strong>POST /api/contact</strong> endpoint in de API Explorer.
+      </p>
+
+      <div class="contact-details">
+        <div class="detail-item">
+          <span class="detail-icon">📧</span>
+          <span class="detail-text">lukas&#64;example.com</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-icon">📍</span>
+          <span class="detail-text">Nederland</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-icon">💻</span>
+          <a href="https://github.com/lukas" target="_blank" class="detail-text">github.com/lukas</a>
+        </div>
+      </div>
+
+      <div class="api-hint">
+        <div class="code-block">
+          <span class="method-badge post">POST</span>
+          <code>/api/contact</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrapper">
+      @if (isSuccess()) {
+        <div class="success-message">
+          <div class="success-icon">✅</div>
+          <h3>Bericht verstuurd!</h3>
+          <p>Bedankt voor je bericht. Ik neem zo snel mogelijk contact op.</p>
+          <div class="success-response">
+            <pre><code>&#123;
+  "status": 201,
+  "message": "Contact message created successfully"
+&#125;</code></pre>
+          </div>
+          <button class="btn-reset" (click)="isSuccess.set(false)">Nog een bericht sturen</button>
+        </div>
+      } @else {
+        <form class="contact-form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="name">Naam *</label>
+            <input
+              id="name"
+              type="text"
+              [ngModel]="name()"
+              (ngModelChange)="name.set($event)"
+              name="name"
+              placeholder="Je volledige naam"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-mail *</label>
+            <input
+              id="email"
+              type="email"
+              [ngModel]="email()"
+              (ngModelChange)="email.set($event)"
+              name="email"
+              placeholder="naam@example.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Bericht *</label>
+            <textarea
+              id="message"
+              [ngModel]="message()"
+              (ngModelChange)="message.set($event)"
+              name="message"
+              placeholder="Schrijf hier je bericht (minimaal 10 tekens)..."
+              rows="5"
+              required
+            ></textarea>
+          </div>
+
+          @if (errorMessage()) {
+            <div class="error-message">{{ errorMessage() }}</div>
+          }
+
+          <button type="submit" class="submit-btn" [disabled]="isSubmitting()">
+            @if (isSubmitting()) {
+              <span class="spinner"></span> Versturen...
+            } @else {
+              Verstuur bericht
+            }
+          </button>
+        </form>
+      }
+    </div>
+  </div>
+</div>
