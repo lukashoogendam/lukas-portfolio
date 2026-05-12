@@ -1,0 +1,787 @@
+@use '../../../styles/variables' as *;
+
+.project-detail {
+  max-width: $breakpoint-xl;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg $spacing-3xl;
+}
+
+// === Loading & Error States ===
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: $spacing-md;
+  color: $text-muted;
+  text-align: center;
+
+  h2 { color: $text-primary; }
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid $border-color;
+  border-top-color: $accent-primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-icon { font-size: 3rem; }
+
+// === Back Link ===
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  color: $text-muted;
+  text-decoration: none;
+  font-size: $font-size-sm;
+  margin-bottom: $spacing-lg;
+  transition: color $transition-fast;
+
+  &:hover { color: $accent-primary; }
+}
+
+// === Hero Section ===
+.hero-section {
+  margin-bottom: $spacing-3xl;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+  margin-bottom: $spacing-md;
+}
+
+.category-badge {
+  padding: 4px 12px;
+  background: rgba($accent-primary, 0.1);
+  color: $accent-primary;
+  border: 1px solid rgba($accent-primary, 0.2);
+  border-radius: $radius-full;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: $radius-full;
+  font-size: $font-size-xs;
+  font-weight: 600;
+
+  &.completed {
+    background: rgba($accent-green, 0.1);
+    color: $accent-green;
+    border: 1px solid rgba($accent-green, 0.2);
+  }
+
+  &.in-progress {
+    background: rgba($accent-yellow, 0.1);
+    color: $accent-yellow;
+    border: 1px solid rgba($accent-yellow, 0.2);
+  }
+}
+
+.date-info {
+  font-size: $font-size-xs;
+  color: $text-muted;
+  font-family: $font-mono;
+}
+
+.hero-title {
+  font-size: $font-size-4xl;
+  font-weight: 700;
+  color: $text-primary;
+  line-height: 1.2;
+  margin-bottom: $spacing-md;
+  background: linear-gradient(135deg, $text-primary, $accent-primary-light);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-intro {
+  font-size: $font-size-lg;
+  color: $text-secondary;
+  line-height: 1.6;
+  max-width: 720px;
+  margin-bottom: $spacing-lg;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-lg;
+}
+
+.tech-tag {
+  padding: 4px 12px;
+  background-color: $bg-card;
+  color: $accent-primary;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  font-size: $font-size-xs;
+  font-family: $font-mono;
+  font-weight: 500;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: $accent-primary;
+    background-color: rgba($accent-primary, 0.08);
+  }
+}
+
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: 8px 16px;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all $transition-fast;
+  border: 1px solid $border-color;
+
+  &.github {
+    background-color: $bg-card;
+    color: $text-primary;
+
+    &:hover {
+      border-color: $text-muted;
+      background-color: $bg-hover;
+    }
+  }
+
+  &.docs {
+    background-color: $bg-card;
+    color: $accent-purple;
+
+    &:hover {
+      border-color: $accent-purple;
+      background-color: rgba($accent-purple, 0.08);
+    }
+  }
+
+  &.demo {
+    background: linear-gradient(135deg, $accent-primary, $accent-primary-dark);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 12px rgba($accent-primary, 0.3);
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba($accent-primary, 0.4);
+    }
+  }
+}
+
+// === Generic Section ===
+.section {
+  margin-bottom: $spacing-2xl;
+  padding-top: $spacing-xl;
+  border-top: 1px solid $border-light;
+}
+
+.section-title {
+  font-size: $font-size-xl;
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  .title-icon {
+    color: $accent-primary;
+    font-family: $font-mono;
+    font-size: $font-size-lg;
+  }
+}
+
+// === Description Section ===
+.description-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: $spacing-xl;
+}
+
+.description-text {
+  font-size: $font-size-base;
+  color: $text-secondary;
+  line-height: 1.8;
+}
+
+.description-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.info-card {
+  background-color: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+
+  .info-label {
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: $accent-primary;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: $spacing-sm;
+  }
+
+  .info-value {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    line-height: 1.6;
+  }
+}
+
+// === Features Section ===
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: $spacing-sm;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  background-color: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  transition: border-color $transition-fast;
+
+  &:hover {
+    border-color: rgba($accent-green, 0.3);
+  }
+
+  .feature-check {
+    color: $accent-green;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .feature-text {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    line-height: 1.5;
+  }
+}
+
+// === Demo & Showcases Section ===
+.showcases-container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2xl;
+}
+
+.showcase-block {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  .showcase-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0;
+    padding-left: $spacing-xs;
+    border-left: 3px solid $accent-primary;
+  }
+}
+
+.demo-container {
+  border: 1px solid $border-color;
+  border-radius: $radius-xl;
+  overflow: hidden;
+  background-color: $bg-secondary;
+}
+
+.demo-frame {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; // 16:9 aspect ratio
+
+  iframe,
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+.demo-embed {
+  min-height: 400px;
+
+  iframe {
+    width: 100%;
+    min-height: 600px;
+    border: none;
+  }
+}
+
+.demo-preview {
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+// === Screenshots Section ===
+.screenshots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: $spacing-md;
+}
+
+.screenshot-card {
+  background-color: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: $accent-primary;
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+
+  img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .screenshot-title {
+    display: block;
+    padding: $spacing-sm $spacing-md;
+    font-size: $font-size-xs;
+    color: $text-muted;
+    border-top: 1px solid $border-color;
+  }
+}
+
+// === Documentation Section ===
+.docs-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: $spacing-md;
+}
+
+.docs-card {
+  background-color: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+
+  h3 {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $text-primary;
+    margin-bottom: $spacing-sm;
+  }
+
+  p {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    line-height: 1.6;
+  }
+}
+
+.docs-link {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  background-color: $bg-hover;
+  border-radius: $radius-md;
+  color: $accent-primary;
+  text-decoration: none;
+  font-size: $font-size-sm;
+  font-family: $font-mono;
+  word-break: break-all;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: rgba($accent-primary, 0.1);
+  }
+
+  .external-icon {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+}
+
+// === JSON Section ===
+.json-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  &:hover .toggle-btn {
+    color: $accent-primary;
+    border-color: $accent-primary;
+  }
+}
+
+.toggle-btn {
+  padding: 6px 16px;
+  background: none;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  color: $text-muted;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: $accent-primary;
+    border-color: $accent-primary;
+  }
+}
+
+.json-viewer-wrapper {
+  margin-top: $spacing-md;
+  background-color: $bg-secondary;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.json-meta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1px solid $border-color;
+  background-color: $bg-tertiary;
+}
+
+.method-badge {
+  padding: 3px 8px;
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  font-weight: 700;
+  font-family: $font-mono;
+
+  &.get {
+    background-color: rgba($method-get, 0.15);
+    color: $method-get;
+  }
+}
+
+.json-endpoint {
+  font-family: $font-mono;
+  font-size: $font-size-sm;
+  color: $text-primary;
+}
+
+.status-code {
+  font-family: $font-mono;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  margin-left: auto;
+
+  &.success { color: $accent-green; }
+}
+
+.json-body {
+  padding: $spacing-lg;
+  max-height: 600px;
+  overflow: auto;
+
+  ::ng-deep ngx-json-viewer {
+    .segment {
+      font-family: $font-mono !important;
+      font-size: $font-size-sm !important;
+    }
+
+    .segment-main {
+      line-height: 1.8 !important;
+    }
+
+    .segment-key {
+      color: $accent-primary !important;
+    }
+
+    .segment-value-string {
+      color: $accent-green !important;
+    }
+
+    .segment-value-number {
+      color: $accent-orange !important;
+    }
+
+    .segment-value-boolean {
+      color: $accent-purple !important;
+    }
+
+    .segment-value-null {
+      color: $text-muted !important;
+    }
+
+    .toggler {
+      color: $text-muted !important;
+    }
+  }
+}
+
+// === Lightbox ===
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-modal;
+  cursor: pointer;
+  padding: $spacing-xl;
+
+  img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-lg;
+  }
+}
+
+.lightbox-close {
+  position: absolute;
+  top: $spacing-lg;
+  right: $spacing-lg;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: $font-size-lg;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+// === Buttons (shared) ===
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: 10px 20px;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  border-radius: $radius-lg;
+  text-decoration: none;
+  transition: all $transition-base;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, $accent-primary, $accent-primary-dark);
+  color: #fff;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba($accent-primary, 0.3);
+  }
+}
+
+// === Responsive ===
+@media (max-width: $breakpoint-lg) {
+  .description-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: $font-size-3xl;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .project-detail {
+    padding: $spacing-md;
+  }
+
+  .hero-title {
+    font-size: $font-size-2xl;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .screenshots-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-content {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-links {
+    flex-direction: column;
+  }
+
+  .json-meta {
+    flex-wrap: wrap;
+  }
+}
+
+// === Docs Link as Button ===
+.docs-link {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-top: $spacing-sm;
+  padding: 8px 16px;
+  background: rgba($accent-primary, 0.1);
+  color: $accent-primary;
+  border: 1px solid rgba($accent-primary, 0.2);
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    background: rgba($accent-primary, 0.2);
+    border-color: rgba($accent-primary, 0.4);
+    transform: translateY(-1px);
+  }
+}
+
+// ===================================
+// PDF VIEWER MODAL
+// ===================================
+.pdf-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-lg;
+  animation: fadeInPdf 0.2s ease;
+}
+
+@keyframes fadeInPdf {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.pdf-modal {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-xl;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  animation: slideUpPdf 0.25s ease;
+}
+
+@keyframes slideUpPdf {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.pdf-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1px solid $border-color;
+  background: $bg-secondary;
+  flex-shrink: 0;
+}
+
+.pdf-modal-title {
+  font-size: $font-size-base;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.pdf-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-md;
+  border: 1px solid $border-color;
+  background: $bg-hover;
+  color: $text-muted;
+  font-size: $font-size-base;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-fast;
+
+  &:hover {
+    background: rgba(#e74c3c, 0.15);
+    border-color: rgba(#e74c3c, 0.3);
+    color: #e74c3c;
+  }
+}
+
+.pdf-modal-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+.pdf-viewer {
+  width: 100%;
+  height: 100%;
+  min-height: 70vh;
+  border: none;
+  display: block;
+}
+

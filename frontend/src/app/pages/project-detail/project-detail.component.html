@@ -1,0 +1,202 @@
+<div class="project-detail">
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Project laden...</p>
+    </div>
+  } @else if (hasError()) {
+    <div class="error-state">
+      <div class="error-icon">⚠️</div>
+      <h2>Project niet gevonden</h2>
+      <p>Het opgevraagde project bestaat niet of kon niet geladen worden.</p>
+      <a routerLink="/explorer" class="btn btn-primary">← Terug naar Explorer</a>
+    </div>
+  } @else {
+    @if (project(); as p) {
+
+    <!-- ① HERO -->
+    <section class="hero-section">
+      <a routerLink="/explorer" [queryParams]="{ endpoint: '/api/projects' }" class="back-link">← Terug naar Explorer</a>
+
+      <div class="hero-meta">
+        <span class="category-badge">{{ p.category }}</span>
+        <span class="status-badge" [class]="getStatusClass()">{{ p.status }}</span>
+        @if (p.startDate) {
+          <span class="date-info">{{ p.startDate }} — {{ p.endDate || 'Heden' }}</span>
+        }
+      </div>
+
+      <h1 class="hero-title">{{ p.title }}</h1>
+      <p class="hero-intro">{{ p.shortDescription }}</p>
+
+      <div class="tech-stack">
+        @for (tech of p.techStack; track tech) {
+          <span class="tech-tag">{{ tech }}</span>
+        }
+      </div>
+
+      <div class="hero-links">
+        @if (p.links && p.links.github) {
+          <a [href]="p.links.github" target="_blank" rel="noopener" class="link-btn github">
+            <span class="link-icon">⌨</span> GitHub
+          </a>
+        }
+      </div>
+    </section>
+
+    <!-- ② BESCHRIJVING -->
+    <section class="section description-section">
+      <h2 class="section-title">Over dit project</h2>
+      <div class="description-grid">
+        <div class="description-main">
+          <p class="description-text">{{ p.description }}</p>
+        </div>
+        <div class="description-sidebar">
+          @if (p.role) {
+            <div class="info-card">
+              <h3 class="info-label">Mijn rol</h3>
+              <p class="info-value">{{ p.role }}</p>
+            </div>
+          }
+          @if (p.highlights) {
+            <div class="info-card">
+              <h3 class="info-label">Wat er is gebouwd</h3>
+              <p class="info-value">{{ p.highlights }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ③ FEATURES -->
+    @if (p.features && p.features.length > 0) {
+      <section class="section features-section">
+        <h2 class="section-title">Features</h2>
+        <div class="features-grid">
+          @for (feature of p.features; track feature) {
+            <div class="feature-item">
+              <span class="feature-check">✓</span>
+              <span class="feature-text">{{ feature }}</span>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- ④ SHOWCASES -->
+    @if (p.showcases && p.showcases.length > 0) {
+      <section class="section demo-section showcases-section">
+        <h2 class="section-title">
+          <span class="title-icon">▶</span> Live Demos & Showcases
+        </h2>
+        
+        <div class="showcases-container">
+          @for (sc of p.showcases; track sc.id) {
+            <div class="showcase-block">
+              @if (sc.title) {
+                <h3 class="showcase-title">{{ sc.title }}</h3>
+              }
+              
+              <div class="demo-container">
+                @switch (sc.type) {
+                  @case ('iframe') {
+                    <div class="demo-frame">
+                      <iframe
+                        [src]="getSafeDemoUrl(sc.url)"
+                        title="Project demo"
+                        sandbox="allow-scripts allow-same-origin allow-popups"
+                        loading="lazy">
+                      </iframe>
+                    </div>
+                  }
+                  @case ('video') {
+                    <div class="demo-frame">
+                      @if (isYouTubeUrl(sc.url)) {
+                        <iframe
+                          [src]="getSafeDemoUrl(sc.url)"
+                          title="Video demo"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowfullscreen
+                          loading="lazy">
+                        </iframe>
+                      } @else {
+                        <video controls preload="metadata">
+                          <source [src]="sc.url" type="video/mp4" />
+                          Je browser ondersteunt geen video.
+                        </video>
+                      }
+                    </div>
+                  }
+                  @case ('embed') {
+                    <div class="demo-embed" [innerHTML]="getSafeEmbedHtml(sc.embedCode)"></div>
+                  }
+                  @default {
+                    @if (sc.url) {
+                      <div class="demo-preview">
+                        <img [src]="sc.url" [alt]="sc.title || p.title" (click)="openLightbox(sc.url)" style="cursor: pointer;" />
+                      </div>
+                    }
+                  }
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- ⑤ SCREENSHOTS -->
+    @if (p.images && p.images.length > 0) {
+      <section class="section screenshots-section">
+        <h2 class="section-title">Screenshots</h2>
+        <div class="screenshots-grid">
+          @for (image of p.images; track image.imageUrl) {
+            <div class="screenshot-card" (click)="openLightbox(image.imageUrl)">
+              <img [src]="image.imageUrl" [alt]="image.title || 'Screenshot'" loading="lazy" />
+              @if (image.title) {
+                <span class="screenshot-title">{{ image.title }}</span>
+              }
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- ⑥ DOCUMENTATIE -->
+    @if ((p.documents && p.documents.length > 0) || p.highlights) {
+      <section class="section docs-section">
+        <h2 class="section-title">Documentatie & Notities</h2>
+        <div class="docs-content">
+          @if (p.highlights) {
+            <div class="docs-card">
+              <h3>Technische samenvatting</h3>
+              <p>{{ p.highlights }}</p>
+            </div>
+          }
+          @if (p.documents && p.documents.length > 0) {
+            @for (doc of p.documents; track doc.id) {
+              <div class="docs-card">
+                <h3>{{ doc.title }}</h3>
+                <a [href]="doc.url" target="_blank" rel="noopener" class="docs-link">
+                  <span class="link-icon">📄</span>
+                  Bekijk {{ doc.title }}
+                  <span class="external-icon">↗</span>
+                </a>
+              </div>
+            }
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Lightbox Overlay -->
+    @if (lightboxImage()) {
+      <div class="lightbox-overlay" (click)="closeLightbox()">
+        <button class="lightbox-close" (click)="closeLightbox()">✕</button>
+        <img [src]="lightboxImage()" alt="Screenshot vergroot" />
+      </div>
+    }
+
+    }
+  }
+</div>

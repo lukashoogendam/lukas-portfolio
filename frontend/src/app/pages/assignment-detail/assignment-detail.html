@@ -1,0 +1,64 @@
+<div class="assignment-detail-page">
+
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Opdracht laden...</p>
+    </div>
+  } @else if (hasError()) {
+    <div class="error-state">
+      <div class="error-icon">⚠️</div>
+      <h2>Opdracht niet gevonden</h2>
+      <p>De opgevraagde opdracht bestaat niet of kon niet geladen worden.</p>
+      <a routerLink="/assignments" class="btn btn-primary">← Terug naar Opdrachten</a>
+    </div>
+  } @else if (assignment(); as a) {
+
+    <!-- HERO -->
+    <section class="hero-section">
+      <a routerLink="/assignments" [queryParams]="{ endpoint: '/api/assignments' }" class="back-link">← Terug naar Opdrachten</a>
+
+      <div class="hero-meta">
+        <span class="course-badge">{{ a.courseName }}</span>
+      </div>
+      <h1 class="hero-title">{{ a.title }}</h1>
+    </section>
+
+    <!-- CONTENT -->
+    @if (a.description) {
+      <section class="section">
+        <h2 class="section-title">Beschrijving</h2>
+        <p class="description-text">{{ a.description }}</p>
+      </section>
+    }
+
+    <!-- LINKS -->
+    <section class="section actions-section">
+      @if (a.documentUrl) {
+        <a [href]="a.documentUrl" target="_blank" rel="noopener" class="action-btn pdf-btn">
+          <span class="btn-icon">📄</span>
+          Bekijk document
+          <span class="btn-arrow">↗</span>
+        </a>
+      }
+      @if (a.projectSlug) {
+        <a [routerLink]="['/projects', a.projectSlug]" class="action-btn project-btn">
+          <span class="btn-icon">📂</span>
+          Bijbehorend project: {{ a.projectTitle }}
+          <span class="btn-arrow">→</span>
+        </a>
+      }
+    </section>
+
+    <!-- API CARD -->
+    <section class="section api-section">
+      <div class="api-card">
+        <span class="api-method">GET</span>
+        <span class="api-path">/api/assignments/{{ a.slug }}</span>
+        <a routerLink="/explorer" [queryParams]="{ endpoint: '/api/assignments' }" class="api-try-link">Probeer in Explorer →</a>
+      </div>
+    </section>
+
+  }
+
+</div>
