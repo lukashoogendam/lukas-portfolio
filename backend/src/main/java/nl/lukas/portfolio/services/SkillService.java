@@ -44,6 +44,7 @@ public class SkillService {
                 .category(request.category())
                 .level(request.level())
                 .description(request.description())
+                .highlighted(request.highlighted() != null ? request.highlighted() : false)
                 .build();
         return skillMapper.toDto(skillRepository.save(skill), Optional.empty());
     }
@@ -57,6 +58,7 @@ public class SkillService {
         if (request.category() != null) skill.setCategory(request.category());
         if (request.level() != null) skill.setLevel(request.level());
         if (request.description() != null) skill.setDescription(request.description());
+        if (request.highlighted() != null) skill.setHighlighted(request.highlighted());
 
         return skillMapper.toDto(skillRepository.save(skill), Optional.empty());
     }

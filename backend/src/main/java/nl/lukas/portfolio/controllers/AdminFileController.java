@@ -70,6 +70,7 @@ public class AdminFileController {
 
             return ResponseEntity.ok(ApiResponse.success("File uploaded successfully", data));
         } catch (IOException e) {
+            System.err.println("Upload error: " + e.getMessage());
             return ResponseEntity.internalServerError()
                     .body(ApiResponse.error(500, "Failed to store file: " + e.getMessage()));
         }

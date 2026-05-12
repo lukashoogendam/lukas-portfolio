@@ -104,9 +104,7 @@ CREATE TABLE users (
     role        VARCHAR(50) NOT NULL DEFAULT 'USER'
 );
 
--- Admin account (wachtwoord: admin123, BCrypt hashed)
-INSERT INTO users (email, password, first_name, last_name, role)
-VALUES ('admin@lukas.dev', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'Lukas', 'Admin', 'ADMIN');
+-- Admin account word nu beheerd door AdminInitializer.java
 
 -- === Indexes ===
 CREATE INDEX idx_projects_slug          ON projects(slug);

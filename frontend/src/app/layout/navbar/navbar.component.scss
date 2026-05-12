@@ -1,5 +1,4 @@
 @use '../../../styles/variables' as *;
-
 .navbar {
   position: sticky;
   top: 0;
@@ -8,7 +7,6 @@
   backdrop-filter: blur(12px);
   border-bottom: 1px solid $border-color;
 }
-
 .navbar-inner {
   max-width: $breakpoint-xl;
   margin: 0 auto;
@@ -19,7 +17,6 @@
   justify-content: space-between;
   gap: $spacing-xl;
 }
-
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -29,29 +26,24 @@
   font-weight: 700;
   font-size: $font-size-lg;
   transition: opacity $transition-fast;
-
   &:hover {
     opacity: 0.85;
     color: $text-primary;
   }
-
   .brand-icon {
     font-family: $font-mono;
     font-size: $font-size-xl;
     color: $accent-primary;
   }
-
   .brand-accent {
     color: $accent-primary;
   }
 }
-
 .navbar-links {
   display: flex;
   align-items: center;
   gap: $spacing-xs;
 }
-
 .nav-link {
   padding: $spacing-sm $spacing-md;
   font-size: $font-size-sm;
@@ -60,24 +52,20 @@
   border-radius: $radius-md;
   transition: all $transition-fast;
   text-decoration: none;
-
   &:hover {
     color: $text-primary;
     background-color: $bg-hover;
   }
-
   &.active {
     color: $text-primary;
     background-color: rgba($accent-primary, 0.1);
   }
 }
-
 .navbar-actions {
   display: flex;
   align-items: center;
   gap: $spacing-sm;
 }
-
 .lang-switcher {
   display: flex;
   align-items: center;
@@ -87,7 +75,6 @@
   border-radius: $radius-md;
   padding: 2px;
 }
-
 .lang-btn {
   padding: 4px $spacing-sm;
   font-size: 12px;
@@ -99,18 +86,15 @@
   cursor: pointer;
   transition: all $transition-fast;
   letter-spacing: 0.03em;
-
   &:hover {
     color: $text-primary;
     background-color: $bg-hover;
   }
-
   &.lang-active {
     color: $accent-primary;
     background-color: rgba($accent-primary, 0.12);
   }
 }
-
 .nav-btn {
   padding: $spacing-sm $spacing-md;
   font-size: $font-size-sm;
@@ -119,24 +103,94 @@
   text-decoration: none;
   transition: all $transition-fast;
 }
-
 .swagger-btn {
   color: $accent-green;
   border: 1px solid rgba($accent-green, 0.3);
   background-color: rgba($accent-green, 0.08);
-
   &:hover {
     background-color: rgba($accent-green, 0.15);
     color: $accent-green;
   }
 }
-
+.mobile-toggle-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $spacing-xs;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  z-index: 100;
+  .hamburger {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: $text-primary;
+    position: relative;
+    transition: all $transition-fast;
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background-color: $text-primary;
+      left: 0;
+      transition: all $transition-fast;
+    }
+    &::before { top: -6px; }
+    &::after { bottom: -6px; }
+    &.open {
+      background-color: transparent;
+      &::before {
+        top: 0;
+        transform: rotate(45deg);
+      }
+      &::after {
+        bottom: 0;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+}
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  padding: $spacing-md $spacing-lg;
+  background-color: rgba($bg-secondary, 0.98);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  box-shadow: $shadow-md;
+  .mobile-link {
+    padding: $spacing-md;
+    font-size: $font-size-base;
+    text-align: center;
+    border-radius: 0;
+    border-bottom: 1px solid rgba($border-color, 0.5);
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
 @media (max-width: $breakpoint-md) {
   .navbar-links {
     display: none;
   }
-
   .navbar-inner {
     padding: 0 $spacing-md;
+  }
+  .mobile-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mobile-menu {
+    display: flex;
   }
 }

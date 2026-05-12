@@ -23,7 +23,10 @@ public record ProjectDetailDto(
     List<ProjectImageDto> images,
     List<ShowcaseDto> showcases,
     List<DocumentDto> documents,
-    LinksDto links
+    LinksDto links,
+    List<Long> skillIds,
+    String courseName,
+    String documentUrl
 ) {
     @Builder
     public record ProjectImageDto(Long id, String title, String imageUrl, Integer sortOrder) {}

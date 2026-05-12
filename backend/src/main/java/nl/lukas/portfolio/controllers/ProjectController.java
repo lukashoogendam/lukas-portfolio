@@ -37,4 +37,13 @@ public class ProjectController {
         ProjectDetailDto project = projectService.getProjectBySlug(slug, lang);
         return ResponseEntity.ok(ApiResponse.success("Project loaded successfully", project));
     }
+
+    @GetMapping("/by-skill/{skillName}")
+    @Operation(summary = "Get projects by skill", description = "Returns all projects that use a specific skill. Use ?lang=en for English.")
+    public ResponseEntity<ApiResponse<List<ProjectListDto>>> getProjectsBySkill(
+            @PathVariable String skillName,
+            @RequestParam(defaultValue = "nl") String lang) {
+        List<ProjectListDto> projects = projectService.getProjectsBySkillName(skillName, lang);
+        return ResponseEntity.ok(ApiResponse.success("Projects filtered by skill: " + skillName, projects));
+    }
 }

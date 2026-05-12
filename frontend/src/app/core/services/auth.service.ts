@@ -1,35 +1,35 @@
-import { Injectable, signal, inject } from '@angular/core';
+import { Injectable, signal, inject, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiResponse } from './portfolio-api.service';
-
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  private readonly baseUrl = 'http://localhost:8080/api/auth';
+  private readonly baseUrl = `${environment.apiUrl}/auth`;
   private http = inject(HttpClient);
   private router = inject(Router);
-
   isLoggedIn = signal(false);
   currentEmail = signal<string | null>(null);
-
+  currentRole = signal<string | null>(null);
+  isAdmin = computed(() => this.currentRole() === 'ADMIN');
   checkAuth(): void {
-    this.http.get<ApiResponse<{ email: string; authenticated: boolean }>>(
+    this.http.get<ApiResponse<{ email: string; authenticated: boolean; role: string }>>(
       `${this.baseUrl}/me`, { withCredentials: true }
     ).subscribe({
       next: (res) => {
         this.isLoggedIn.set(true);
         this.currentEmail.set(res.data.email);
+        this.currentRole.set(res.data.role);
       },
       error: () => {
         this.isLoggedIn.set(false);
         this.currentEmail.set(null);
+        this.currentRole.set(null);
       }
     });
   }
-
   login(email: string, password: string): void {
     this.http.post<ApiResponse<void>>(
       `${this.baseUrl}/login`,
@@ -47,7 +47,6 @@ export class AuthService {
       }
     });
   }
-
   logout(): void {
     this.http.post<ApiResponse<void>>(
       `${this.baseUrl}/logout`, {},
@@ -56,13 +55,12 @@ export class AuthService {
       next: () => {
         this.isLoggedIn.set(false);
         this.currentEmail.set(null);
+        this.currentRole.set(null);
         this.router.navigate(['/login']);
       }
     });
   }
-
   loginError = signal<string | null>(null);
-
   clearError(): void {
     this.loginError.set(null);
   }

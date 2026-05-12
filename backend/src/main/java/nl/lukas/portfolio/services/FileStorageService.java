@@ -55,6 +55,7 @@ public class FileStorageService {
         Files.createDirectories(targetDir);
 
         String indexPath = null;
+        String fallbackHtmlPath = null;
 
         try (java.util.zip.ZipInputStream zis = new java.util.zip.ZipInputStream(file.getInputStream())) {
             java.util.zip.ZipEntry zipEntry = zis.getNextEntry();
@@ -75,6 +76,8 @@ public class FileStorageService {
 
                     if (zipEntry.getName().endsWith("index.html") && indexPath == null) {
                         indexPath = uniqueFolder + "/" + zipEntry.getName();
+                    } else if (zipEntry.getName().endsWith(".html") && fallbackHtmlPath == null) {
+                        fallbackHtmlPath = uniqueFolder + "/" + zipEntry.getName();
                     }
                 }
                 zipEntry = zis.getNextEntry();
@@ -82,7 +85,11 @@ public class FileStorageService {
         }
 
         if (indexPath == null) {
-            throw new IOException("Geen index.html gevonden in de ZIP.");
+            indexPath = fallbackHtmlPath;
+        }
+
+        if (indexPath == null) {
+            throw new IOException("Geen HTML bestand (.html of index.html) gevonden in de ZIP.");
         }
 
         return indexPath;

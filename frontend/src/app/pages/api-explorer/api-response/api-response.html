@@ -1,0 +1,43 @@
+@if (responseData() || isLoading()) {
+  <div class="response-section">
+    <div class="response-header">
+      <h3 class="response-title">Response</h3>
+      @if (responseStatus()) {
+        <div class="response-meta">
+          <span class="status-badge" [class]="getStatusClass()">
+            {{ responseStatus() }}
+          </span>
+          <span class="time-badge">{{ responseTime() }} ms</span>
+        </div>
+      }
+    </div>
+    
+    <div class="response-body" [class.loading]="isLoading()">
+      @if (isLoading()) {
+        <div class="loading-state">
+          <div class="spinner large"></div>
+          <p>Request uitvoeren...</p>
+        </div>
+      } @else {
+        <div class="response-tabs">
+          <div class="response-tab active">Body (JSON)</div>
+          
+          @if (!hasError() && (isProjectsEndpoint() || isProjectsBySkillEndpoint())) {
+            <div class="response-tab active" style="margin-left: auto; cursor: default; border-bottom: none; color: var(--text-color);">
+              Visual Preview:
+            </div>
+            @for (project of getProjectList(); track project.slug) {
+              <a [routerLink]="['/projects', project.slug]" class="preview-btn">
+                {{ project.title }} →
+              </a>
+            }
+          }
+        </div>
+        
+        <div class="json-container">
+          <ngx-json-viewer [json]="responseData()"></ngx-json-viewer>
+        </div>
+      }
+    </div>
+  </div>
+}

@@ -6,7 +6,6 @@
         Heb je een vraag of wil je samenwerken? Stuur een bericht via het formulier
         of gebruik het <strong>POST /api/contact</strong> endpoint in de API Explorer.
       </p>
-
       <div class="contact-details">
         <div class="detail-item">
           <span class="detail-icon">📧</span>
@@ -21,7 +20,6 @@
           <a href="https://github.com/lukas" target="_blank" class="detail-text">github.com/lukas</a>
         </div>
       </div>
-
       <div class="api-hint">
         <div class="code-block">
           <span class="method-badge post">POST</span>
@@ -29,7 +27,6 @@
         </div>
       </div>
     </div>
-
     <div class="contact-form-wrapper">
       @if (isSuccess()) {
         <div class="success-message">
@@ -58,7 +55,6 @@
               required
             />
           </div>
-
           <div class="form-group">
             <label for="email">E-mail *</label>
             <input
@@ -71,7 +67,6 @@
               required
             />
           </div>
-
           <div class="form-group">
             <label for="message">Bericht *</label>
             <textarea
@@ -84,11 +79,9 @@
               required
             ></textarea>
           </div>
-
           @if (errorMessage()) {
             <div class="error-message">{{ errorMessage() }}</div>
           }
-
           <button type="submit" class="submit-btn" [disabled]="isSubmitting()">
             @if (isSubmitting()) {
               <span class="spinner"></span> Versturen...

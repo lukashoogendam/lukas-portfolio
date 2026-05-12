@@ -6,7 +6,5 @@ public record UpdateProfileRequest(
     String focus,
     String location,
     String summary,
-    String email,
-    String github,
-    String linkedin
+    String email
 ) {}

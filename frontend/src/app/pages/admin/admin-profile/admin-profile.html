@@ -1,0 +1,64 @@
+@if (successMessage()) {
+  <div class="success-banner">
+    <span>✓</span> {{ successMessage() }}
+  </div>
+}
+
+<div class="content-header">
+  <h2 class="content-title">Profiel</h2>
+</div>
+
+<div class="form-card">
+  <div class="form-header">
+    <h3 style="display: flex; align-items: center; gap: 1rem;">
+      Profiel bewerken
+      <div class="lang-toggle">
+        <button class="lang-btn" [class.active]="formLang() === 'nl'" (click)="switchFormLang('nl')">🇳🇱 NL</button>
+        <button class="lang-btn" [class.active]="formLang() === 'en'" (click)="switchFormLang('en')">🇬🇧 EN</button>
+      </div>
+    </h3>
+  </div>
+  
+  <div class="form-body">
+    @if (formLang() === 'en') {
+      <div class="translation-hint">💡 Let op: je bewerkt nu de Engelse vertaling. Niet-vertaalbare velden zijn verborgen.</div>
+    }
+    
+    @if (profileLoading()) {
+      <div class="profile-loading">Profiel laden...</div>
+    } @else {
+      <div class="form-grid">
+        @if (formLang() === 'nl') {
+          <div class="form-group">
+            <label class="form-label">Naam</label>
+            <input class="form-input" [ngModel]="formData()['name'] || ''" (ngModelChange)="updateField('name', $event)" placeholder="Lukas Hoogendam" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Locatie</label>
+            <input class="form-input" [ngModel]="formData()['location'] || ''" (ngModelChange)="updateField('location', $event)" placeholder="Amsterdam, NL" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">E-mail</label>
+            <input class="form-input" [ngModel]="formData()['email'] || ''" (ngModelChange)="updateField('email', $event)" placeholder="lukas@email.com" />
+          </div>
+        }
+        <div class="form-group">
+          <label class="form-label">Functietitel / Rol</label>
+          <input class="form-input" [ngModel]="getFieldValue('role')" (ngModelChange)="updateField('role', $event)" placeholder="Software Developer" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Focus / Specialisatie</label>
+          <input class="form-input" [ngModel]="getFieldValue('focus')" (ngModelChange)="updateField('focus', $event)" placeholder="Backend & API Development" />
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Samenvatting / Bio</label>
+          <textarea class="form-input" rows="8" [ngModel]="getFieldValue('summary')" (ngModelChange)="updateField('summary', $event)" placeholder="Korte beschrijving over jezelf..."></textarea>
+        </div>
+      </div>
+    }
+  </div>
+  
+  <div class="form-footer">
+    <button class="save-btn" (click)="saveItem()">Profiel opslaan</button>
+  </div>
+</div>

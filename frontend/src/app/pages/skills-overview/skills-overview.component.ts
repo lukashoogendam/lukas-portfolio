@@ -6,12 +6,10 @@ import {
   SkillDto
 } from '../../core/services/portfolio-api.service';
 import { LanguageService } from '../../core/services/language.service';
-
 interface SkillGroup {
   category: string;
   skills: SkillDto[];
 }
-
 @Component({
   selector: 'app-skills-overview',
   imports: [CommonModule, RouterLink],
@@ -20,22 +18,18 @@ interface SkillGroup {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkillsOverviewComponent {
-
   skillGroups = signal<SkillGroup[]>([]);
   totalSkills = signal(0);
   isLoading = signal(true);
   hasError = signal(false);
-
   private apiService = inject(PortfolioApiService);
   private langService = inject(LanguageService);
-
   constructor() {
     effect(() => {
       this.langService.currentLang();
       this.loadSkills();
     });
   }
-
   private loadSkills(): void {
     this.isLoading.set(true);
     this.apiService.getSkills().subscribe({
@@ -51,7 +45,6 @@ export class SkillsOverviewComponent {
       }
     });
   }
-
   private groupByCategory(skills: SkillDto[]): SkillGroup[] {
     const map = new Map<string, SkillDto[]>();
     for (const skill of skills) {
@@ -61,7 +54,6 @@ export class SkillsOverviewComponent {
     }
     return Array.from(map.entries()).map(([category, skills]) => ({ category, skills }));
   }
-
   getLevelWidth(level: string): string {
     const map: Record<string, string> = {
       beginner: '25%',
@@ -73,7 +65,6 @@ export class SkillsOverviewComponent {
     };
     return map[level?.toLowerCase()] ?? '50%';
   }
-
   getLevelLabel(level: string): string {
     const map: Record<string, string> = {
       beginner: 'Beginner',
@@ -83,6 +74,6 @@ export class SkillsOverviewComponent {
       senior: 'Senior',
       expert: 'Expert',
     };
-    return map[level?.toLowerCase()] ?? level ?? '—';
+    return map[level?.toLowerCase()] ?? level ?? '-';
   }
 }

@@ -1,0 +1,64 @@
+@if (successMessage()) {
+  <div class="success-banner">
+    <span>✓</span> {{ successMessage() }}
+  </div>
+}
+
+<div class="content-header">
+  <h2 class="content-title">Socials</h2>
+  <button class="add-btn" (click)="openCreateForm()">+ Nieuw</button>
+</div>
+
+@if (showForm()) {
+  <div class="form-card">
+    <div class="form-header">
+      <h3 style="display: flex; align-items: center; gap: 1rem;">
+        {{ isEditing() ? 'Bewerken' : 'Nieuw item' }}
+      </h3>
+      <button class="close-btn" (click)="closeForm()">✕</button>
+    </div>
+    
+    <div class="form-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Platform</label>
+          <input class="form-input" [ngModel]="formData()['platform'] || ''" (ngModelChange)="updateField('platform', $event)" placeholder="GitHub" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">URL</label>
+          <input class="form-input" [ngModel]="formData()['url'] || ''" (ngModelChange)="updateField('url', $event)" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Icon</label>
+          <input class="form-input" [ngModel]="formData()['icon'] || ''" (ngModelChange)="updateField('icon', $event)" placeholder="github" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Volgorde</label>
+          <input class="form-input" type="number" [ngModel]="formData()['sortOrder'] || 0" (ngModelChange)="updateField('sortOrder', $event)" />
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-footer">
+      <button class="cancel-btn" (click)="closeForm()">Annuleren</button>
+      <button class="save-btn" (click)="saveItem()">{{ isEditing() ? 'Opslaan' : 'Aanmaken' }}</button>
+    </div>
+  </div>
+}
+
+<div class="item-list">
+  @for (social of socials(); track social.id) {
+    <div class="item-row">
+      <div class="item-info">
+        <span class="item-title">{{ social.platform }}</span>
+        <span class="item-meta">{{ social.url }}</span>
+      </div>
+      <div class="item-actions">
+        <button class="action-btn edit" (click)="openEditForm(social)">Bewerken</button>
+        <button class="action-btn delete" (click)="deleteItem(social.id)">Verwijderen</button>
+      </div>
+    </div>
+  } @empty {
+    <div class="empty-list">Geen socials gevonden.</div>
+  }
+</div>

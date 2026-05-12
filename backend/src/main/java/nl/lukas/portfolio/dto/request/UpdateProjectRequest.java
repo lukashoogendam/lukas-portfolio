@@ -18,6 +18,8 @@ public record UpdateProjectRequest(
     List<Long> skillIds,
     List<CreateProjectRequest.ProjectImageRequest> images,
     List<CreateProjectRequest.ShowcaseRequest> showcases,
-    List<CreateProjectRequest.DocumentRequest> documents
+    List<CreateProjectRequest.DocumentRequest> documents,
+    String courseName,
+    String documentUrl
 ) {
 }

@@ -88,9 +88,12 @@ public class AuthController {
                     .body(ApiResponse.error(401, "Not authenticated"));
         }
 
+        var user = userService.findByEmail(authentication.getName());
+
         Map<String, Object> data = Map.of(
                 "email", authentication.getName(),
-                "authenticated", true
+                "authenticated", true,
+                "role", user.getRole().name()
         );
 
         return ResponseEntity.ok(ApiResponse.success("Authenticated", data));

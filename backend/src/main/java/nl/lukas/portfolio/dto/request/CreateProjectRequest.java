@@ -20,7 +20,9 @@ public record CreateProjectRequest(
     List<Long> skillIds,
     List<ProjectImageRequest> images,
     List<ShowcaseRequest> showcases,
-    List<DocumentRequest> documents
+    List<DocumentRequest> documents,
+    String courseName,
+    String documentUrl
 ) {
     public record ProjectImageRequest(
         String title,

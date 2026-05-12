@@ -6,3 +6,6 @@
 untracked_files.txt
 implementation_plan.md
 backend/compile_errors*.txt
+
+# Environment secrets
+.env

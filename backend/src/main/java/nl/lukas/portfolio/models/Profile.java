@@ -33,10 +33,4 @@ public class Profile {
 
     @Column(length = 255)
     private String email;
-
-    @Column(columnDefinition = "TEXT")
-    private String github;
-
-    @Column(columnDefinition = "TEXT")
-    private String linkedin;
 }

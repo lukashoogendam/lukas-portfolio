@@ -1,0 +1,84 @@
+@if (!selectedEndpoint()) {
+  <div class="empty-state">
+    <div class="empty-icon">⚡</div>
+    <h3>Selecteer een endpoint</h3>
+    <p>Klik op een endpoint in de lijst om een request te versturen.</p>
+  </div>
+} @else {
+  <div class="request-bar">
+    <span class="method-badge large" [class]="selectedEndpoint()?.method?.toLowerCase()">
+      {{ selectedEndpoint()?.method }}
+    </span>
+    <div class="request-url">
+      <span class="url-base">{{ apiDisplayHost }}</span>
+      <span class="url-path">{{ getRequestUrl() }}</span>
+    </div>
+    
+    @if (selectedEndpoint()?.method === 'GET') {
+      <button class="icon-btn" (click)="sendRequest()" [disabled]="isLoading()" title="Opnieuw ophalen">
+        @if (isLoading()) { <span class="spinner"></span> } @else { ↻ }
+      </button>
+    }
+  </div>
+
+  @if (isSlugEndpoint()) {
+    <div class="input-section">
+      <label class="input-label">Path Variables</label>
+      <div class="contact-form">
+        <div class="form-field">
+          <label>slug</label>
+          <select [ngModel]="slugInput()" (ngModelChange)="setSlugInput($event)" class="slug-input" (change)="sendRequest()">
+            <option value="" disabled selected>Kies een project...</option>
+            @if (isProjectDetailEndpoint()) {
+              @for (slug of availableProjectSlugs(); track slug) {
+                <option [value]="slug">{{ slug }}</option>
+              }
+            }
+          </select>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (isSkillNameEndpoint()) {
+    <div class="input-section">
+      <label class="input-label">Path Variables</label>
+      <div class="contact-form">
+        <div class="form-field">
+          <label>skillName</label>
+          <input
+            type="text"
+            class="slug-input"
+            [ngModel]="slugInput()"
+            (ngModelChange)="setSlugInput($event)"
+            placeholder="bijv. Angular, Java, Spring Boot..." />
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (isLoginEndpoint()) {
+    <div class="input-section">
+      <label class="input-label">Request Body (JSON)</label>
+      <div class="contact-form">
+        <div class="form-field">
+          <textarea
+            class="slug-input"
+            rows="5"
+            [ngModel]="loginJson()"
+            (ngModelChange)="setLoginJson($event)"
+            style="font-family: monospace;"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (selectedEndpoint()?.method === 'POST') {
+    <div class="action-section">
+      <button class="send-btn" (click)="sendRequest()" [disabled]="isLoading()">
+        @if (isLoading()) { Bezig met inloggen... } @else { Send Request }
+      </button>
+    </div>
+  }
+}

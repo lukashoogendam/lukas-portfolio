@@ -34,8 +34,6 @@ public class ProfileMapper {
                 .location(profile.getLocation())
                 .summary(summary)
                 .email(profile.getEmail())
-                .github(profile.getGithub())
-                .linkedin(profile.getLinkedin())
                 .build();
     }
 

@@ -30,12 +30,17 @@ public class ProjectMapper {
                 .filter(s -> s != null && !s.isBlank())
                 .orElse(project.getShortDescription());
 
+        String courseName = translation.map(ProjectTranslation::getCourseName)
+                .filter(s -> s != null && !s.isBlank())
+                .orElse(project.getCourseName());
+
         return ProjectListDto.builder()
                 .slug(project.getSlug())
                 .title(title)
                 .shortDescription(shortDescription)
                 .category(project.getCategory())
                 .status(project.getStatus())
+                .courseName(courseName)
                 .build();
     }
 
@@ -72,6 +77,10 @@ public class ProjectMapper {
                 .map(Skill::getName)
                 .collect(Collectors.toList());
 
+        List<Long> skillIds = project.getSkills().stream()
+                .map(Skill::getId)
+                .collect(Collectors.toList());
+
         List<ProjectDetailDto.ProjectImageDto> images = project.getImages().stream()
                 .map(this::toImageDto)
                 .collect(Collectors.toList());
@@ -89,6 +98,10 @@ public class ProjectMapper {
         ProjectDetailDto.LinksDto links = ProjectDetailDto.LinksDto.builder()
                 .github(project.getRepositoryUrl())
                 .build();
+
+        String courseName = useFallback
+                ? translation.map(ProjectTranslation::getCourseName).filter(s -> s != null && !s.isBlank()).orElse(project.getCourseName())
+                : translation.map(ProjectTranslation::getCourseName).orElse("");
 
         return ProjectDetailDto.builder()
                 .id(project.getId())
@@ -109,6 +122,9 @@ public class ProjectMapper {
                 .showcases(showcases)
                 .documents(documents)
                 .links(links)
+                .skillIds(skillIds)
+                .courseName(courseName)
+                .documentUrl(project.getDocumentUrl())
                 .build();
     }
 

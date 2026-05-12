@@ -9,5 +9,6 @@ public record UpsertProjectTranslationRequest(
     String description,
     String role,
     String highlights,
-    List<String> features
+    List<String> features,
+    String courseName
 ) {}

@@ -31,6 +31,10 @@ public class Skill {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean highlighted = false;
+
     @OneToMany(mappedBy = "skill", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude

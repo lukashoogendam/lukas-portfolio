@@ -49,6 +49,12 @@ public class Project {
     @Column(name = "repository_url")
     private String repositoryUrl;
 
+    @Column(name = "course_name", length = 150)
+    private String courseName;
+
+    @Column(name = "document_url")
+    private String documentUrl;
+
     @Column(columnDefinition = "TEXT")
     private String role;
 

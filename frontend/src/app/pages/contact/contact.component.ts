@@ -2,7 +2,6 @@ import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PortfolioApiService } from '../../core/services/portfolio-api.service';
-
 @Component({
   selector: 'app-contact',
   imports: [CommonModule, FormsModule],
@@ -11,32 +10,26 @@ import { PortfolioApiService } from '../../core/services/portfolio-api.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactComponent {
-
   name = signal('');
   email = signal('');
   message = signal('');
   isSubmitting = signal(false);
   isSuccess = signal(false);
   errorMessage = signal('');
-
   private apiService = inject(PortfolioApiService);
-
   onSubmit(): void {
     const isMissingFields = !this.name() || !this.email() || !this.message();
     if (isMissingFields) {
       this.errorMessage.set('Vul alle velden in.');
       return;
     }
-
     const isMessageTooShort = this.message().length < 10;
     if (isMessageTooShort) {
       this.errorMessage.set('Bericht moet minimaal 10 tekens bevatten.');
       return;
     }
-
     this.isSubmitting.set(true);
     this.errorMessage.set('');
-
     this.apiService.sendContactMessage({
       name: this.name(),
       email: this.email(),

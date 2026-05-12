@@ -10,6 +10,10 @@ import java.util.Optional;
 @Component
 public class SkillMapper {
 
+    public SkillDto toDto(Skill skill) {
+        return toDto(skill, Optional.empty(), true);
+    }
+
     public SkillDto toDto(Skill skill, Optional<SkillTranslation> translation) {
         return toDto(skill, translation, true);
     }
@@ -25,6 +29,7 @@ public class SkillMapper {
                 .category(skill.getCategory())
                 .level(skill.getLevel())
                 .description(description)
+                .highlighted(skill.isHighlighted())
                 .build();
     }
 }

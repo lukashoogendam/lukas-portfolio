@@ -44,4 +44,7 @@ public class ProjectTranslation {
 
     @Column(columnDefinition = "TEXT")
     private String features;
+
+    @Column(name = "course_name", length = 150)
+    private String courseName;
 }

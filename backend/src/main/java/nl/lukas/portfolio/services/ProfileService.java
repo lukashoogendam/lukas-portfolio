@@ -42,8 +42,6 @@ public class ProfileService {
         if (request.location() != null) profile.setLocation(request.location());
         if (request.summary() != null) profile.setSummary(request.summary());
         if (request.email() != null) profile.setEmail(request.email());
-        if (request.github() != null) profile.setGithub(request.github());
-        if (request.linkedin() != null) profile.setLinkedin(request.linkedin());
 
         return profileMapper.toDto(profileRepository.save(profile), Optional.empty());
     }

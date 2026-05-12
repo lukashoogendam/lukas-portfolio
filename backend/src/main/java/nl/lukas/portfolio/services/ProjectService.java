@@ -51,6 +51,14 @@ public class ProjectService {
     }
 
     @Transactional(readOnly = true)
+    public List<ProjectListDto> getProjectsBySkillName(String skillName, String lang) {
+        String resolvedLang = LanguageHelper.resolveLang(lang);
+        return projectRepository.findBySkillName(skillName).stream()
+                .map(project -> projectMapper.toListDto(project, resolvedLang, getTranslation(project.getId(), resolvedLang)))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public ProjectDetailDto getProjectBySlug(String slug, String lang) {
         String resolvedLang = LanguageHelper.resolveLang(lang);
         Project project = projectRepository.findBySlug(slug)
@@ -75,6 +83,8 @@ public class ProjectService {
                 .endDate(request.endDate())
                 .repositoryUrl(request.repositoryUrl())
                 .features(serializeFeatures(request.features()))
+                .courseName(request.courseName())
+                .documentUrl(request.documentUrl())
                 .build();
 
         assignSkills(project, request.skillIds());
@@ -180,6 +190,7 @@ public class ProjectService {
         translation.setRole(request.role());
         translation.setHighlights(request.highlights());
         translation.setFeatures(serializeFeatures(request.features()));
+        translation.setCourseName(request.courseName());
 
         translationRepository.save(translation);
 
@@ -214,11 +225,12 @@ public class ProjectService {
         if (request.endDate() != null) project.setEndDate(request.endDate());
         if (request.repositoryUrl() != null) project.setRepositoryUrl(request.repositoryUrl());
         if (request.features() != null) project.setFeatures(serializeFeatures(request.features()));
+        if (request.courseName() != null) project.setCourseName(request.courseName());
+        if (request.documentUrl() != null) project.setDocumentUrl(request.documentUrl());
     }
 
     private void assignSkills(Project project, List<Long> skillIds) {
-        boolean hasSkillsToUpdate = skillIds != null && !skillIds.isEmpty();
-        if (hasSkillsToUpdate) {
+        if (skillIds != null) {
             List<Skill> skills = skillRepository.findAllById(skillIds);
             project.setSkills(new HashSet<>(skills));
         }
