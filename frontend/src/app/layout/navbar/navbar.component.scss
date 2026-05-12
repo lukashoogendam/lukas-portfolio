@@ -1,0 +1,142 @@
+@use '../../../styles/variables' as *;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: $z-navbar;
+  background-color: rgba($bg-tertiary, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid $border-color;
+}
+
+.navbar-inner {
+  max-width: $breakpoint-xl;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-xl;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  text-decoration: none;
+  color: $text-primary;
+  font-weight: 700;
+  font-size: $font-size-lg;
+  transition: opacity $transition-fast;
+
+  &:hover {
+    opacity: 0.85;
+    color: $text-primary;
+  }
+
+  .brand-icon {
+    font-family: $font-mono;
+    font-size: $font-size-xl;
+    color: $accent-primary;
+  }
+
+  .brand-accent {
+    color: $accent-primary;
+  }
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.nav-link {
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  color: $text-secondary;
+  border-radius: $radius-md;
+  transition: all $transition-fast;
+  text-decoration: none;
+
+  &:hover {
+    color: $text-primary;
+    background-color: $bg-hover;
+  }
+
+  &.active {
+    color: $text-primary;
+    background-color: rgba($accent-primary, 0.1);
+  }
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background-color: $bg-secondary;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  padding: 2px;
+}
+
+.lang-btn {
+  padding: 4px $spacing-sm;
+  font-size: 12px;
+  font-weight: 600;
+  color: $text-secondary;
+  background: transparent;
+  border: none;
+  border-radius: calc(#{$radius-md} - 2px);
+  cursor: pointer;
+  transition: all $transition-fast;
+  letter-spacing: 0.03em;
+
+  &:hover {
+    color: $text-primary;
+    background-color: $bg-hover;
+  }
+
+  &.lang-active {
+    color: $accent-primary;
+    background-color: rgba($accent-primary, 0.12);
+  }
+}
+
+.nav-btn {
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  border-radius: $radius-md;
+  text-decoration: none;
+  transition: all $transition-fast;
+}
+
+.swagger-btn {
+  color: $accent-green;
+  border: 1px solid rgba($accent-green, 0.3);
+  background-color: rgba($accent-green, 0.08);
+
+  &:hover {
+    background-color: rgba($accent-green, 0.15);
+    color: $accent-green;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .navbar-links {
+    display: none;
+  }
+
+  .navbar-inner {
+    padding: 0 $spacing-md;
+  }
+}
