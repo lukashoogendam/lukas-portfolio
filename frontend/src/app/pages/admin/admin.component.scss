@@ -1,0 +1,716 @@
+@use '../../../styles/variables' as *;
+
+.admin {
+  max-width: $breakpoint-xl;
+  margin: 0 auto;
+  padding: $spacing-lg;
+  min-height: calc(100vh - 64px);
+}
+
+// === Header ===
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid $border-color;
+  margin-bottom: $spacing-lg;
+}
+
+.header-left {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-md;
+}
+
+.header-title {
+  font-size: $font-size-2xl;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.header-email {
+  font-size: $font-size-xs;
+  font-family: $font-mono;
+  color: $text-muted;
+  background-color: $bg-card;
+  padding: 2px 10px;
+  border-radius: $radius-full;
+}
+
+.header-right {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.header-btn {
+  padding: 6px 16px;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  &.secondary {
+    background: none;
+    color: $text-secondary;
+
+    &:hover {
+      border-color: $accent-primary;
+      color: $accent-primary;
+    }
+  }
+
+  &.danger {
+    background: none;
+    color: $accent-red;
+    border-color: rgba($accent-red, 0.3);
+
+    &:hover {
+      background: rgba($accent-red, 0.1);
+    }
+  }
+}
+
+// === Success Banner ===
+.success-banner {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  background: rgba($accent-green, 0.1);
+  border: 1px solid rgba($accent-green, 0.2);
+  border-radius: $radius-md;
+  color: $accent-green;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  margin-bottom: $spacing-lg;
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// === Tabs ===
+.tabs {
+  display: flex;
+  gap: 2px;
+  background-color: $bg-secondary;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: 4px;
+  margin-bottom: $spacing-lg;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  border-radius: $radius-md;
+  color: $text-muted;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: $text-primary;
+    background-color: $bg-hover;
+  }
+
+  &.active {
+    color: $text-primary;
+    background-color: $bg-card;
+    box-shadow: $shadow-sm;
+  }
+}
+
+.tab-count {
+  font-size: $font-size-xs;
+  font-weight: 600;
+  background-color: $bg-hover;
+  padding: 1px 7px;
+  border-radius: $radius-full;
+
+  .active & {
+    background-color: rgba($accent-primary, 0.15);
+    color: $accent-primary;
+  }
+}
+
+// === Content ===
+.content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.content-title {
+  font-size: $font-size-lg;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.add-btn {
+  padding: 6px 16px;
+  background: linear-gradient(135deg, $accent-primary, $accent-primary-dark);
+  color: #fff;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba($accent-primary, 0.3);
+  }
+}
+
+// === Form Card ===
+.form-card {
+  background-color: $bg-secondary;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  margin-bottom: $spacing-lg;
+  animation: slideIn 0.2s ease-out;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1px solid $border-color;
+
+  h3 {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $text-primary;
+  }
+}
+
+.close-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid $border-color;
+  border-radius: $radius-sm;
+  color: $text-muted;
+  cursor: pointer;
+  font-size: $font-size-xs;
+
+  &:hover {
+    color: $accent-red;
+    border-color: $accent-red;
+  }
+}
+
+.form-body {
+  padding: $spacing-lg;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-md;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &.full {
+    grid-column: 1 / -1;
+  }
+}
+
+.form-label {
+  font-size: $font-size-xs;
+  font-weight: 600;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-input {
+  padding: 8px 12px;
+  font-size: $font-size-sm;
+  font-family: $font-family;
+  color: $text-primary;
+  background-color: $bg-input;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  outline: none;
+  resize: vertical;
+  transition: border-color $transition-fast;
+
+  &:focus {
+    border-color: $accent-primary;
+  }
+
+  &::placeholder {
+    color: $text-muted;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-lg;
+  border-top: 1px solid $border-color;
+}
+
+.cancel-btn {
+  padding: 6px 16px;
+  background: none;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  color: $text-muted;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    color: $text-primary;
+    border-color: $text-muted;
+  }
+}
+
+.save-btn {
+  padding: 6px 20px;
+  background: linear-gradient(135deg, $accent-green, #2d9440);
+  color: #fff;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba($accent-green, 0.3);
+  }
+}
+
+// === Item List ===
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
+  background-color: $bg-secondary;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  transition: border-color $transition-fast;
+
+  &:hover {
+    border-color: rgba($accent-primary, 0.3);
+  }
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.item-title {
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.item-meta {
+  font-size: $font-size-xs;
+  font-family: $font-mono;
+  color: $text-muted;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-actions {
+  display: flex;
+  gap: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  padding: 4px 12px;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  border-radius: $radius-sm;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &.edit {
+    background: rgba($accent-primary, 0.1);
+    color: $accent-primary;
+    border-color: rgba($accent-primary, 0.2);
+
+    &:hover {
+      background: rgba($accent-primary, 0.2);
+    }
+  }
+
+  &.delete {
+    background: none;
+    color: $text-muted;
+    border-color: $border-color;
+
+    &:hover {
+      color: $accent-red;
+      border-color: rgba($accent-red, 0.3);
+      background: rgba($accent-red, 0.08);
+    }
+  }
+}
+
+.empty-list {
+  padding: $spacing-2xl;
+  text-align: center;
+  color: $text-muted;
+  font-size: $font-size-sm;
+  background-color: $bg-secondary;
+  border: 1px dashed $border-color;
+  border-radius: $radius-md;
+}
+
+// === Language Toggle ===
+.lang-toggle {
+  display: flex;
+  background: rgba($bg-secondary, 0.5);
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  padding: 2px;
+  gap: 2px;
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: $text-muted;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: $text-primary;
+    background: rgba($text-muted, 0.1);
+  }
+
+  &.active {
+    background: rgba($accent-primary, 0.15);
+    color: $accent-primary;
+    box-shadow: 0 1px 2px rgba(#000, 0.2);
+  }
+}
+
+.translation-hint {
+  font-size: $font-size-xs;
+  color: $text-muted;
+  background: rgba($accent-primary, 0.06);
+  border: 1px solid rgba($accent-primary, 0.15);
+  border-radius: $radius-sm;
+  padding: $spacing-sm $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.loading-text {
+  color: $text-muted;
+  font-size: $font-size-sm;
+  text-align: center;
+  padding: $spacing-xl;
+}
+
+// === Upload ===
+.upload-group {
+  display: flex;
+  gap: $spacing-sm;
+  align-items: stretch;
+
+  .form-input {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.upload-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  padding: 0 $spacing-md;
+  background: rgba($accent-primary, 0.08);
+  border: 1px solid rgba($accent-primary, 0.25);
+  border-radius: $radius-md;
+  color: $accent-primary;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all $transition-fast;
+  min-width: 110px;
+
+  &:hover {
+    background: rgba($accent-primary, 0.15);
+    border-color: $accent-primary;
+  }
+
+  &.uploading {
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.upload-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba($accent-primary, 0.3);
+  border-top-color: $accent-primary;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// === Images Manager ===
+.images-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-top: $spacing-sm;
+}
+
+.image-item {
+  display: flex;
+  gap: $spacing-md;
+  align-items: center;
+  background-color: $bg-secondary;
+  padding: $spacing-sm;
+  border-radius: $radius-md;
+  border: 1px solid $border-color;
+
+  .img-preview {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: $radius-sm;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .img-inputs {
+    display: flex;
+    gap: $spacing-sm;
+    flex: 1;
+
+    .form-input {
+      background-color: $bg-primary;
+      padding: 0.5rem;
+    }
+  }
+
+  .remove-btn {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: none;
+    border-radius: $radius-sm;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: #ef4444;
+      color: $text-primary;
+    }
+  }
+}
+
+// === Showcases Manager ===
+.showcases-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-top: $spacing-sm;
+}
+
+.showcase-item {
+  background-color: $bg-secondary;
+  border-radius: $radius-md;
+  border: 1px solid $border-color;
+  overflow: hidden;
+
+  .showcase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-sm $spacing-md;
+    background-color: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid $border-color;
+
+    .showcase-badge {
+      font-size: $font-size-xs;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: $accent-primary;
+      font-weight: 600;
+      background: rgba($accent-primary, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .showcase-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      .icon-btn {
+        background: rgba($text-muted, 0.1);
+        color: $text-muted;
+        border: none;
+        border-radius: $radius-sm;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all $transition-fast;
+
+        &:hover:not([disabled]) {
+          background: rgba($text-primary, 0.2);
+          color: $text-primary;
+        }
+
+        &[disabled] {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+      }
+
+      .remove-btn {
+        background: none;
+        color: $text-muted;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 4px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: $radius-sm;
+        transition: all $transition-fast;
+        
+        &:hover {
+          color: #ef4444;
+          background: rgba(239, 68, 68, 0.1);
+        }
+      }
+    }
+  }
+
+  .showcase-body {
+    padding: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    .form-label-small {
+      display: block;
+      font-size: $font-size-xs;
+      color: $text-muted;
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.showcase-actions {
+  display: flex;
+  gap: $spacing-sm;
+  
+  .add-btn {
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px dashed $border-color;
+    border-radius: $radius-sm;
+    color: $text-secondary;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    transition: all $transition-fast;
+
+    &:hover {
+      border-color: $accent-primary;
+      color: $accent-primary;
+    }
+  }
+}
+
+.mt-2 {
+  margin-top: $spacing-sm;
+}
+
+// === Responsive ===
+@media (max-width: $breakpoint-md) {
+  .admin-header {
+    flex-direction: column;
+    gap: $spacing-md;
+    align-items: flex-start;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .item-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-sm;
+  }
+}
