@@ -1,0 +1,146 @@
+@use 'styles/variables' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font-family;
+  background-color: $bg-primary;
+  color: $text-primary;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: $accent-primary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $accent-primary-light;
+  }
+}
+
+button {
+  cursor: pointer;
+  font-family: $font-family;
+}
+
+code, pre {
+  font-family: $font-mono;
+}
+
+::selection {
+  background-color: rgba($accent-primary, 0.3);
+  color: $text-primary;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bg-secondary;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $border-color;
+  border-radius: $radius-full;
+
+  &:hover {
+    background: $text-muted;
+  }
+}
+
+// === Utility Classes ===
+.container {
+  max-width: $breakpoint-xl;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-sm;
+  font-size: $font-size-xs;
+  font-weight: 500;
+  border-radius: $radius-full;
+  background-color: rgba($accent-primary, 0.15);
+  color: $accent-primary;
+  border: 1px solid rgba($accent-primary, 0.25);
+}
+
+.method-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  font-family: $font-mono;
+  border-radius: $radius-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &.get {
+    background-color: rgba($method-get, 0.15);
+    color: $method-get;
+    border: 1px solid rgba($method-get, 0.3);
+  }
+
+  &.post {
+    background-color: rgba($method-post, 0.15);
+    color: $method-post;
+    border: 1px solid rgba($method-post, 0.3);
+  }
+
+  &.put {
+    background-color: rgba($method-put, 0.15);
+    color: $method-put;
+    border: 1px solid rgba($method-put, 0.3);
+  }
+
+  &.delete {
+    background-color: rgba($method-delete, 0.15);
+    color: $method-delete;
+    border: 1px solid rgba($method-delete, 0.3);
+  }
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  font-family: $font-mono;
+  border-radius: $radius-sm;
+
+  &.success {
+    background-color: rgba($status-200, 0.15);
+    color: $status-200;
+  }
+
+  &.error {
+    background-color: rgba($status-404, 0.15);
+    color: $status-404;
+  }
+
+  &.warning {
+    background-color: rgba($status-400, 0.15);
+    color: $status-400;
+  }
+}
