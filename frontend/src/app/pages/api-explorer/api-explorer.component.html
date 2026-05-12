@@ -1,0 +1,258 @@
+<div class="explorer">
+  <!-- Sidebar: Endpoint List -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2 class="sidebar-title">Endpoints</h2>
+      <span class="endpoint-count">{{ endpoints.length }}</span>
+    </div>
+
+    <div class="endpoint-list">
+      @for (endpoint of endpoints; track endpoint.path) {
+        <button
+          class="endpoint-item"
+          [class.active]="selectedEndpoint() === endpoint"
+          (click)="selectEndpoint(endpoint)">
+          <span class="method-badge" [class]="endpoint.method.toLowerCase()">
+            {{ endpoint.method }}
+          </span>
+          <div class="endpoint-info">
+            <span class="endpoint-path">{{ endpoint.path }}</span>
+            <span class="endpoint-desc">{{ endpoint.description }}</span>
+          </div>
+        </button>
+      }
+    </div>
+  </aside>
+
+  <!-- Main: Request & Response -->
+  <main class="main-panel">
+    @if (!selectedEndpoint()) {
+      <div class="empty-state">
+        <div class="empty-icon">⚡</div>
+        <h3>Selecteer een endpoint</h3>
+        <p>Klik op een endpoint in de lijst om een request te versturen.</p>
+      </div>
+    } @else {
+      <!-- Request Bar -->
+      <div class="request-bar">
+        <span class="method-badge large" [class]="selectedEndpoint()?.method?.toLowerCase()">
+          {{ selectedEndpoint()?.method }}
+        </span>
+        <div class="request-url">
+          <span class="url-base">http://localhost:8080</span>
+          <span class="url-path">{{ getRequestUrl() }}</span>
+        </div>
+        @if (selectedEndpoint()?.method === 'GET') {
+          <button class="icon-btn" (click)="sendRequest()" [disabled]="isLoading()" title="Opnieuw ophalen">
+            @if (isLoading()) {
+              <span class="spinner"></span>
+            } @else {
+              ↻
+            }
+          </button>
+        }
+      </div>
+
+      <!-- Slug Input -->
+      @if (selectedEndpoint()?.hasInput) {
+        <div class="input-section">
+          <label class="input-label">Path Variables</label>
+          <div class="contact-form">
+            <div class="form-field">
+              <label>slug</label>
+              <select [ngModel]="slugInput()" (ngModelChange)="slugInput.set($event)" class="slug-input" (change)="sendRequest()">
+                <option value="" disabled selected>Kies een {{ isProjectDetailEndpoint() ? 'project' : 'opdracht' }}...</option>
+                @if (isProjectDetailEndpoint()) {
+                  @for (slug of availableProjectSlugs(); track slug) {
+                    <option [value]="slug">{{ slug }}</option>
+                  }
+                } @else if (isAssignmentDetailEndpoint()) {
+                  @for (slug of availableAssignmentSlugs(); track slug) {
+                    <option [value]="slug">{{ slug }}</option>
+                  }
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Contact Form -->
+      @if (isContactEndpoint()) {
+        <div class="input-section">
+          <label class="input-label">Request Body (JSON)</label>
+          <div class="contact-form">
+            <div class="form-field">
+              <textarea type="json" [ngModel]="contactJson()" (ngModelChange)="contactJson.set($event)" placeholder="Voer JSON in" rows="10"></textarea>
+            </div>
+            <div class="form-actions">
+              <button class="send-btn" (click)="sendRequest()" [disabled]="isLoading()">
+                @if (isLoading()) {
+                  <span class="spinner"></span> Sending...
+                } @else {
+                  Send POST Request ▶
+                }
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Login Body -->
+      @if (isLoginEndpoint()) {
+        <div class="input-section">
+          <label class="input-label">Request Body (JSON)</label>
+          <div class="contact-form">
+            <div class="form-field">
+              <textarea type="json" [ngModel]="loginJson()" (ngModelChange)="loginJson.set($event)" rows="5"></textarea>
+            </div>
+            <div class="form-actions">
+              <button class="send-btn" (click)="sendRequest()" [disabled]="isLoading()">
+                @if (isLoading()) {
+                  <span class="spinner"></span> Sending...
+                } @else {
+                  Send POST Request ▶
+                }
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Response Section -->
+      <div class="response-section">
+        <div class="response-header">
+          <h3>Response</h3>
+          @if (responseStatus() !== null) {
+            <div class="response-meta">
+              <span class="status-badge" [class]="getStatusClass()">
+                Status: {{ responseStatus() }}
+              </span>
+              <span class="response-time">{{ responseTime() }}ms</span>
+            </div>
+          }
+        </div>
+
+        <div class="response-body">
+
+          <!-- Profile Banner -->
+          @if (!isLoading() && responseData() && isProfileEndpoint() && !hasError()) {
+            <div class="entity-banner profile-banner">
+              <div class="entity-banner-info">
+                <span class="entity-banner-icon">👤</span>
+                <div class="entity-banner-text">
+                  <span class="entity-banner-title">Profiel geladen</span>
+                  <span class="entity-banner-subtitle">Bekijk de volledige profielpagina met contact & links</span>
+                </div>
+              </div>
+              <a routerLink="/profile" class="entity-banner-link">
+                Bekijk volledige profiel →
+              </a>
+            </div>
+          }
+
+          <!-- Skills Banner -->
+          @if (!isLoading() && responseData() && isSkillsEndpoint() && !hasError()) {
+            <div class="entity-banner skills-banner">
+              <div class="entity-banner-info">
+                <span class="entity-banner-icon">⚡</span>
+                <div class="entity-banner-text">
+                  <span class="entity-banner-title">Skills geladen</span>
+                  <span class="entity-banner-subtitle">Bekijk alle skills gegroepeerd per categorie</span>
+                </div>
+              </div>
+              <a routerLink="/skills" class="entity-banner-link">
+                Bekijk alle skills →
+              </a>
+            </div>
+          }
+
+          <!-- Assignments Banner -->
+          @if (!isLoading() && responseData() && isAssignmentsEndpoint() && !hasError()) {
+            <div class="entity-banner assignments-banner">
+              <div class="entity-banner-info">
+                <span class="entity-banner-icon">📚</span>
+                <div class="entity-banner-text">
+                  <span class="entity-banner-title">Opdrachten geladen</span>
+                  <span class="entity-banner-subtitle">Bekijk alle schoolopdrachten met projectlinks</span>
+                </div>
+              </div>
+              <a routerLink="/assignments" class="entity-banner-link">
+                Bekijk alle opdrachten →
+              </a>
+            </div>
+          }
+
+          <!-- Loading state -->
+          @if (isLoading()) {
+            <div class="loading-state">
+              <div class="loading-bar"></div>
+              <p>Sending request...</p>
+            </div>
+          }
+
+          <!-- Projects Banner -->
+          @if (!isLoading() && responseData() && isProjectsEndpoint() && !hasError()) {
+            <div class="entity-banner projects-banner">
+              <div class="entity-banner-info">
+                <span class="entity-banner-icon">📂</span>
+                <div class="entity-banner-text">
+                  <span class="entity-banner-title">Projecten geladen</span>
+                  <span class="entity-banner-subtitle">Bekijk alle projecten in een overzicht</span>
+                </div>
+              </div>
+              <a routerLink="/projects" class="entity-banner-link">
+                Bekijk alle projecten →
+              </a>
+            </div>
+          }
+
+          <!-- Project Detail Banner -->
+          @if (!isLoading() && responseData() && isProjectDetailEndpoint() && !hasError()) {
+            <div class="entity-banner projects-banner">
+              <div class="entity-banner-info">
+                <span class="entity-banner-icon">📂</span>
+                <div class="entity-banner-text">
+                  <span class="entity-banner-title">Project Detail geladen</span>
+                  <span class="entity-banner-subtitle">Bekijk de detailpagina van dit project</span>
+                </div>
+              </div>
+              <a [routerLink]="['/projects', slugInput()]" class="entity-banner-link">
+                Naar projectpagina →
+              </a>
+            </div>
+          }
+
+          <!-- Assignment Detail Banner -->
+          @if (!isLoading() && responseData() && isAssignmentDetailEndpoint() && !hasError()) {
+            <div class="entity-banner assignments-banner">
+              <div class="entity-banner-info">
+                <span class="entity-banner-icon">📚</span>
+                <div class="entity-banner-text">
+                  <span class="entity-banner-title">Opdracht Detail geladen</span>
+                  <span class="entity-banner-subtitle">Bekijk de detailpagina van deze opdracht</span>
+                </div>
+              </div>
+              <a [routerLink]="['/assignments', slugInput()]" class="entity-banner-link">
+                Naar opdrachtpagina →
+              </a>
+            </div>
+          }
+
+          <!-- Normale JSON viewer voor alle endpoints -->
+          @if (!isLoading() && responseData()) {
+            <ngx-json-viewer [json]="responseData()" [expanded]="true"></ngx-json-viewer>
+          }
+
+          <!-- Leeg state -->
+          @if (!isLoading() && !responseData()) {
+            <div class="empty-response">
+              <p>Klik op <strong>Send</strong> om een response te zien.</p>
+            </div>
+          }
+
+        </div>
+      </div>
+    }
+  </main>
+</div>

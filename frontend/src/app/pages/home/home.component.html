@@ -1,0 +1,82 @@
+<div class="home">
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Available for internship
+      </div>
+
+      <h1 class="hero-title">
+        Hi, ik ben <span class="highlight">Lukas</span>.
+      </h1>
+
+      <p class="hero-subtitle">
+        Informatica student &amp; backend developer.
+        <br />
+        Ik bouw applicaties met
+        <span class="tech-tag">Spring Boot</span>,
+        <span class="tech-tag">PostgreSQL</span> en
+        <span class="tech-tag">Angular</span>.
+      </p>
+
+      <p class="hero-description">
+        Deze portfolio is opgezet als een interactieve API.
+        Klik op endpoints om mijn profiel, skills en projecten te verkennen — net als in Postman.
+      </p>
+
+      <div class="hero-actions">
+        <a routerLink="/explorer" class="btn btn-primary">
+          <span class="btn-icon">▶</span>
+          Start API Explorer
+        </a>
+        <a routerLink="/contact" class="btn btn-secondary">
+          Neem contact op
+        </a>
+      </div>
+
+      <div class="hero-endpoints">
+        <p class="endpoints-label">Beschikbare endpoints:</p>
+        <div class="endpoint-list">
+          <a routerLink="/explorer" fragment="profile" class="endpoint-item">
+            <span class="method-badge get">GET</span>
+            <span class="endpoint-path">/api/profile</span>
+          </a>
+          <a routerLink="/explorer" fragment="skills" class="endpoint-item">
+            <span class="method-badge get">GET</span>
+            <span class="endpoint-path">/api/skills</span>
+          </a>
+          <a routerLink="/explorer" fragment="projects" class="endpoint-item">
+            <span class="method-badge get">GET</span>
+            <span class="endpoint-path">/api/projects</span>
+          </a>
+          <a routerLink="/explorer" fragment="contact" class="endpoint-item">
+            <span class="method-badge post">POST</span>
+            <span class="endpoint-path">/api/contact</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span class="code-title">GET /api/profile</span>
+        </div>
+        <pre class="code-body"><code><span class="json-brace">&#123;</span>
+  <span class="json-key">"status"</span>: <span class="json-number">200</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Success"</span>,
+  <span class="json-key">"data"</span>: <span class="json-brace">&#123;</span>
+    <span class="json-key">"name"</span>: <span class="json-string">"Lukas"</span>,
+    <span class="json-key">"role"</span>: <span class="json-string">"Informatica student"</span>,
+    <span class="json-key">"focus"</span>: <span class="json-string">"Backend development"</span>
+  <span class="json-brace">&#125;</span>
+<span class="json-brace">&#125;</span></code></pre>
+      </div>
+    </div>
+  </section>
+</div>
