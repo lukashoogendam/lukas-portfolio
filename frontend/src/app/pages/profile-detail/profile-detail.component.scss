@@ -1,0 +1,268 @@
+@use '../../../styles/variables' as *;
+
+.profile-page {
+  max-width: $breakpoint-xl;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg $spacing-3xl;
+}
+
+// === Loading & Error States ===
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: $spacing-md;
+  color: $text-muted;
+  text-align: center;
+
+  h2 { color: $text-primary; }
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid $border-color;
+  border-top-color: $accent-primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-icon { font-size: 3rem; }
+
+// === Back Link ===
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  color: $text-muted;
+  text-decoration: none;
+  font-size: $font-size-sm;
+  margin-bottom: $spacing-lg;
+  transition: color $transition-fast;
+
+  &:hover { color: $accent-primary; }
+}
+
+// === Hero Section ===
+.hero-section {
+  margin-bottom: $spacing-3xl;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: 6px 14px;
+  background: rgba($accent-green, 0.1);
+  border: 1px solid rgba($accent-green, 0.25);
+  border-radius: $radius-full;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  color: $accent-green;
+  margin-bottom: $spacing-lg;
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $accent-green;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+
+.hero-name {
+  font-size: $font-size-4xl;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: $spacing-sm;
+  background: linear-gradient(135deg, $text-primary, $accent-primary-light);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-role {
+  font-size: $font-size-xl;
+  color: $text-secondary;
+  margin-bottom: $spacing-lg;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  font-size: $font-size-sm;
+  color: $text-muted;
+}
+
+.meta-icon {
+  font-size: $font-size-base;
+}
+
+// === Section ===
+.section {
+  margin-bottom: $spacing-2xl;
+  padding-top: $spacing-xl;
+  border-top: 1px solid $border-light;
+}
+
+.section-title {
+  font-size: $font-size-xl;
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: $spacing-lg;
+}
+
+// === Summary ===
+.summary-text {
+  font-size: $font-size-base;
+  color: $text-secondary;
+  line-height: 1.8;
+  max-width: 720px;
+}
+
+// === Contact Grid ===
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-md;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  background-color: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  text-decoration: none;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: $accent-primary;
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+}
+
+.contact-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.contact-label {
+  font-size: $font-size-xs;
+  font-weight: 600;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contact-value {
+  font-size: $font-size-sm;
+  color: $accent-primary;
+  font-family: $font-mono;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// === API Card ===
+.api-card {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  background-color: $bg-secondary;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  font-family: $font-mono;
+}
+
+.api-method {
+  padding: 3px 10px;
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  font-weight: 700;
+  background-color: rgba($method-get, 0.15);
+  color: $method-get;
+}
+
+.api-path {
+  font-size: $font-size-sm;
+  color: $text-primary;
+  flex: 1;
+}
+
+.api-try-link {
+  font-size: $font-size-xs;
+  color: $accent-primary;
+  text-decoration: none;
+  font-family: $font-family;
+
+  &:hover { text-decoration: underline; }
+}
+
+// === Buttons ===
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: 10px 20px;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  border-radius: $radius-lg;
+  text-decoration: none;
+  transition: all $transition-base;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, $accent-primary, $accent-primary-dark);
+  color: #fff;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba($accent-primary, 0.3);
+  }
+}
+
+// === Responsive ===
+@media (max-width: $breakpoint-md) {
+  .profile-page {
+    padding: $spacing-md;
+  }
+
+  .hero-name {
+    font-size: $font-size-3xl;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}

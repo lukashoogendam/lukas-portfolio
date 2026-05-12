@@ -1,0 +1,108 @@
+<div class="profile-page">
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Profiel laden...</p>
+    </div>
+  } @else if (hasError()) {
+    <div class="error-state">
+      <div class="error-icon">⚠️</div>
+      <h2>Profiel niet gevonden</h2>
+      <p>Het profiel kon niet geladen worden.</p>
+      <a routerLink="/explorer" class="btn btn-primary">← Terug naar Explorer</a>
+    </div>
+  } @else {
+    @if (profile(); as p) {
+
+    <!-- HERO -->
+    <section class="hero-section">
+      <a routerLink="/explorer" [queryParams]="{ endpoint: '/api/profile' }" class="back-link">← Terug naar Explorer</a>
+
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Beschikbaar voor stage / bijbaan
+      </div>
+
+      <h1 class="hero-name">{{ p.name }}</h1>
+      <p class="hero-role">{{ p.role }}</p>
+
+      <div class="hero-meta">
+        <span class="meta-item">
+          <span class="meta-icon">📍</span>
+          {{ p.location }}
+        </span>
+        <span class="meta-item">
+          <span class="meta-icon">🎯</span>
+          {{ p.focus }}
+        </span>
+      </div>
+    </section>
+
+    <!-- SAMENVATTING -->
+    <section class="section summary-section">
+      <h2 class="section-title">Over mij</h2>
+      <p class="summary-text">{{ p.summary }}</p>
+    </section>
+
+    <!-- CONTACT & LINKS -->
+    <section class="section contact-section">
+      <h2 class="section-title">Contact & Links</h2>
+      <div class="contact-grid">
+
+        @if (p.email) {
+          <a [href]="'mailto:' + p.email" class="contact-card">
+            <span class="contact-icon">✉️</span>
+            <div class="contact-info">
+              <span class="contact-label">E-mail</span>
+              <span class="contact-value">{{ p.email }}</span>
+            </div>
+          </a>
+        }
+
+        @if (p.github) {
+          <a [href]="p.github" target="_blank" rel="noopener" class="contact-card">
+            <span class="contact-icon">⌨</span>
+            <div class="contact-info">
+              <span class="contact-label">GitHub</span>
+              <span class="contact-value">{{ p.github }}</span>
+            </div>
+          </a>
+        }
+
+        @if (p.linkedin) {
+          <a [href]="p.linkedin" target="_blank" rel="noopener" class="contact-card">
+            <span class="contact-icon">💼</span>
+            <div class="contact-info">
+              <span class="contact-label">LinkedIn</span>
+              <span class="contact-value">{{ p.linkedin }}</span>
+            </div>
+          </a>
+        }
+
+        <!-- Extra socials from API -->
+        @for (social of socials(); track social.id) {
+          <a [href]="social.url" target="_blank" rel="noopener" class="contact-card">
+            <span class="contact-icon">{{ social.icon || getSocialIcon(social.platform) }}</span>
+            <div class="contact-info">
+              <span class="contact-label">{{ social.platform }}</span>
+              <span class="contact-value">{{ social.url }}</span>
+            </div>
+          </a>
+        }
+
+      </div>
+    </section>
+
+    <!-- API DETAILS -->
+    <section class="section api-section">
+      <h2 class="section-title">API Endpoint</h2>
+      <div class="api-card">
+        <span class="api-method">GET</span>
+        <span class="api-path">/api/profile</span>
+        <a routerLink="/explorer" [queryParams]="{ endpoint: '/api/profile' }" class="api-try-link">Probeer in Explorer →</a>
+      </div>
+    </section>
+
+    }
+  }
+</div>
