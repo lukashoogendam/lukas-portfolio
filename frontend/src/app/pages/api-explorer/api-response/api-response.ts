@@ -24,12 +24,21 @@ export class ApiResponseComponent {
 
   getStatusClass() { return this.apiState.getStatusClass(); }
 
+  isProfileEndpoint() { return this.selectedEndpoint()?.path === '/api/profile'; }
+  isSkillsEndpoint() { return this.selectedEndpoint()?.path === '/api/skills'; }
+  isSocialsEndpoint() { return this.selectedEndpoint()?.path === '/api/socials'; }
   isProjectsEndpoint() { return this.selectedEndpoint()?.path === '/api/projects'; }
   isProjectsBySkillEndpoint() { return this.selectedEndpoint()?.path === '/api/projects/by-skill/{skillName}'; }
+  isProjectBySlugEndpoint() { return this.selectedEndpoint()?.path === '/api/projects/{slug}'; }
 
   getProjectList(): ProjectListDto[] {
     const data = this.responseData() as any;
     if (!data?.data || !Array.isArray(data.data)) return [];
     return data.data as ProjectListDto[];
+  }
+
+  getProjectSlug(): string {
+    const data = this.responseData() as any;
+    return data?.data?.slug ?? '';
   }
 }
