@@ -72,19 +72,27 @@
           </div>
         }
 
+        @if (!hasError() && (isProjectsEndpoint() || isProjectsBySkillEndpoint()) && getProjectList().length > 0) {
+          <div class="entity-banner project-banner">
+            <div class="entity-banner-info">
+              <span class="entity-banner-icon">📁</span>
+              <div class="entity-banner-text">
+                <span class="entity-banner-title">{{ getProjectList().length }} project(en) gevonden</span>
+                <span class="entity-banner-subtitle">Klik op een project om de volledige pagina te zien</span>
+              </div>
+            </div>
+            <div class="project-preview-list">
+              @for (project of getProjectList(); track project.slug) {
+                <a [routerLink]="['/projects', project.slug]" class="entity-banner-link">
+                  {{ project.title }} →
+                </a>
+              }
+            </div>
+          </div>
+        }
+
         <div class="response-tabs">
           <div class="response-tab active">Body (JSON)</div>
-
-          @if (!hasError() && (isProjectsEndpoint() || isProjectsBySkillEndpoint())) {
-            <div class="response-tab active" style="margin-left: auto; cursor: default; border-bottom: none; color: var(--text-color);">
-              Visual Preview:
-            </div>
-            @for (project of getProjectList(); track project.slug) {
-              <a [routerLink]="['/projects', project.slug]" class="preview-btn">
-                {{ project.title }} →
-              </a>
-            }
-          }
         </div>
 
         <div class="json-container">

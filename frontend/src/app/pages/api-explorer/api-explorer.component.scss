@@ -566,6 +566,16 @@
     box-shadow: 0 4px 12px rgba($accent-primary, 0.3);
   }
 }
+.project-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  margin-top: $spacing-sm;
+  width: 100%;
+  .entity-banner-link {
+    width: fit-content;
+  }
+}
 .project-row {
   display: flex;
   align-items: center;
