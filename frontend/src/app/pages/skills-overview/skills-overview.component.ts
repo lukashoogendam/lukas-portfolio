@@ -1,5 +1,5 @@
 import { Component, signal, inject, ChangeDetectionStrategy, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {
   PortfolioApiService,
@@ -24,6 +24,7 @@ export class SkillsOverviewComponent {
   hasError = signal(false);
   private apiService = inject(PortfolioApiService);
   private langService = inject(LanguageService);
+  private location = inject(Location);
   constructor() {
     effect(() => {
       this.langService.currentLang();
@@ -75,5 +76,9 @@ export class SkillsOverviewComponent {
       expert: 'Expert',
     };
     return map[level?.toLowerCase()] ?? level ?? '-';
+  }
+
+  goBack() : void{
+    this.location.back();
   }
 }

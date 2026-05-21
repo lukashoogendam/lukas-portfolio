@@ -1,82 +1,85 @@
 <div class="projects-page">
   @if (isLoading()) {
-    <div class="loading-state">
-      <div class="loading-spinner"></div>
-      <p>Projecten laden...</p>
-    </div>
+  <div class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Projecten laden...</p>
+  </div>
   } @else if (hasError()) {
-    <div class="error-state">
-      <div class="error-icon">⚠️</div>
-      <h2>Projecten niet gevonden</h2>
-      <p>De projecten konden niet geladen worden.</p>
-      <a routerLink="/explorer" class="btn btn-primary">← Terug naar Explorer</a>
-    </div>
+  <div class="error-state">
+    <div class="error-icon">⚠️</div>
+    <h2>Projecten niet gevonden</h2>
+    <p>De projecten konden niet geladen worden.</p>
+    <a class="btn btn-primary" (click)="goBack()">← Terug</a>
+  </div>
   } @else {
-    <section class="hero-section">
-      <a routerLink="/explorer" [queryParams]="{ endpoint: skillFilter() ? '/api/projects/by-skill/{skillName}' : '/api/projects' }" class="back-link">← Terug naar Explorer</a>
-      <h1 class="hero-title">Mijn Projecten</h1>
-      <p class="hero-subtitle">
-        {{ projects().length }} gerealiseerde projecten en concepten
-      </p>
-      @if (skillFilter()) {
-        <div class="filter-banner" style="margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.75rem; background: rgba(var(--primary-color-rgb), 0.1); border: 1px solid rgba(var(--primary-color-rgb), 0.2); padding: 0.5rem 1rem; border-radius: 8px; color: var(--primary-color);">
-          <span class="filter-icon">⚡</span>
-          <span>Gefilterd op skill: <strong>{{ skillFilter() }}</strong></span>
-          <a routerLink="/projects" class="clear-filter-btn" style="color: var(--text-muted); text-decoration: none; font-size: 1.2rem; line-height: 1; padding-left: 0.5rem; border-left: 1px solid rgba(var(--text-muted-rgb), 0.2); cursor: pointer;">&times;</a>
-        </div>
+  <section class="hero-section">
+    <a routerLink="/explorer"
+      [queryParams]="{ endpoint: skillFilter() ? '/api/projects/by-skill/{skillName}' : '/api/projects' }"
+      class="back-link" (click)="goBack()">← Terug</a>
+    <h1 class="hero-title">Mijn Projecten</h1>
+    <p class="hero-subtitle">
+      {{ projects().length }} gerealiseerde projecten en concepten
+    </p>
+    @if (skillFilter()) {
+    <div class="filter-banner"
+      style="margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.75rem; background: rgba(var(--primary-color-rgb), 0.1); border: 1px solid rgba(var(--primary-color-rgb), 0.2); padding: 0.5rem 1rem; border-radius: 8px; color: var(--primary-color);">
+      <span class="filter-icon">⚡</span>
+      <span>Gefilterd op skill: <strong>{{ skillFilter() }}</strong></span>
+      <a routerLink="/projects" class="clear-filter-btn"
+        style="color: var(--text-muted); text-decoration: none; font-size: 1.2rem; line-height: 1; padding-left: 0.5rem; border-left: 1px solid rgba(var(--text-muted-rgb), 0.2); cursor: pointer;">&times;</a>
+    </div>
+    }
+    @if (!skillFilter()) {
+    <div class="category-tabs">
+      @for (cat of categories; track cat) {
+      <button class="category-tab" [class.active]="activeCategory() === cat" (click)="setCategory(cat)">
+        {{ cat }}
+      </button>
       }
-      @if (!skillFilter()) {
-        <div class="category-tabs">
-          @for (cat of categories; track cat) {
-            <button
-              class="category-tab"
-              [class.active]="activeCategory() === cat"
-              (click)="setCategory(cat)">
-              {{ cat }}
-            </button>
-          }
-        </div>
-      }
-    </section>
-    <section class="section">
-      <div class="projects-list">
-        @for (project of filteredProjects(); track project.slug) {
-          <div class="project-card">
-            <div class="project-header">
-              <div class="project-meta">
-                <span class="course-badge">{{ project.category }}</span>
-                @if (project.courseName) {
-                  <span class="course-name-badge">📚 {{ project.courseName }}</span>
-                }
-                <span class="status-badge">{{ project.status }}</span>
-              </div>
-              <h2 class="project-title">{{ project.title }}</h2>
-            </div>
-          @if (project.shortDescription) {
-              <p class="project-description">{{ project.shortDescription }}</p>
+    </div>
+    }
+  </section>
+  <section class="section">
+    <div class="projects-list">
+      @for (project of filteredProjects(); track project.slug) {
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <span class="course-badge">{{ project.category }}</span>
+            @if (project.courseName) {
+            <span class="course-name-badge">📚 {{ project.courseName }}</span>
             }
-            <div class="project-footer">
-              <a [routerLink]="['/projects', project.slug]" class="linked-project-btn">
-                <span class="btn-icon">📂</span>
-                Bekijk details
-                <span class="btn-arrow">→</span>
-              </a>
-            </div>
+            <span class="status-badge">{{ project.status }}</span>
           </div>
+          <h2 class="project-title">{{ project.title }}</h2>
+        </div>
+        @if (project.shortDescription) {
+        <p class="project-description">{{ project.shortDescription }}</p>
         }
-        @if (projects().length === 0) {
-          <div class="empty-list">
-            <p>Nog geen projecten toegevoegd.</p>
-          </div>
-        }
+        <div class="project-footer">
+          <a [routerLink]="['/projects', project.slug]" class="linked-project-btn">
+            <span class="btn-icon">📂</span>
+            Bekijk details
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
       </div>
-    </section>
-    <section class="section api-section">
-      <div class="api-card">
-        <span class="api-method">GET</span>
-        <span class="api-path">{{ skillFilter() ? '/api/projects/by-skill/' + skillFilter() : '/api/projects' }}</span>
-        <a routerLink="/explorer" [queryParams]="{ endpoint: skillFilter() ? '/api/projects/by-skill/{skillName}' : '/api/projects' }" class="api-try-link">Probeer in Explorer →</a>
+      }
+      @if (projects().length === 0) {
+      <div class="empty-list">
+        <p>Nog geen projecten toegevoegd.</p>
       </div>
-    </section>
+      }
+    </div>
+  </section>
+  <section class="section api-section">
+    <div class="api-card">
+      <span class="api-method">GET</span>
+      <span class="api-path">{{ skillFilter() ? '/api/projects/by-skill/' + skillFilter() : '/api/projects' }}</span>
+      <a routerLink="/explorer"
+        [queryParams]="{ endpoint: skillFilter() ? '/api/projects/by-skill/{skillName}' : '/api/projects' }"
+        class="api-try-link">Probeer in Explorer →</a>
+    </div>
+  </section>
   }
 </div>

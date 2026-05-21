@@ -9,12 +9,12 @@
       <div class="error-icon">⚠️</div>
       <h2>Profiel niet gevonden</h2>
       <p>Het profiel kon niet geladen worden.</p>
-      <a routerLink="/explorer" class="btn btn-primary">← Terug naar Explorer</a>
+      <a (click)="goBack()" class="btn btn-primary">← Terug</a>
     </div>
   } @else {
     @if (profile(); as p) {
     <section class="hero-section">
-      <a routerLink="/explorer" [queryParams]="{ endpoint: '/api/profile' }" class="back-link">← Terug naar Explorer</a>
+      <a (click)="goBack()" class="back-link">← Terug</a>
       <div class="hero-badge">
         <span class="badge-dot"></span>
         Beschikbaar voor stage / bijbaan

@@ -51,8 +51,14 @@
             class="slug-input"
             [ngModel]="slugInput()"
             (ngModelChange)="setSlugInput($event)"
+            (keyup.enter)="sendRequest()"
             placeholder="bijv. Angular, Java, Spring Boot..." />
         </div>
+      </div>
+      <div class="action-section">
+        <button class="send-btn" (click)="sendRequest()" [disabled]="isLoading()">
+          @if (isLoading()) { Bezig... } @else { Send Request }
+        </button>
       </div>
     </div>
   }

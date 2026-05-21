@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {
   PortfolioApiService,
@@ -23,6 +23,7 @@ export class ProfileDetailComponent implements OnInit {
   hasError = signal(false);
   private apiService = inject(PortfolioApiService);
   private sanitizer = inject(DomSanitizer);
+  private location = inject(Location);
   ngOnInit(): void {
     this.apiService.getProfile().subscribe({
       next: (res) => {
@@ -76,5 +77,9 @@ export class ProfileDetailComponent implements OnInit {
       svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`;
     }
     return this.sanitizer.bypassSecurityTrustHtml(svgStr);
+  }
+
+  goBack() : void{
+    this.location.back();
   }
 }

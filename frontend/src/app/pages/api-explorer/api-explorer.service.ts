@@ -188,8 +188,21 @@ export class ApiExplorerService {
     }, 400);
   }
 
+  private stripShowcases(data: unknown): unknown {
+    if (!data || typeof data !== 'object') return data;
+    const d = data as any;
+    if (Array.isArray(d.data)) {
+      return { ...d, data: d.data.map((item: any) => { const { showcases, ...rest } = item; return rest; }) };
+    }
+    if (d.data && typeof d.data === 'object') {
+      const { showcases, ...rest } = d.data;
+      return { ...d, data: rest };
+    }
+    return data;
+  }
+
   private handleSuccess(res: unknown, startTime: number) {
-    this.responseData.set(res);
+    this.responseData.set(this.stripShowcases(res));
     this.responseStatus.set((res as any)?.status || 200);
     this.responseTime.set(Date.now() - startTime);
     this.isLoading.set(false);

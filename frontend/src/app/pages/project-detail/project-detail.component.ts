@@ -1,5 +1,5 @@
 import { Component, signal, inject, ChangeDetectionStrategy, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
 import {
@@ -27,6 +27,7 @@ export class ProjectDetailComponent {
   private apiService = inject(PortfolioApiService);
   private sanitizer = inject(DomSanitizer);
   private langService = inject(LanguageService);
+  private location = inject(Location);
   constructor() {
     effect(() => {
       const slug = this.route.snapshot.paramMap.get('slug');
@@ -69,5 +70,9 @@ export class ProjectDetailComponent {
     if (status === 'Afgerond') return 'completed';
     if (status === 'In ontwikkeling') return 'in-progress';
     return '';
+  }
+
+  goBack() : void{
+    this.location.back();
   }
 }
