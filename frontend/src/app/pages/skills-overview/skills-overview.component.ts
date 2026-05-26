@@ -12,7 +12,7 @@ interface SkillGroup {
 }
 @Component({
   selector: 'app-skills-overview',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './skills-overview.component.html',
   styleUrl: './skills-overview.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

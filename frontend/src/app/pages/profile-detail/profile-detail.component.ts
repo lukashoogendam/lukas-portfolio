@@ -10,7 +10,7 @@ import {
 } from '../../core/services/portfolio-api.service';
 @Component({
   selector: 'app-profile-detail',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './profile-detail.component.html',
   styleUrl: './profile-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

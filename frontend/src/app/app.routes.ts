@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { adminGuard } from './core/guards/admin.guard';
 export const routes: Routes = [
   { path: '', loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) },
-  { path: 'explorer', loadComponent: () => import('./pages/api-explorer/api-explorer.component').then(m => m.ApiExplorerComponent) },
   { path: 'projects', loadComponent: () => import('./pages/projects-overview/projects-overview').then(m => m.ProjectsOverview) },
   { path: 'projects/:slug', loadComponent: () => import('./pages/project-detail/project-detail.component').then(m => m.ProjectDetailComponent) },
   { path: 'profile', loadComponent: () => import('./pages/profile-detail/profile-detail.component').then(m => m.ProfileDetailComponent) },

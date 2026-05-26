@@ -13,9 +13,7 @@
   </div>
   } @else {
   <section class="hero-section">
-    <a routerLink="/explorer"
-      [queryParams]="{ endpoint: skillFilter() ? '/api/projects/by-skill/{skillName}' : '/api/projects' }"
-      class="back-link" (click)="goBack()">← Terug</a>
+    <a class="back-link" (click)="goBack()">← Terug</a>
     <h1 class="hero-title">Mijn Projecten</h1>
     <p class="hero-subtitle">
       {{ projects().length }} gerealiseerde projecten en concepten
@@ -72,14 +70,6 @@
       }
     </div>
   </section>
-  <section class="section api-section">
-    <div class="api-card">
-      <span class="api-method">GET</span>
-      <span class="api-path">{{ skillFilter() ? '/api/projects/by-skill/' + skillFilter() : '/api/projects' }}</span>
-      <a routerLink="/explorer"
-        [queryParams]="{ endpoint: skillFilter() ? '/api/projects/by-skill/{skillName}' : '/api/projects' }"
-        class="api-try-link">Probeer in Explorer →</a>
-    </div>
-  </section>
+
   }
 </div>

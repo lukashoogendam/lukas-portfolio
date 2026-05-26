@@ -13,7 +13,7 @@ import { ShowcaseModalComponent } from './showcase-modal/showcase-modal';
 
 @Component({
   selector: 'app-project-detail',
-  imports: [CommonModule, RouterLink, MarkdownPipe, ShowcaseModalComponent],
+  imports: [CommonModule, MarkdownPipe, ShowcaseModalComponent],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

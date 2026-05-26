@@ -6,7 +6,6 @@
     </a>
     <div class="navbar-links">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Home</a>
-      <a routerLink="/explorer" routerLinkActive="active" class="nav-link">API Explorer</a>
       <a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a>
     </div>
     <div class="navbar-actions">
@@ -36,7 +35,6 @@
   @if (isMobileMenuOpen()) {
     <div class="mobile-menu">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link mobile-link" (click)="closeMobileMenu()">Home</a>
-      <a routerLink="/explorer" routerLinkActive="active" class="nav-link mobile-link" (click)="closeMobileMenu()">API Explorer</a>
       <a routerLink="/contact" routerLinkActive="active" class="nav-link mobile-link" (click)="closeMobileMenu()">Contact</a>
     </div>
   }
