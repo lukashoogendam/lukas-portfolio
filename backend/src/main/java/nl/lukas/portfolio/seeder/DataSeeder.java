@@ -3,11 +3,14 @@ package nl.lukas.portfolio.seeder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import lombok.extern.slf4j.Slf4j;
-import nl.lukas.portfolio.models.Project;
-import nl.lukas.portfolio.models.Skill;
-import nl.lukas.portfolio.repositories.ProfileRepository;
-import nl.lukas.portfolio.repositories.ProjectRepository;
-import nl.lukas.portfolio.repositories.SkillRepository;
+import nl.lukas.portfolio.project.Project;
+import nl.lukas.portfolio.project.ProjectCategory;
+import nl.lukas.portfolio.project.ProjectStatus;
+import nl.lukas.portfolio.skill.Skill;
+import nl.lukas.portfolio.skill.SkillCategory;
+import nl.lukas.portfolio.profile.ProfileRepository;
+import nl.lukas.portfolio.project.ProjectRepository;
+import nl.lukas.portfolio.skill.SkillRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -45,18 +48,18 @@ public class DataSeeder implements CommandLineRunner {
 
     private void seedSkills() {
         List<Skill> skills = List.of(
-            Skill.builder().name("Java").category("Backend").level("Intermediate").description("Object-oriented programming met Java 17+").build(),
-            Skill.builder().name("Spring Boot").category("Backend").level("Intermediate").description("REST APIs, JPA, Security, Validation").build(),
-            Skill.builder().name("PostgreSQL").category("Database").level("Intermediate").description("Relationeel database design, SQL queries, star schemas").build(),
-            Skill.builder().name("Angular").category("Frontend").level("Intermediate").description("Standalone components, RxJS, Angular Material").build(),
-            Skill.builder().name("Python").category("Backend").level("Beginner").description("Data scripts, API integratie, automatisering").build(),
-            Skill.builder().name("Docker").category("DevOps").level("Beginner").description("Containerisatie en deployment").build(),
-            Skill.builder().name("Git").category("Tools").level("Intermediate").description("Version control, branching strategies").build(),
-            Skill.builder().name("HTML/CSS").category("Frontend").level("Intermediate").description("Responsive design, SCSS, moderne layouts").build(),
-            Skill.builder().name("TypeScript").category("Frontend").level("Intermediate").description("Typed JavaScript voor Angular development").build(),
-            Skill.builder().name("REST APIs").category("Backend").level("Intermediate").description("Ontwerpen en consumeren van RESTful services").build(),
-            Skill.builder().name("Flyway").category("Database").level("Beginner").description("Database migratie beheer").build(),
-            Skill.builder().name("Flutter").category("Frontend").level("Intermediate").description("Mobiele app ontwikkeling met Dart").build()
+            Skill.builder().name("Java").category(SkillCategory.BACKEND).description("Object-oriented programming met Java 17+").build(),
+            Skill.builder().name("Spring Boot").category(SkillCategory.BACKEND).description("REST APIs, JPA, Security, Validation").build(),
+            Skill.builder().name("PostgreSQL").category(SkillCategory.DATABASE).description("Relationeel database design, SQL queries, star schemas").build(),
+            Skill.builder().name("Angular").category(SkillCategory.FRONTEND).description("Standalone components, RxJS, Angular Material").build(),
+            Skill.builder().name("Python").category(SkillCategory.BACKEND).description("Data scripts, API integratie, automatisering").build(),
+            Skill.builder().name("Docker").category(SkillCategory.DEVOPS).description("Containerisatie en deployment").build(),
+            Skill.builder().name("Git").category(SkillCategory.TOOLS).description("Version control, branching strategies").build(),
+            Skill.builder().name("HTML/CSS").category(SkillCategory.FRONTEND).description("Responsive design, SCSS, moderne layouts").build(),
+            Skill.builder().name("TypeScript").category(SkillCategory.FRONTEND).description("Typed JavaScript voor Angular development").build(),
+            Skill.builder().name("REST APIs").category(SkillCategory.BACKEND).description("Ontwerpen en consumeren van RESTful services").build(),
+            Skill.builder().name("Flyway").category(SkillCategory.DATABASE).description("Database migratie beheer").build(),
+            Skill.builder().name("Flutter").category(SkillCategory.FRONTEND).description("Mobiele app ontwikkeling met Dart").build()
         );
         skillRepository.saveAll(skills);
         log.info("DataSeeder: {} skills opgeslagen.", skills.size());
@@ -81,8 +84,8 @@ public class DataSeeder implements CommandLineRunner {
                 .title("YouTube Data Dashboard")
                 .shortDescription("Dashboard voor het ophalen, opslaan en analyseren van YouTube-data.")
                 .description("Een uitgebreid data-dashboard dat YouTube-video's analyseert op views, likes, comments en engagement. Het project combineert een Python data-ingestie pipeline, een PostgreSQL star schema database, een Spring Boot REST API en een Angular frontend met interactieve grafieken.")
-                .category("Schoolproject")
-                .status("Afgerond")
+                .category(ProjectCategory.SCHOOL_PROJECT)
+                .status(ProjectStatus.COMPLETED)
                 .startDate(LocalDate.of(2025, 9, 1))
                 .endDate(LocalDate.of(2026, 1, 15))
                 .repositoryUrl("https://github.com/lukas/youtube-dashboard")
@@ -99,8 +102,8 @@ public class DataSeeder implements CommandLineRunner {
                 .title("B4llrz Mobile App")
                 .shortDescription("Een mobiele app voor basketbalspelers om hun skills bij te houden.")
                 .description("B4llrz is een Flutter-applicatie ontworpen voor basketbalspelers. Spelers kunnen hun profiel beheren, skills bijhouden via een gamification-systeem met XP en levels, en challenges voltooien. De app bevat een Spring Boot backend met PostgreSQL database, authenticatie en een admin panel.")
-                .category("Schoolproject")
-                .status("Afgerond")
+                .category(ProjectCategory.SCHOOL_PROJECT)
+                .status(ProjectStatus.COMPLETED)
                 .startDate(LocalDate.of(2025, 9, 1))
                 .endDate(LocalDate.of(2026, 4, 20))
                 .repositoryUrl("https://github.com/lukas/b4llrz")
@@ -116,8 +119,8 @@ public class DataSeeder implements CommandLineRunner {
                 .title("AI Chatbot met Spring Boot")
                 .shortDescription("Een chatbot applicatie gebouwd met Spring Boot en LLM-integratie.")
                 .description("Een intelligente chatbot die gebruik maakt van Spring Boot als backend en een Angular frontend. De chatbot communiceert met Large Language Models via Ollama of Groq API voor het genereren van natuurlijke antwoorden.")
-                .category("Eigen project")
-                .status("In ontwikkeling")
+                .category(ProjectCategory.PERSONAL_PROJECT)
+                .status(ProjectStatus.IN_PROGRESS)
                 .startDate(LocalDate.of(2026, 2, 1))
                 .repositoryUrl("https://github.com/lukas/chatbot")
                 .role("Backend developer & prompt engineer")
@@ -131,8 +134,8 @@ public class DataSeeder implements CommandLineRunner {
                 .title("Portfolio als API")
                 .shortDescription("Deze portfolio-website, gebouwd als interactieve API-omgeving.")
                 .description("Een unieke portfolio-website die werkt als een interactieve API Explorer, vergelijkbaar met Postman. Bezoekers kunnen endpoints aanroepen om informatie op te halen over projecten, skills en ervaringen.")
-                .category("Eigen project")
-                .status("In ontwikkeling")
+                .category(ProjectCategory.PERSONAL_PROJECT)
+                .status(ProjectStatus.IN_PROGRESS)
                 .startDate(LocalDate.of(2026, 5, 1))
                 .repositoryUrl("https://github.com/lukas/portfolio-api")
                 .role("Full-stack developer")
@@ -152,7 +155,7 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedProfile() {
-        nl.lukas.portfolio.models.Profile profile = nl.lukas.portfolio.models.Profile.builder()
+        nl.lukas.portfolio.profile.Profile profile = nl.lukas.portfolio.profile.Profile.builder()
                 .name("Lukas")
                 .role("Informatica student")
                 .focus("Backend development with Spring Boot")
