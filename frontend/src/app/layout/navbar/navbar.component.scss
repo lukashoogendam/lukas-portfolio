@@ -3,9 +3,17 @@
   position: sticky;
   top: 0;
   z-index: $z-navbar;
-  background-color: rgba($bg-tertiary, 0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid $border-color;
+  background-color: rgba($bg-tertiary, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid transparent;
+  transition: all $transition-base;
+
+  &.scrolled {
+    background-color: rgba($bg-tertiary, 0.97);
+    border-bottom-color: $border-color;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
 }
 .navbar-inner {
   max-width: $breakpoint-xl;
@@ -96,12 +104,21 @@
   }
 }
 .nav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: $font-family;
   padding: $spacing-sm $spacing-md;
   font-size: $font-size-sm;
   font-weight: 500;
   border-radius: $radius-md;
   text-decoration: none;
   transition: all $transition-fast;
+  color: $text-secondary;
+  &:hover {
+    color: $text-primary;
+    background-color: $bg-hover;
+  }
 }
 .swagger-btn {
   color: $accent-green;
