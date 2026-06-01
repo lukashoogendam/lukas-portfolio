@@ -1,8 +1,12 @@
 package nl.lukas.portfolio.config;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+@Getter
+@Setter
 @Component
 @ConfigurationProperties(prefix = "cookie")
 public class CookieProperties {
@@ -11,46 +15,4 @@ public class CookieProperties {
     private String sameSite;
     private String path;
     private int maxAge;
-
-    public boolean isHttpOnly() {
-        return httpOnly;
-    }
-
-    public void setHttpOnly(boolean httpOnly) {
-        this.httpOnly = httpOnly;
-    }
-
-    public boolean isSecure() {
-        return secure;
-    }
-
-    public void setSecure(boolean secure) {
-        this.secure = secure;
-    }
-
-    public String getSameSite() {
-        return sameSite;
-    }
-
-    public void setSameSite(String sameSite) {
-        this.sameSite = sameSite;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public int getMaxAge() {
-        return maxAge;
-    }
-
-    public void setMaxAge(int maxAge) {
-        this.maxAge = maxAge;
-    }
 }
-
-
