@@ -4,29 +4,7 @@
   margin: 0 auto;
   padding: $spacing-xl $spacing-lg $spacing-3xl;
 }
-.loading-state,
-.error-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 60vh;
-  gap: $spacing-md;
-  color: $text-muted;
-  text-align: center;
-  h2 { color: $text-primary; }
-}
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid $border-color;
-  border-top-color: $accent-primary;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+
 .error-icon { font-size: 3rem; }
 .back-link {
   display: inline-flex;
@@ -192,50 +170,7 @@
   font-size: $font-size-base;
   color: $text-secondary;
   line-height: 1.8;
-  ::ng-deep {
-    h1, h2, h3, h4 {
-      color: $text-primary;
-      font-weight: 600;
-      margin: $spacing-lg 0 $spacing-sm;
-      &:first-child { margin-top: 0; }
-    }
-    h1 { font-size: $font-size-xl; }
-    h2 { font-size: $font-size-lg; }
-    h3 { font-size: $font-size-base; }
-    p { margin: 0 0 $spacing-sm; &:last-child { margin-bottom: 0; } }
-    strong { color: $text-primary; font-weight: 600; }
-    em { color: $accent-primary-light; font-style: italic; }
-    ul, ol {
-      padding-left: $spacing-lg;
-      margin: $spacing-sm 0;
-      li { margin-bottom: $spacing-xs; }
-    }
-    ul li { list-style: disc; }
-    ol li { list-style: decimal; }
-    code {
-      background-color: $bg-tertiary;
-      color: $accent-green;
-      font-family: $font-mono;
-      font-size: 0.85em;
-      padding: 2px 6px;
-      border-radius: $radius-sm;
-    }
-    blockquote {
-      border-left: 3px solid $accent-primary;
-      padding: $spacing-sm $spacing-md;
-      margin: $spacing-md 0;
-      color: $text-muted;
-      font-style: italic;
-      background: rgba($accent-primary, 0.05);
-      border-radius: 0 $radius-sm $radius-sm 0;
-    }
-    a { color: $accent-primary; text-decoration: underline; }
-    hr {
-      border: none;
-      border-top: 1px solid $border-color;
-      margin: $spacing-lg 0;
-    }
-  }
+
 }
 .description-sidebar {
   display: flex;
@@ -259,13 +194,7 @@
     font-size: $font-size-sm;
     color: $text-secondary;
     line-height: 1.6;
-    ::ng-deep {
-      p { margin: 0 0 $spacing-xs; &:last-child { margin-bottom: 0; } }
-      strong { color: $text-primary; font-weight: 600; }
-      ul, ol { padding-left: $spacing-md; margin: $spacing-xs 0; }
-      ul li { list-style: disc; }
-      code { font-family: $font-mono; color: $accent-green; font-size: 0.85em; }
-    }
+
   }
 }
 .features-grid {
@@ -477,13 +406,6 @@
     font-size: $font-size-sm;
     color: $text-secondary;
     line-height: 1.6;
-    ::ng-deep {
-      p { margin: 0 0 $spacing-sm; &:last-child { margin-bottom: 0; } }
-      strong { color: $text-primary; font-weight: 600; }
-      ul, ol { padding-left: $spacing-md; margin: $spacing-xs 0; }
-      ul li { list-style: disc; }
-      code { font-family: $font-mono; color: $accent-green; font-size: 0.85em; }
-    }
   }
 }
 .docs-link {
@@ -507,101 +429,7 @@
     flex-shrink: 0;
   }
 }
-.json-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  &:hover .toggle-btn {
-    color: $accent-primary;
-    border-color: $accent-primary;
-  }
-}
-.toggle-btn {
-  padding: 6px 16px;
-  background: none;
-  border: 1px solid $border-color;
-  border-radius: $radius-md;
-  color: $text-muted;
-  font-size: $font-size-xs;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all $transition-fast;
-  &:hover {
-    color: $accent-primary;
-    border-color: $accent-primary;
-  }
-}
-.json-viewer-wrapper {
-  margin-top: $spacing-md;
-  background-color: $bg-secondary;
-  border: 1px solid $border-color;
-  border-radius: $radius-lg;
-  overflow: hidden;
-}
-.json-meta {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  padding: $spacing-md $spacing-lg;
-  border-bottom: 1px solid $border-color;
-  background-color: $bg-tertiary;
-}
-.method-badge {
-  padding: 3px 8px;
-  border-radius: $radius-sm;
-  font-size: $font-size-xs;
-  font-weight: 700;
-  font-family: $font-mono;
-  &.get {
-    background-color: rgba($method-get, 0.15);
-    color: $method-get;
-  }
-}
-.json-endpoint {
-  font-family: $font-mono;
-  font-size: $font-size-sm;
-  color: $text-primary;
-}
-.status-code {
-  font-family: $font-mono;
-  font-size: $font-size-xs;
-  font-weight: 600;
-  margin-left: auto;
-  &.success { color: $accent-green; }
-}
-.json-body {
-  padding: $spacing-lg;
-  max-height: 600px;
-  overflow: auto;
-  ::ng-deep ngx-json-viewer {
-    .segment {
-      font-family: $font-mono !important;
-      font-size: $font-size-sm !important;
-    }
-    .segment-main {
-      line-height: 1.8 !important;
-    }
-    .segment-key {
-      color: $accent-primary !important;
-    }
-    .segment-value-string {
-      color: $accent-green !important;
-    }
-    .segment-value-number {
-      color: $accent-orange !important;
-    }
-    .segment-value-boolean {
-      color: $accent-purple !important;
-    }
-    .segment-value-null {
-      color: $text-muted !important;
-    }
-    .toggler {
-      color: $text-muted !important;
-    }
-  }
-}
+
 .lightbox-overlay {
   position: fixed;
   top: 0;
@@ -643,26 +471,7 @@
     background: rgba(255, 255, 255, 0.2);
   }
 }
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-sm;
-  padding: 10px 20px;
-  font-size: $font-size-sm;
-  font-weight: 600;
-  border-radius: $radius-lg;
-  text-decoration: none;
-  transition: all $transition-base;
-  border: none;
-}
-.btn-primary {
-  background: linear-gradient(135deg, $accent-primary, $accent-primary-dark);
-  color: #fff;
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba($accent-primary, 0.3);
-  }
-}
+
 @media (max-width: $breakpoint-lg) {
   .description-grid {
     grid-template-columns: 1fr;
@@ -690,105 +499,5 @@
   .hero-links {
     flex-direction: column;
   }
-  .json-meta {
-    flex-wrap: wrap;
-  }
 }
-.docs-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-sm;
-  margin-top: $spacing-sm;
-  padding: 8px 16px;
-  background: rgba($accent-primary, 0.1);
-  color: $accent-primary;
-  border: 1px solid rgba($accent-primary, 0.2);
-  border-radius: $radius-md;
-  font-size: $font-size-sm;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all $transition-fast;
-  &:hover {
-    background: rgba($accent-primary, 0.2);
-    border-color: rgba($accent-primary, 0.4);
-    transform: translateY(-1px);
-  }
-}
-.pdf-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(6px);
-  z-index: 9000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: $spacing-lg;
-  animation: fadeInPdf 0.2s ease;
-}
-@keyframes fadeInPdf {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-.pdf-modal {
-  background: $bg-card;
-  border: 1px solid $border-color;
-  border-radius: $radius-xl;
-  width: 100%;
-  max-width: 900px;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-  animation: slideUpPdf 0.25s ease;
-}
-@keyframes slideUpPdf {
-  from { transform: translateY(20px); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
-}
-.pdf-modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $spacing-md $spacing-lg;
-  border-bottom: 1px solid $border-color;
-  background: $bg-secondary;
-  flex-shrink: 0;
-}
-.pdf-modal-title {
-  font-size: $font-size-base;
-  font-weight: 600;
-  color: $text-primary;
-}
-.pdf-close-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: $radius-md;
-  border: 1px solid $border-color;
-  background: $bg-hover;
-  color: $text-muted;
-  font-size: $font-size-base;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all $transition-fast;
-  &:hover {
-    background: rgba(#e74c3c, 0.15);
-    border-color: rgba(#e74c3c, 0.3);
-    color: #e74c3c;
-  }
-}
-.pdf-modal-body {
-  flex: 1;
-  overflow: hidden;
-}
-.pdf-viewer {
-  width: 100%;
-  height: 100%;
-  min-height: 70vh;
-  border: none;
-  display: block;
-}
+

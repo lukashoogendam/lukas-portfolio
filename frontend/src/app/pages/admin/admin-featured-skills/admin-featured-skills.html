@@ -1,0 +1,83 @@
+@if (successMessage()) {
+  <div class="success-banner">
+    <span>✓</span> {{ successMessage() }}
+  </div>
+}
+
+<div class="content-header">
+  <h2 class="content-title">Hoofdskills</h2>
+  <button class="add-btn" (click)="openCreateForm()">+ Nieuw</button>
+</div>
+
+@if (showForm()) {
+  <div class="form-card">
+    <div class="form-header">
+      <h3>{{ isEditing() ? 'Bewerken' : 'Nieuw item' }}</h3>
+      <button class="close-btn" (click)="closeForm()">✕</button>
+    </div>
+    
+    <div class="form-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Naam (NL)</label>
+          <input class="form-input" [ngModel]="formData()['name'] || ''" (ngModelChange)="updateField('name', $event)" placeholder="Deploying" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Naam (EN)</label>
+          <input class="form-input" [ngModel]="formData()['nameEn'] || ''" (ngModelChange)="updateField('nameEn', $event)" placeholder="Deploying" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Categorie</label>
+          <select class="form-input" [ngModel]="formData()['category'] || ''" (ngModelChange)="updateField('category', $event)">
+            <option value="" disabled>Kies een categorie</option>
+            <option value="BACKEND">Backend</option>
+            <option value="FRONTEND">Frontend</option>
+            <option value="DATABASE">Database</option>
+            <option value="DEVOPS">DevOps</option>
+            <option value="TOOLS">Tools</option>
+            <option value="MOBILE">Mobile</option>
+            <option value="CLOUD">Cloud</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Icoon (emoji of URL)</label>
+          <input class="form-input" [ngModel]="formData()['icon'] || ''" (ngModelChange)="updateField('icon', $event)" placeholder="🧠 of https://..." />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sortering</label>
+          <input class="form-input" type="number" [ngModel]="formData()['sortOrder'] || 0" (ngModelChange)="updateField('sortOrder', $event)" />
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Beschrijving (NL)</label>
+          <textarea class="form-input" rows="4" [ngModel]="formData()['description'] || ''" (ngModelChange)="updateField('description', $event)" placeholder="Beschrijving van expertise..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Beschrijving (EN)</label>
+          <textarea class="form-input" rows="4" [ngModel]="formData()['descriptionEn'] || ''" (ngModelChange)="updateField('descriptionEn', $event)" placeholder="Description of expertise..."></textarea>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-footer">
+      <button class="cancel-btn" (click)="closeForm()">Annuleren</button>
+      <button class="save-btn" (click)="saveItem()">{{ isEditing() ? 'Opslaan' : 'Aanmaken' }}</button>
+    </div>
+  </div>
+}
+
+<div class="item-list">
+  @for (item of items(); track item.id) {
+    <div class="item-row">
+      <div class="item-info">
+        <span class="item-title">{{ item.name }}</span>
+        <span class="item-meta">{{ item.category }}</span>
+      </div>
+      <div class="item-actions">
+        <button class="action-btn edit" (click)="openEditForm(item)">Bewerken</button>
+        <button class="action-btn delete" (click)="deleteItem(item.id)">Verwijderen</button>
+      </div>
+    </div>
+  } @empty {
+    <div class="empty-list">Geen hoofdskills gevonden.</div>
+  }
+</div>

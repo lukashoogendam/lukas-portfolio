@@ -6,7 +6,10 @@ import {
   ProjectDetailDto,
   SkillDto,
   SocialDto,
-  Profile
+  Profile,
+  TimelineEventDto,
+  HomeSectionDto,
+  FeaturedSkillDto
 } from './portfolio-api.service';
 import { environment } from '../../../environments/environment';
 export interface ProjectTranslationRequest {
@@ -120,5 +123,61 @@ export class AdminApiService {
       formData,
       { withCredentials: true }
     );
+  }
+
+  // Timeline
+  getTimelineEvents(): Observable<ApiResponse<TimelineEventDto[]>> {
+    return this.http.get<ApiResponse<TimelineEventDto[]>>(`${this.baseUrl}/timeline`, { withCredentials: true });
+  }
+  createTimelineEvent(request: unknown): Observable<ApiResponse<TimelineEventDto>> {
+    return this.http.post<ApiResponse<TimelineEventDto>>(`${this.baseUrl}/timeline`, request, { withCredentials: true });
+  }
+  updateTimelineEvent(id: number, request: unknown): Observable<ApiResponse<TimelineEventDto>> {
+    return this.http.put<ApiResponse<TimelineEventDto>>(`${this.baseUrl}/timeline/${id}`, request, { withCredentials: true });
+  }
+  deleteTimelineEvent(id: number): Observable<ApiResponse<void>> {
+    return this.http.delete<ApiResponse<void>>(`${this.baseUrl}/timeline/${id}`, { withCredentials: true });
+  }
+
+  // Home Sections
+  getHomeSections(): Observable<ApiResponse<HomeSectionDto[]>> {
+    return this.http.get<ApiResponse<HomeSectionDto[]>>(`${this.baseUrl}/home-sections`, { withCredentials: true });
+  }
+  createHomeSection(request: unknown): Observable<ApiResponse<HomeSectionDto>> {
+    return this.http.post<ApiResponse<HomeSectionDto>>(`${this.baseUrl}/home-sections`, request, { withCredentials: true });
+  }
+  updateHomeSection(id: number, request: unknown): Observable<ApiResponse<HomeSectionDto>> {
+    return this.http.put<ApiResponse<HomeSectionDto>>(`${this.baseUrl}/home-sections/${id}`, request, { withCredentials: true });
+  }
+  deleteHomeSection(id: number): Observable<ApiResponse<void>> {
+    return this.http.delete<ApiResponse<void>>(`${this.baseUrl}/home-sections/${id}`, { withCredentials: true });
+  }
+
+  // Reorder
+  reorderProjects(slugs: string[]): Observable<ApiResponse<void>> {
+    return this.http.post<ApiResponse<void>>(`${this.baseUrl}/projects/reorder`, slugs, { withCredentials: true });
+  }
+  reorderSkills(ids: number[]): Observable<ApiResponse<void>> {
+    return this.http.post<ApiResponse<void>>(`${this.baseUrl}/skills/reorder`, ids, { withCredentials: true });
+  }
+  reorderHomeSections(ids: number[]): Observable<ApiResponse<void>> {
+    return this.http.post<ApiResponse<void>>(`${this.baseUrl}/home-sections/reorder`, ids, { withCredentials: true });
+  }
+
+  // Featured Skills
+  getFeaturedSkills(): Observable<ApiResponse<FeaturedSkillDto[]>> {
+    return this.http.get<ApiResponse<FeaturedSkillDto[]>>(`${this.baseUrl}/featured-skills`, { withCredentials: true });
+  }
+  createFeaturedSkill(request: unknown): Observable<ApiResponse<FeaturedSkillDto>> {
+    return this.http.post<ApiResponse<FeaturedSkillDto>>(`${this.baseUrl}/featured-skills`, request, { withCredentials: true });
+  }
+  updateFeaturedSkill(id: number, request: unknown): Observable<ApiResponse<FeaturedSkillDto>> {
+    return this.http.put<ApiResponse<FeaturedSkillDto>>(`${this.baseUrl}/featured-skills/${id}`, request, { withCredentials: true });
+  }
+  deleteFeaturedSkill(id: number): Observable<ApiResponse<void>> {
+    return this.http.delete<ApiResponse<void>>(`${this.baseUrl}/featured-skills/${id}`, { withCredentials: true });
+  }
+  reorderFeaturedSkills(ids: number[]): Observable<ApiResponse<void>> {
+    return this.http.post<ApiResponse<void>>(`${this.baseUrl}/featured-skills/reorder`, ids, { withCredentials: true });
   }
 }

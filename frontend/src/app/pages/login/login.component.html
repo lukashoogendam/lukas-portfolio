@@ -20,6 +20,7 @@
           class="form-input"
           [ngModel]="email()"
           (ngModelChange)="email.set($event)"
+          name="email"
           placeholder="Email"
           autocomplete="email"
         />
@@ -32,6 +33,7 @@
           class="form-input"
           [ngModel]="password()"
           (ngModelChange)="password.set($event)"
+          name="password"
           placeholder="••••••••"
           autocomplete="current-password"
         />

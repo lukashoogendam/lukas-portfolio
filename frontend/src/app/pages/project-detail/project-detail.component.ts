@@ -1,19 +1,18 @@
 import { Component, signal, inject, ChangeDetectionStrategy, effect } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import {
   PortfolioApiService,
   ProjectDetailDto,
-  ApiResponse
 } from '../../core/services/portfolio-api.service';
 import { LanguageService } from '../../core/services/language.service';
 import { MarkdownPipe } from '../../core/pipes/markdown.pipe';
 import { ShowcaseModalComponent } from './showcase-modal/showcase-modal';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-project-detail',
-  imports: [CommonModule, MarkdownPipe, ShowcaseModalComponent],
+  imports: [MarkdownPipe, ShowcaseModalComponent, TranslatePipe],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -25,9 +24,9 @@ export class ProjectDetailComponent {
   lightboxImage = signal<string | null>(null);
   private route = inject(ActivatedRoute);
   private apiService = inject(PortfolioApiService);
-  private sanitizer = inject(DomSanitizer);
-  private langService = inject(LanguageService);
+  langService = inject(LanguageService);
   private location = inject(Location);
+
   constructor() {
     effect(() => {
       const slug = this.route.snapshot.paramMap.get('slug');
@@ -37,6 +36,7 @@ export class ProjectDetailComponent {
       }
     });
   }
+
   private loadProject(slug: string): void {
     this.apiService.getProjectBySlug(slug).subscribe({
       next: (response) => {
@@ -49,30 +49,36 @@ export class ProjectDetailComponent {
       }
     });
   }
+
   openLightbox(imageUrl: string): void {
     this.lightboxImage.set(imageUrl);
   }
+
   closeLightbox(): void {
     this.lightboxImage.set(null);
   }
+
   activeShowcaseModal = signal<any | null>(null);
+
   openShowcaseModal(sc: any): void {
     this.activeShowcaseModal.set(sc);
     document.body.style.overflow = 'hidden';
   }
+
   closeShowcaseModal(): void {
     this.activeShowcaseModal.set(null);
     document.body.style.overflow = '';
   }
+
   getStatusClass(): string {
     const status = this.project()?.status;
     if (!status) return '';
-    if (status === 'Afgerond') return 'completed';
-    if (status === 'In ontwikkeling') return 'in-progress';
+    if (status === 'COMPLETED') return 'completed';
+    if (status === 'IN_PROGRESS') return 'in-progress';
     return '';
   }
 
-  goBack() : void{
+  goBack(): void {
     this.location.back();
   }
 }

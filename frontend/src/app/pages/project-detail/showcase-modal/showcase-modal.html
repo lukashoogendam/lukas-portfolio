@@ -1,23 +1,23 @@
 <div class="showcase-modal-overlay" (click)="closeModal()">
   <div class="showcase-modal-content" (click)="$event.stopPropagation()">
     <div class="showcase-modal-header">
-      <h3>{{ sc.title || 'Demo' }}</h3>
+      <h3>{{ sc()?.title || 'Demo' }}</h3>
       <button class="showcase-close" (click)="closeModal()">✕</button>
     </div>
     <div class="showcase-modal-body">
-      @switch (sc.type) {
+      @switch (sc()?.type) {
         @case ('iframe') {
           <iframe
-            [src]="getSafeDemoUrl(sc.url)"
+            [src]="getSafeDemoUrl(sc()?.url)"
             title="Project demo"
             sandbox="allow-scripts allow-same-origin allow-popups"
             loading="lazy">
           </iframe>
         }
         @case ('video') {
-          @if (isYouTubeUrl(sc.url)) {
+          @if (isYouTubeUrl(sc()?.url)) {
             <iframe
-              [src]="getSafeDemoUrl(sc.url)"
+              [src]="getSafeDemoUrl(sc()?.url)"
               title="Video demo"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
@@ -25,17 +25,17 @@
             </iframe>
           } @else {
             <video controls autoplay>
-              <source [src]="sc.url" type="video/mp4" />
+              <source [src]="sc()?.url" type="video/mp4" />
               Je browser ondersteunt geen video.
             </video>
           }
         }
         @case ('embed') {
-          <div class="demo-embed" [innerHTML]="getSafeEmbedHtml(sc.embedCode)"></div>
+          <div class="demo-embed" [innerHTML]="getSafeEmbedHtml(sc()?.embedCode)"></div>
         }
         @default {
-          @if (sc.url) {
-            <img [src]="sc.url" [alt]="sc.title || 'Demo'" />
+          @if (sc()?.url) {
+            <img [src]="sc()?.url" [alt]="sc()?.title || 'Demo'" />
           }
         }
       }

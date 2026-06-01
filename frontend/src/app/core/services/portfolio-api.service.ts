@@ -3,6 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LanguageService } from './language.service';
 import { environment } from '../../../environments/environment';
+export type ProjectCategory = 'SCHOOL_PROJECT' | 'PERSONAL_PROJECT';
+export type ProjectStatus = 'COMPLETED' | 'IN_PROGRESS';
+export type SkillCategory = 'BACKEND' | 'FRONTEND' | 'DATABASE' | 'DEVOPS' | 'TOOLS' | 'MOBILE' | 'CLOUD';
 export interface ApiResponse<T> {
   status: number;
   message: string;
@@ -16,21 +19,65 @@ export interface Profile {
   summary: string;
   email: string;
 }
+export interface TimelineEventDto {
+  id: number;
+  title: string;
+  subtitle: string;
+  type: string;
+  startDate: string;
+  endDate: string;
+  current: boolean;
+  description: string;
+  sortOrder: number;
+}
+export interface HomeSectionDto {
+  id: number;
+  identifier: string;
+  title: string;
+  titleEn: string;
+  subtitle: string;
+  subtitleEn: string;
+  content: string;
+  contentEn: string;
+  sortOrder: number;
+  type: 'HERO' | 'ABOUT' | 'FEATURED_SKILLS' | 'SKILLS' | 'PROJECTS' | 'TIMELINE' | 'CONTACT' | 'CUSTOM_TEXT';
+  visible: boolean;
+  showTerminal?: boolean;
+}
+export interface HomeDto {
+  profile: Profile;
+  highlightedProjects: ProjectListDto[];
+  allSkills: SkillDto[];
+  featuredSkills: FeaturedSkillDto[];
+  timelineEvents: TimelineEventDto[];
+  homeSections: HomeSectionDto[];
+}
 export interface SkillDto {
   id: number;
   name: string;
-  category: string;
-  level: string;
+  category: SkillCategory;
   description: string;
-  highlighted: boolean;
+  sortOrder: number;
+}
+export interface FeaturedSkillDto {
+  id: number;
+  name: string;
+  nameEn: string;
+  description: string;
+  descriptionEn: string;
+  category: SkillCategory;
+  icon: string;
+  sortOrder: number;
 }
 export interface ProjectListDto {
   slug: string;
   title: string;
   shortDescription: string;
-  category: string;
-  status: string;
+  category: ProjectCategory;
+  status: ProjectStatus;
   courseName: string | null;
+  highlighted: boolean;
+  sortOrder: number;
 }
 export interface ProjectDetailDto {
   id: number;
@@ -40,8 +87,8 @@ export interface ProjectDetailDto {
   description: string;
   role: string;
   highlights: string;
-  category: string;
-  status: string;
+  category: ProjectCategory;
+  status: ProjectStatus;
   startDate: string;
   endDate: string;
   repositoryUrl: string;
@@ -54,6 +101,7 @@ export interface ProjectDetailDto {
   skillIds?: number[];
   courseName: string | null;
   documentUrl: string | null;
+  highlighted: boolean;
 }
 export interface ProjectImageDto {
   title: string;
@@ -98,6 +146,9 @@ export class PortfolioApiService {
   private langService = inject(LanguageService);
   private get langParams(): HttpParams {
     return new HttpParams().set('lang', this.langService.currentLang());
+  }
+  getHome(): Observable<ApiResponse<HomeDto>> {
+    return this.http.get<ApiResponse<HomeDto>>(`${this.baseUrl}/home`, { params: this.langParams });
   }
   getProfile(): Observable<ApiResponse<Profile>> {
     return this.http.get<ApiResponse<Profile>>(`${this.baseUrl}/profile`);

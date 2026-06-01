@@ -1,12 +1,16 @@
-<nav class="navbar">
+<nav class="navbar" [class.scrolled]="isScrolled()">
   <div class="navbar-inner">
     <a routerLink="/" class="navbar-brand">
       <span class="brand-icon">&#123;&#125;</span>
       <span class="brand-text">Lukas <span class="brand-accent">portfolio</span></span>
     </a>
     <div class="navbar-links">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Home</a>
-      <a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a>
+      <button class="nav-link nav-btn" (click)="scrollTo('hero')">{{ 'nav.home' | t }}</button>
+      <button class="nav-link nav-btn" (click)="scrollTo('about')">{{ 'nav.about' | t }}</button>
+      <button class="nav-link nav-btn" (click)="scrollTo('skills')">{{ 'nav.skills' | t }}</button>
+      <button class="nav-link nav-btn" (click)="scrollTo('projects')">{{ 'nav.projects' | t }}</button>
+      <button class="nav-link nav-btn" (click)="scrollTo('timeline')">{{ 'nav.experience' | t }}</button>
+      <button class="nav-link nav-btn" (click)="scrollTo('contact')">{{ 'nav.contact' | t }}</button>
     </div>
     <div class="navbar-actions">
       <div class="lang-switcher">
@@ -34,8 +38,12 @@
   </div>
   @if (isMobileMenuOpen()) {
     <div class="mobile-menu">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link mobile-link" (click)="closeMobileMenu()">Home</a>
-      <a routerLink="/contact" routerLinkActive="active" class="nav-link mobile-link" (click)="closeMobileMenu()">Contact</a>
+      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('hero')">{{ 'nav.home' | t }}</button>
+      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('about')">{{ 'nav.about' | t }}</button>
+      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('skills')">{{ 'nav.skills' | t }}</button>
+      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('projects')">{{ 'nav.projects' | t }}</button>
+      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('timeline')">{{ 'nav.experience' | t }}</button>
+      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('contact')">{{ 'nav.contact' | t }}</button>
     </div>
   }
 </nav>

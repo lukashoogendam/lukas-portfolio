@@ -1,16 +1,18 @@
 package nl.lukas.portfolio.seeder;
 
-import nl.lukas.portfolio.models.User;
-import nl.lukas.portfolio.models.Role;
-import nl.lukas.portfolio.repositories.UserRepository;
+import nl.lukas.portfolio.auth.User;
+import nl.lukas.portfolio.auth.Role;
+import nl.lukas.portfolio.auth.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Component
+@ConditionalOnProperty(name = "app.seeder.enabled", havingValue = "true", matchIfMissing = true)
 public class AdminInitializer implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminInitializer.class);
@@ -31,20 +33,20 @@ public class AdminInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (userRepository.count() == 0) {
-            logger.info("No users found in database. Creating default admin user: {}", adminEmail);
-            
+        if (!userRepository.existsByEmail(adminEmail)) {
+            logger.info("Admin user not found in database. Creating default admin user: {}", adminEmail);
+
             User admin = new User();
             admin.setEmail(adminEmail);
             admin.setPassword(passwordEncoder.encode(adminPassword));
             admin.setFirstName("Lukas");
             admin.setLastName("Admin");
             admin.setRole(Role.ADMIN);
-            
+
             userRepository.save(admin);
             logger.info("Admin user created successfully.");
         } else {
-            logger.info("Users already exist. Skipping admin initialization.");
+            logger.info("Admin user already exists. Skipping admin initialization.");
         }
 
         if (!userRepository.existsByEmail("user@gmail.com")) {

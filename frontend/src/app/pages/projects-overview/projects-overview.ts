@@ -1,11 +1,12 @@
 import { Component, signal, computed, inject, ChangeDetectionStrategy, effect } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
-import { PortfolioApiService, ProjectListDto } from '../../core/services/portfolio-api.service';
+import { PortfolioApiService, ProjectListDto, ProjectCategory } from '../../core/services/portfolio-api.service';
 import { LanguageService } from '../../core/services/language.service';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 @Component({
   selector: 'app-projects-overview',
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink, TranslatePipe],
   templateUrl: './projects-overview.html',
   styleUrl: './projects-overview.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -14,7 +15,7 @@ export class ProjectsOverview {
   projects = signal<ProjectListDto[]>([]);
   isLoading = signal(true);
   hasError = signal(false);
-  activeCategory = signal<string>('Alles');
+  activeCategory = signal<'ALL' | ProjectCategory>('ALL');
 
   private apiService = inject(PortfolioApiService);
   private langService = inject(LanguageService);
@@ -23,11 +24,11 @@ export class ProjectsOverview {
 
   skillFilter = signal<string | null>(null);
 
-  readonly categories = ['Alles', 'Schoolproject', 'Eigen project'];
+  readonly categoryValues: ('ALL' | ProjectCategory)[] = ['ALL', 'SCHOOL_PROJECT', 'PERSONAL_PROJECT'];
 
   filteredProjects = computed(() => {
     const cat = this.activeCategory();
-    if (cat === 'Alles') return this.projects();
+    if (cat === 'ALL') return this.projects();
     return this.projects().filter(p => p.category === cat);
   });
 
@@ -41,7 +42,7 @@ export class ProjectsOverview {
     });
   }
 
-  setCategory(cat: string): void {
+  setCategory(cat: 'ALL' | ProjectCategory): void {
     this.activeCategory.set(cat);
   }
 

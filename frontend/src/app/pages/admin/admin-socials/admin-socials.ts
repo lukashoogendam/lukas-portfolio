@@ -1,12 +1,12 @@
 import { Component, OnInit, signal, inject, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { AdminApiService } from '../../../core/services/admin-api.service';
 import { PortfolioApiService, SocialDto } from '../../../core/services/portfolio-api.service';
 
 @Component({
   selector: 'app-admin-socials',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './admin-socials.html',
   styleUrl: '../admin.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -1,5 +1,7 @@
 import { Injectable, signal, effect } from '@angular/core';
+import { nl, en, type TranslationKey } from '../i18n';
 export type Language = 'nl' | 'en';
+const translations: Record<Language, Record<string, string>> = { nl, en };
 @Injectable({
   providedIn: 'root'
 })
@@ -20,5 +22,8 @@ export class LanguageService {
   }
   toggle(): void {
     this.currentLang.update(l => (l === 'nl' ? 'en' : 'nl'));
+  }
+  t(key: TranslationKey): string {
+    return translations[this.currentLang()][key] ?? key;
   }
 }

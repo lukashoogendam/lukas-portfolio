@@ -1,6 +1,6 @@
 @use 'styles/variables' as *;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
 *, *::before, *::after {
   margin: 0;
@@ -143,4 +143,228 @@ code, pre {
     background-color: rgba($status-400, 0.15);
     color: $status-400;
   }
+}
+
+// === Site Background Gradient Blobs ===
+.site-bg-blobs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+  background: $bg-primary;
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+  }
+
+  .blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: $accent-primary;
+  }
+
+  .blob-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: $accent-orange;
+  }
+}
+
+// === Shared Button Styles ===
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: 14px 28px;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  border-radius: $radius-lg;
+  text-decoration: none;
+  transition: all $transition-base;
+  border: none;
+  cursor: pointer;
+  font-family: $font-family;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, $accent-primary, $accent-primary-dark);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba($accent-primary, 0.35);
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba($accent-primary, 0.5);
+    color: #fff;
+  }
+  &:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+}
+
+.btn-ghost {
+  background: rgba($accent-primary, 0.08);
+  color: $accent-primary;
+  border: 1px solid rgba($accent-primary, 0.25);
+  &:hover {
+    background: rgba($accent-primary, 0.15);
+    border-color: $accent-primary;
+    transform: translateY(-2px);
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  color: $text-primary;
+  border: 1px solid $border-color;
+  &:hover {
+    border-color: $accent-primary;
+    color: $accent-primary;
+    transform: translateY(-2px);
+  }
+}
+
+.btn-full { width: 100%; justify-content: center; }
+
+// === Shared Form Styles ===
+.form-input {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: 12px 16px;
+  color: $text-primary;
+  font-size: $font-size-base;
+  font-family: $font-family;
+  transition: all $transition-fast;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+    border-color: $accent-primary;
+    box-shadow: 0 0 0 3px rgba($accent-primary, 0.15);
+  }
+
+  &::placeholder { color: $text-muted; }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  label {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $text-secondary;
+  }
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+// === Shared Loading States ===
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid $border-color;
+  border-top-color: $accent-primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: $spacing-md;
+  color: $text-muted;
+  text-align: center;
+  h2 { color: $text-primary; }
+}
+
+// === Gradient Underline ===
+.gradient-underline {
+  width: 120px;
+  height: 4px;
+  background: linear-gradient(90deg, $accent-primary, $accent-green);
+  margin: 1.5rem auto;
+  border-radius: 2px;
+}
+
+// === Markdown Content Styles (from project-detail) ===
+.description-text {
+  h1, h2, h3, h4 {
+    color: $text-primary;
+    font-weight: 600;
+    margin: $spacing-lg 0 $spacing-sm;
+    &:first-child { margin-top: 0; }
+  }
+  h1 { font-size: $font-size-xl; }
+  h2 { font-size: $font-size-lg; }
+  h3 { font-size: $font-size-base; }
+  p { margin: 0 0 $spacing-sm; &:last-child { margin-bottom: 0; } }
+  strong { color: $text-primary; font-weight: 600; }
+  em { color: $accent-primary-light; font-style: italic; }
+  ul, ol {
+    padding-left: $spacing-lg;
+    margin: $spacing-sm 0;
+    li { margin-bottom: $spacing-xs; }
+  }
+  ul li { list-style: disc; }
+  ol li { list-style: decimal; }
+  code {
+    background-color: $bg-tertiary;
+    color: $accent-green;
+    font-family: $font-mono;
+    font-size: 0.85em;
+    padding: 2px 6px;
+    border-radius: $radius-sm;
+  }
+  blockquote {
+    border-left: 3px solid $accent-primary;
+    padding: $spacing-sm $spacing-md;
+    margin: $spacing-md 0;
+    color: $text-muted;
+    font-style: italic;
+    background: rgba($accent-primary, 0.05);
+    border-radius: 0 $radius-sm $radius-sm 0;
+  }
+  a { color: $accent-primary; text-decoration: underline; }
+  hr {
+    border: none;
+    border-top: 1px solid $border-color;
+    margin: $spacing-lg 0;
+  }
+}
+
+.info-value {
+  p { margin: 0 0 $spacing-xs; &:last-child { margin-bottom: 0; } }
+  strong { color: $text-primary; font-weight: 600; }
+  ul, ol { padding-left: $spacing-md; margin: $spacing-xs 0; }
+  ul li { list-style: disc; }
+  code { font-family: $font-mono; color: $accent-green; font-size: 0.85em; }
+}
+
+.docs-text {
+  p { margin: 0 0 $spacing-sm; &:last-child { margin-bottom: 0; } }
+  strong { color: $text-primary; font-weight: 600; }
+  ul, ol { padding-left: $spacing-md; margin: $spacing-xs 0; }
+  ul li { list-style: disc; }
+  code { font-family: $font-mono; color: $accent-green; font-size: 0.85em; }
 }

@@ -1,9 +1,9 @@
 package nl.lukas.portfolio.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import nl.lukas.portfolio.services.UserService;
-import nl.lukas.portfolio.utils.CookieUtil;
-import nl.lukas.portfolio.utils.JwtUtil;
+import nl.lukas.portfolio.auth.UserService;
+import nl.lukas.portfolio.common.CookieUtil;
+import nl.lukas.portfolio.common.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,4 +52,3 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
-

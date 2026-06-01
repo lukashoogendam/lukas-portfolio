@@ -3,8 +3,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
 marked.setOptions({ breaks: true });
 @Pipe({
-  name: 'markdown',
-  standalone: true
+  name: 'markdown'
 })
 export class MarkdownPipe implements PipeTransform {
   private sanitizer = inject(DomSanitizer);

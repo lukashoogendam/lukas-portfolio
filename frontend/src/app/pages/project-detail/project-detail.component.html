@@ -2,24 +2,24 @@
   @if (isLoading()) {
     <div class="loading-state">
       <div class="loading-spinner"></div>
-      <p>Project laden...</p>
+      <p>{{ 'detail.loading' | t }}</p>
     </div>
   } @else if (hasError()) {
     <div class="error-state">
       <div class="error-icon">⚠️</div>
-      <h2>Project niet gevonden</h2>
-      <p>Het opgevraagde project bestaat niet of kon niet geladen worden.</p>
-      <a (click)="goBack()" class="btn btn-primary">← Terug</a>
+      <h2>{{ 'detail.error_title' | t }}</h2>
+      <p>{{ 'detail.error_message' | t }}</p>
+      <a (click)="goBack()" class="btn btn-primary">{{ 'detail.back' | t }}</a>
     </div>
   } @else {
     @if (project(); as p) {
     <section class="hero-section">
-      <a (click)="goBack()" class="back-link">← Terug</a>
+      <a (click)="goBack()" class="back-link">{{ 'detail.back' | t }}</a>
       <div class="hero-meta">
-        <span class="category-badge">{{ p.category }}</span>
-        <span class="status-badge" [class]="getStatusClass()">{{ p.status }}</span>
+        <span class="category-badge">{{ 'enum.category.' + p.category | t }}</span>
+        <span class="status-badge" [class]="getStatusClass()">{{ 'enum.status.' + p.status | t }}</span>
         @if (p.startDate) {
-          <span class="date-info">{{ p.startDate }} - {{ p.endDate || 'Heden' }}</span>
+          <span class="date-info">{{ p.startDate }} - {{ p.endDate || ('detail.current' | t) }}</span>
         }
       </div>
       <h1 class="hero-title">{{ p.title }}</h1>
@@ -40,13 +40,13 @@
         }
         @if (p.documentUrl) {
           <a [href]="p.documentUrl" target="_blank" rel="noopener" class="link-btn document">
-            <span class="link-icon">📄</span> Opdracht bekijken
+            <span class="link-icon">📄</span> {{ 'detail.view_assignment' | t }}
           </a>
         }
       </div>
     </section>
     <section class="section description-section">
-      <h2 class="section-title">Over dit project</h2>
+      <h2 class="section-title">{{ 'detail.about' | t }}</h2>
       <div class="description-grid">
         <div class="description-main">
           <div class="description-text" [innerHTML]="p.description | markdown"></div>
@@ -54,13 +54,13 @@
         <div class="description-sidebar">
           @if (p.role) {
             <div class="info-card">
-              <h3 class="info-label">Mijn rol</h3>
+              <h3 class="info-label">{{ 'detail.my_role' | t }}</h3>
               <p class="info-value">{{ p.role }}</p>
             </div>
           }
           @if (p.highlights) {
             <div class="info-card">
-              <h3 class="info-label">Wat er is gebouwd</h3>
+              <h3 class="info-label">{{ 'detail.built' | t }}</h3>
               <div class="info-value" [innerHTML]="p.highlights | markdown"></div>
             </div>
           }
@@ -95,8 +95,8 @@
                 @else { 🖼️ }
               </div>
               <div class="showcase-card-content">
-                 <h3>{{ sc.title || 'Demo bekijken' }}</h3>
-                 <p>Klik om te openen</p>
+                 <h3>{{ sc.title || ('detail.view_demo' | t) }}</h3>
+                 <p>{{ 'detail.click_to_open' | t }}</p>
               </div>
             </div>
           }
@@ -120,11 +120,11 @@
     }
     @if ((p.documents && p.documents.length > 0) || p.highlights) {
       <section class="section docs-section">
-        <h2 class="section-title">Documentatie & Notities</h2>
+        <h2 class="section-title">{{ 'detail.docs' | t }}</h2>
         <div class="docs-content">
           @if (p.highlights) {
             <div class="docs-card">
-              <h3>Technische samenvatting</h3>
+              <h3>{{ 'detail.tech_summary' | t }}</h3>
               <div class="docs-text" [innerHTML]="p.highlights | markdown"></div>
             </div>
           }
@@ -134,7 +134,7 @@
                 <h3>{{ doc.title }}</h3>
                 <a [href]="doc.url" target="_blank" rel="noopener" class="docs-link">
                   <span class="link-icon">📄</span>
-                  Bekijk {{ doc.title }}
+                  {{ 'detail.view_doc' | t }} {{ doc.title }}
                   <span class="external-icon">↗</span>
                 </a>
               </div>
@@ -146,7 +146,7 @@
     @if (lightboxImage()) {
       <div class="lightbox-overlay" (click)="closeLightbox()">
         <button class="lightbox-close" (click)="closeLightbox()">✕</button>
-        <img [src]="lightboxImage()" alt="Screenshot vergroot" />
+        <img [src]="lightboxImage()" [alt]="langService.t('detail.lightbox_alt')" />
       </div>
     }
     @if (activeShowcaseModal(); as sc) {

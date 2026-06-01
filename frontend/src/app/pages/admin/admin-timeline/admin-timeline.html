@@ -1,0 +1,88 @@
+@if (successMessage()) {
+  <div class="success-banner">
+    <span>✓</span> {{ successMessage() }}
+  </div>
+}
+
+<div class="content-header">
+  <h2 class="content-title">Tijdlijn</h2>
+  <button class="add-btn" (click)="openCreateForm()">+ Nieuw</button>
+</div>
+
+@if (showForm()) {
+  <div class="form-card">
+    <div class="form-header">
+      <h3 style="display: flex; align-items: center; gap: 1rem;">
+        {{ isEditing() ? 'Bewerken' : 'Nieuw item' }}
+      </h3>
+      <button class="close-btn" (click)="closeForm()">✕</button>
+    </div>
+    
+    <div class="form-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Titel (Functie/Opleiding)</label>
+          <input class="form-input" [ngModel]="formData()['title'] || ''" (ngModelChange)="updateField('title', $event)" placeholder="Software Developer" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subtitel (Bedrijf/School)</label>
+          <input class="form-input" [ngModel]="formData()['subtitle'] || ''" (ngModelChange)="updateField('subtitle', $event)" placeholder="Tech Bedrijf B.V." />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select class="form-input" [ngModel]="formData()['type'] || 'WORK'" (ngModelChange)="updateField('type', $event)">
+            <option value="WORK">Werk</option>
+            <option value="EDUCATION">Educatie</option>
+            <option value="OTHER">Overig</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Volgorde (0 = bovenaan)</label>
+          <input class="form-input" type="number" [ngModel]="formData()['sortOrder'] || 0" (ngModelChange)="updateField('sortOrder', $event)" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Start Datum</label>
+          <input class="form-input" type="date" [ngModel]="formData()['startDate'] || ''" (ngModelChange)="updateField('startDate', $event)" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Eind Datum</label>
+          <input class="form-input" type="date" [ngModel]="formData()['endDate'] || ''" (ngModelChange)="updateField('endDate', $event)" [disabled]="isCurrent()" />
+        </div>
+        <div class="form-group full">
+          <label class="form-label">
+            <input type="checkbox" [ngModel]="formData()['current'] || false" (ngModelChange)="updateField('current', $event)" />
+            Huidige (nog steeds bezig)
+          </label>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Beschrijving (optioneel)</label>
+          <textarea class="form-input" rows="5" [ngModel]="formData()['description'] || ''" (ngModelChange)="updateField('description', $event)"></textarea>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-footer">
+      <button class="cancel-btn" (click)="closeForm()">Annuleren</button>
+      <button class="save-btn" (click)="saveItem()">{{ isEditing() ? 'Opslaan' : 'Aanmaken' }}</button>
+    </div>
+  </div>
+}
+
+<div class="item-list">
+  @for (event of events(); track event.id) {
+    <div class="item-row">
+      <div class="item-info">
+        <span class="item-title">{{ event.title }} bij {{ event.subtitle }}</span>
+        <span class="item-meta">
+          {{ event.type }} · {{ event.startDate | date:'MMM yyyy' }} - {{ event.current ? 'Heden' : (event.endDate | date:'MMM yyyy') }}
+        </span>
+      </div>
+      <div class="item-actions">
+        <button class="action-btn edit" (click)="openEditForm(event)">Bewerken</button>
+        <button class="action-btn delete" (click)="deleteItem(event.id)">Verwijderen</button>
+      </div>
+    </div>
+  } @empty {
+    <div class="empty-list">Geen tijdlijn items gevonden.</div>
+  }
+</div>

@@ -6,6 +6,10 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterOutlet, NavbarComponent],
   template: `
+    <div class="site-bg-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+    </div>
     <app-navbar />
     <router-outlet />
   `,
