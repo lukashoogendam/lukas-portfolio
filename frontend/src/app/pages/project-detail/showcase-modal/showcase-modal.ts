@@ -1,17 +1,15 @@
-import { Component, Input, Output, EventEmitter, inject, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-showcase-modal',
-  imports: [CommonModule],
   templateUrl: './showcase-modal.html',
-  styleUrl: '../project-detail.component.scss',
+  styleUrl: './showcase-modal.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShowcaseModalComponent {
-  @Input() sc: any;
-  @Output() close = new EventEmitter<void>();
+  sc = input<any>();
+  close = output<void>();
 
   private sanitizer = inject(DomSanitizer);
 

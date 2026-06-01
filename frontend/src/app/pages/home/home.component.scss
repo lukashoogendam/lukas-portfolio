@@ -1,246 +1,660 @@
 @use '../../../styles/variables' as *;
+
+// ─── Shared Section Layout ───────────────────────────────────────────────────
 .home {
-  min-height: calc(100vh - 64px);
-  display: flex;
-  flex-direction: column;
+  min-height: 100vh;
 }
-.hero {
+
+.section {
+  scroll-margin-top: 64px; // Offset for sticky navbar
+  min-height: 65vh; // Prevents multiple terminals from being in the viewport at the same time when empty
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-section {
+  min-height: 85vh;
+}
+
+// Sections have no distinct background in this minimalist style
+
+.section-inner {
   max-width: $breakpoint-xl;
   margin: 0 auto;
-  padding: $spacing-3xl $spacing-lg;
+  padding: $spacing-xl $spacing-lg;
+  width: 100%;
+}
+
+.section-header-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.terminal-pill-wrapper {
+  flex-shrink: 0;
+  margin-bottom: 0.5rem;
+}
+
+.layout-2col {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $spacing-3xl;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
   align-items: center;
-  width: 100%;
-}
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-sm;
-  padding: $spacing-xs $spacing-md;
-  font-size: $font-size-sm;
-  font-weight: 500;
-  color: $accent-green;
-  background-color: rgba($accent-green, 0.08);
-  border: 1px solid rgba($accent-green, 0.2);
-  border-radius: $radius-full;
-  margin-bottom: $spacing-lg;
-  .badge-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: $accent-green;
-    animation: pulse 2s ease-in-out infinite;
+
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: 1.1fr 0.9fr;
   }
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-.hero-title {
-  font-size: $font-size-4xl;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: $spacing-md;
-  color: $text-primary;
-  .highlight {
-    background: linear-gradient(135deg, $accent-primary, $accent-purple);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+
+  // In 2-col mode, hero text should left-align
+  .hero-content {
+    text-align: left;
   }
-}
-.hero-subtitle {
-  font-size: $font-size-lg;
-  color: $text-secondary;
-  line-height: 1.7;
-  margin-bottom: $spacing-md;
-  .tech-tag {
-    color: $accent-primary;
-    font-weight: 500;
-  }
-}
-.hero-description {
-  font-size: $font-size-base;
-  color: $text-muted;
-  line-height: 1.6;
-  margin-bottom: $spacing-xl;
-}
-.hero-actions {
-  display: flex;
-  gap: $spacing-md;
-  margin-bottom: $spacing-2xl;
-}
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-sm;
-  padding: 12px 24px;
-  font-size: $font-size-sm;
-  font-weight: 600;
-  border-radius: $radius-lg;
-  text-decoration: none;
-  transition: all $transition-base;
-  border: none;
-}
-.btn-primary {
-  background: linear-gradient(135deg, $accent-primary, $accent-primary-dark);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba($accent-primary, 0.3);
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba($accent-primary, 0.4);
-    color: #fff;
-  }
-  .btn-icon {
-    font-size: $font-size-xs;
-  }
-}
-.btn-secondary {
-  background-color: $bg-card;
-  color: $text-primary;
-  border: 1px solid $border-color;
-  &:hover {
-    background-color: $bg-hover;
-    border-color: $text-muted;
-    color: $text-primary;
-  }
-}
-.hero-endpoints {
-  .endpoints-label {
-    font-size: $font-size-xs;
-    color: $text-muted;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: $spacing-sm;
-  }
-}
-.endpoint-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-sm;
-}
-.endpoint-item {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-sm;
-  padding: 6px 12px;
-  background-color: $bg-card;
-  border: 1px solid $border-color;
-  border-radius: $radius-md;
-  text-decoration: none;
-  transition: all $transition-fast;
-  &:hover {
-    border-color: $accent-primary;
-    background-color: $bg-hover;
-  }
-  .endpoint-path {
-    font-family: $font-mono;
-    font-size: $font-size-sm;
-    color: $text-secondary;
-  }
-}
-.hero-visual {
-  display: flex;
-  justify-content: center;
-}
-.code-window {
-  width: 100%;
-  max-width: 480px;
-  background-color: $bg-secondary;
-  border: 1px solid $border-color;
-  border-radius: $radius-xl;
-  overflow: hidden;
-  box-shadow: $shadow-lg, $shadow-glow;
-}
-.code-header {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  padding: $spacing-sm $spacing-md;
-  background-color: $bg-tertiary;
-  border-bottom: 1px solid $border-color;
-}
-.code-dots {
-  display: flex;
-  gap: 6px;
-  .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    &.red { background-color: $accent-red; }
-    &.yellow { background-color: $accent-yellow; }
-    &.green { background-color: $accent-green; }
-  }
-}
-.code-title {
-  font-family: $font-mono;
-  font-size: $font-size-sm;
-  color: $text-secondary;
-}
-.code-body {
-  padding: $spacing-lg;
-  font-size: $font-size-sm;
-  line-height: 1.8;
-  overflow-x: auto;
-  code {
-    font-family: $font-mono;
-  }
-  .json-key { color: $accent-primary; }
-  .json-string { color: $accent-green; }
-  .json-number { color: $accent-orange; }
-  .json-brace { color: $text-muted; }
-}
-@media (max-width: $breakpoint-lg) {
-  .hero {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: $spacing-2xl;
-  }
+
   .hero-actions {
-    justify-content: center;
+    justify-content: flex-start;
   }
-  .endpoint-list {
-    justify-content: center;
-  }
-  .hero-visual {
-    order: -1;
-  }
-  .hero-title {
-    font-size: $font-size-3xl;
-  }
-}
-@media (max-width: $breakpoint-sm) {
-  .hero {
-    padding: $spacing-xl $spacing-md;
-  }
-  .hero-actions {
-    flex-direction: column;
-    .btn {
-      justify-content: center;
+
+  &.reverse-mobile {
+    @media (max-width: $breakpoint-md - 1px) {
+      display: flex;
+      flex-direction: column-reverse;
     }
   }
 }
-.about-me {
-  max-width: $breakpoint-xl;
-  margin: 0 auto;
-  padding: $spacing-3xl $spacing-lg;
-  width: 100%;
+
+.content-col {
+  display: flex;
+  flex-direction: column;
 }
-@media (max-width: $breakpoint-md) {
-  .about-me {
-    padding: $spacing-xl $spacing-md;
+
+.terminal-col {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .code-window {
+    width: 100%;
   }
 }
-.about-me h2 {
-  font-size: $font-size-3xl;
-  color: $text-primary;
+
+.section-label {
+  font-size: $font-size-xs;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $accent-primary;
   margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+    background: $accent-primary;
+    border-radius: 1px;
+  }
 }
-.about-me p {
+
+.section-heading {
+  font-size: $font-size-4xl;
+  font-weight: 700;
+  color: $text-primary;
+  line-height: 1.2;
+  margin-bottom: $spacing-lg;
+}
+
+.section-intro {
   font-size: $font-size-lg;
   color: $text-secondary;
   line-height: 1.8;
-  max-width: 800px;
+  max-width: 640px;
+  margin-bottom: $spacing-2xl;
+}
+
+.section-cta {
+  margin-top: $spacing-2xl;
+  text-align: center;
+}
+
+
+
+// ─── HERO ─────────────────────────────────────────────────────────────────────
+
+.hero-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: $font-mono;
+  color: $accent-green;
+  background: rgba($accent-green, 0.08);
+  border: 1px solid rgba($accent-green, 0.2);
+  padding: 6px 16px;
+  border-radius: $radius-full;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  font-family: $font-mono;
+  line-height: 1.1;
+  color: $text-primary;
+  margin: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: $text-secondary;
+  font-family: $font-mono;
+  margin: 1.5rem 0 2rem;
+}
+
+.hero-description {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: $text-muted;
+  max-width: 600px;
+  margin: 0 0 2.5rem;
+  line-height: 1.5;
+}
+
+.hero-actions {
+  display: flex;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+}
+
+
+
+// ─── ABOUT ────────────────────────────────────────────────────────────────────
+
+.terminal-header {
+  margin-bottom: 3rem;
+  
+  .cmd-small-green {
+    font-family: $font-mono;
+    font-size: 0.85rem;
+    color: $accent-green;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    
+    .prompt {
+      margin-right: 0.25rem;
+    }
+  }
+
+  .uppercase {
+    text-transform: uppercase;
+  }
+  
+  .cmd-large-title {
+    font-family: $font-mono;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    color: $text-primary;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-top: 0.5rem;
+  }
+  
+
+
+  .cmd-output-grey {
+    font-family: $font-mono;
+    font-size: 1rem;
+    color: $text-secondary;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+.about-content {
+  font-size: $font-size-lg;
+  color: $text-secondary;
+  line-height: 1.9;
+  max-width: 760px;
+}
+
+// ─── SKILLS ───────────────────────────────────────────────────────────────────
+
+/* Featured Skills Cards */
+.featured-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.featured-skill-card {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-xl;
+  padding: 1.75rem;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: rgba($accent-primary, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transform: translateY(-3px);
+  }
+}
+
+.featured-skill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.featured-skill-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-lg;
+  background: rgba($accent-primary, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+
+  &.emoji {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+}
+
+.featured-skill-category {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.75rem;
+  border-radius: $radius-full;
+  background: rgba($accent-primary, 0.08);
+  color: $text-secondary;
+  border: 1px solid rgba($accent-primary, 0.15);
+  font-family: $font-mono;
+}
+
+.featured-skill-title {
+  font-family: $font-mono;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: $text-primary;
+  margin-bottom: 0.75rem;
+}
+
+.featured-skill-desc {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: $text-secondary;
+  margin: 0;
+}
+
+@media (max-width: $breakpoint-md) {
+  .featured-skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ecosystems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: $spacing-xl;
+}
+
+.ecosystem-card {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-xl;
+  padding: 1.5rem;
+  transition: all $transition-fast;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba($accent-primary, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  }
+
+  .ecosystem-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: $font-mono;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $text-primary;
+    margin-bottom: 1.25rem;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $border-color; // Fallback
+  }
+
+  // Dynamic colors for dots
+  &:nth-child(6n+1) .dot { background: $accent-green; }
+  &:nth-child(6n+2) .dot { background: $accent-primary; }
+  &:nth-child(6n+3) .dot { background: $accent-yellow; }
+  &:nth-child(6n+4) .dot { background: $accent-purple; }
+  &:nth-child(6n+5) .dot { background: $accent-orange; }
+  &:nth-child(6n+0) .dot { background: $accent-red; }
+
+
+
+  .ecosystem-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .ecosystem-chip {
+    padding: 6px 14px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: $radius-full;
+    font-family: $font-mono;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $text-primary;
+    transition: background $transition-fast;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+  }
+}
+
+// ─── PROJECTS ─────────────────────────────────────────────────────────────────
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: $spacing-xl;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  transition: all $transition-fast;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: $accent-primary;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+    .project-cta {
+      background: $text-primary;
+    }
+  }
+
+  .project-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .project-meta {
+    margin-bottom: 1rem;
+  }
+
+  .project-category {
+    font-family: $font-mono;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $text-muted;
+  }
+
+  .project-title {
+    font-family: $font-mono;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $text-primary;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .project-description {
+    font-size: 0.95rem;
+    color: $text-secondary;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .project-cta {
+    padding: 1rem 1.5rem;
+    background: #111;
+    color: $accent-green;
+    font-family: $font-mono;
+    font-size: 0.9rem;
+    transition: background $transition-fast;
+    border-top: 1px solid $border-color;
+    display: flex;
+    align-items: center;
+
+    .prompt {
+      color: $text-muted;
+      margin-right: 0.5rem;
+    }
+
+    .cursor-blink {
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+    }
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+// ─── TIMELINE ────────────────────────────────────────────────────────────────
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: $spacing-lg;
+  position: relative;
+}
+
+.timeline-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  .timeline-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: $bg-card;
+    border: 2px solid $border-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-line {
+    flex: 1;
+    width: 2px;
+    background: $border-color;
+    margin: 4px 0;
+    min-height: 20px;
+  }
+}
+
+.timeline-item:last-child .timeline-line {
+  display: none;
+}
+
+.timeline-card {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-xl;
+  padding: $spacing-lg $spacing-xl;
+  margin-bottom: $spacing-lg;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: rgba($accent-primary, 0.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+
+  .timeline-period {
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: $accent-primary;
+    font-family: $font-mono;
+    margin-bottom: $spacing-xs;
+  }
+
+  .timeline-title {
+    font-size: $font-size-lg;
+    font-weight: 700;
+    color: $text-primary;
+    margin-bottom: 4px;
+  }
+
+  .timeline-subtitle {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $text-secondary;
+    margin-bottom: $spacing-sm;
+  }
+
+  .timeline-desc {
+    font-size: $font-size-sm;
+    color: $text-muted;
+    line-height: 1.7;
+  }
+}
+
+// ─── CONTACT ─────────────────────────────────────────────────────────────────
+
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-3xl;
+  align-items: start;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-top: $spacing-xl;
+}
+
+.contact-detail {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  font-size: $font-size-base;
+  color: $text-secondary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover { color: $accent-primary; }
+  .detail-icon { font-size: 1.25rem; }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.form-error {
+  padding: $spacing-md;
+  background: rgba($accent-red, 0.1);
+  border: 1px solid rgba($accent-red, 0.3);
+  border-radius: $radius-md;
+  color: $accent-red;
+  font-size: $font-size-sm;
+}
+
+.form-success {
+  text-align: center;
+  padding: $spacing-2xl;
+  background: $bg-card;
+  border: 1px solid rgba($accent-green, 0.3);
+  border-radius: $radius-xl;
+
+  .success-icon { font-size: 3rem; margin-bottom: $spacing-md; }
+  h3 { font-size: $font-size-xl; color: $text-primary; margin-bottom: $spacing-sm; }
+  p { color: $text-secondary; margin-bottom: $spacing-xl; }
+}
+
+// ─── CUSTOM TEXT ──────────────────────────────────────────────────────────────
+.custom-content {
+  font-size: $font-size-lg;
+  color: $text-secondary;
+  line-height: 1.9;
+  max-width: 760px;
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+@media (max-width: $breakpoint-lg) {
+  
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hero-actions { justify-content: center; }
+
+  .contact-inner {
+    grid-template-columns: 1fr;
+    gap: $spacing-2xl;
+  }
+
+  .section-heading { font-size: $font-size-3xl; }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .section-inner { padding: $spacing-2xl $spacing-md; }
+  .section-heading { font-size: $font-size-2xl; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; .btn { width: 100%; justify-content: center; } }
+  .timeline-item { grid-template-columns: 40px 1fr; }
 }

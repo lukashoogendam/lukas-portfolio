@@ -1,63 +1,294 @@
-<div class="home">
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        Available for internship
-      </div>
-      <h1 class="hero-title">
-        Hi, ik ben <span class="highlight">Lukas</span>.
-      </h1>
-      <p class="hero-subtitle">
-        Informatica student &amp; backend developer.
-        <br />
-        Ik bouw applicaties met
-        <span class="tech-tag">Spring Boot</span>,
-        <span class="tech-tag">PostgreSQL</span> en
-        <span class="tech-tag">Angular</span>.
-      </p>
-      <p class="hero-description">
-        Welkom op mijn portfolio. Je kan hier mijn projecten bekijken. Klik op de knoppen om alles te zien.
-      </p>
-      <div class="hero-actions">
-        <a routerLink="/profile" class="btn btn-secondary">
-          Profiel
-        </a>
-        <a routerLink="/projects" class="btn btn-secondary">
-          Projecten
-        </a>
-        <a routerLink="/contact" class="btn btn-secondary">
-          Contact
-        </a>
-      </div>
+@if (homeData(); as data) {
+  <div class="home">
+    <!-- Iterate over visible sections in the admin-configured order -->
+    @for (section of visibleSections(); track section.id) {
+      @switch (section.type) {
 
-    </div>
-    <div class="hero-visual">
-      <div class="code-window">
-        <div class="code-header">
-          <div class="code-dots">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-          </div>
-          <span class="code-title">GET /api/profile</span>
-        </div>
-        <pre class="code-body"><code><span class="json-brace">&#123;</span>
-  <span class="json-key">"status"</span>: <span class="json-number">200</span>,
-  <span class="json-key">"message"</span>: <span class="json-string">"Success"</span>,
-  <span class="json-key">"data"</span>: <span class="json-brace">&#123;</span>
-    <span class="json-key">"name"</span>: <span class="json-string">"Lukas"</span>,
-    <span class="json-key">"role"</span>: <span class="json-string">"Informatica student"</span>,
-    <span class="json-key">"focus"</span>: <span class="json-string">"Backend development"</span>
-  <span class="json-brace">&#125;</span>
-<span class="json-brace">&#125;</span></code></pre>
-      </div>
-    </div>
-  </section>
-  <section class="about-me">
-    <h2>Over mij</h2>
-    <p>
-      Hoi. Ik ben Lukas. Ik ben een student informatica. Ik vind het leuk om te programmeren. In mijn vrije tijd maak ik mijn eigen projecten. Ik bouw graag goede en snelle websites. Ook doe ik graag aan sport. Verder speel ik af en toe een game. Heb je een vraag? Neem dan gerust contact op.
-    </p>
-  </section>
-</div>
+        <!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
+        @case ('HERO') {
+          <section id="hero" class="section hero-section" #terminalSection data-section-id="hero">
+            <div class="section-inner slide-in-down" [class.layout-2col]="section.showTerminal">
+              <div class="hero-content text-center">
+                <div class="hero-badge">{{ 'hero.badge' | t }}</div>
+                <h1 class="hero-title">
+                  {{ data.profile.name }}<br>
+                  {{ data.profile.role }}
+                </h1>
+                <div class="gradient-underline"></div>
+                <p class="hero-subtitle">
+                  {{ data.profile.focus }}
+                </p>
+                <div class="hero-actions">
+                  <button class="btn btn-primary" (click)="scrollTo('projects')">
+                    {{ 'hero.cta_work' | t }}
+                  </button>
+                  <button class="btn btn-outline" (click)="scrollTo('contact')">
+                    {{ 'hero.cta_contact' | t }}
+                  </button>
+                </div>
+              </div>
+
+              @if (section.showTerminal) {
+                <div class="terminal-col">
+                  <app-api-terminal 
+                    endpoint="/profile/summary" 
+                    [jsonPayload]="data.profile"
+                    title="bash">
+                  </app-api-terminal>
+                </div>
+              }
+            </div>
+          </section>
+        }
+
+        <!-- ═══════════════════════════════════════ ABOUT ═══════════════════════════════════════ -->
+        @case ('ABOUT') {
+          <section id="about" class="section about-section" data-section-id="about">
+            <div class="section-inner">
+              <div class="terminal-header text-center">
+                <div class="cmd-small-green uppercase">
+                  <span class="prompt">$</span> CURL -X GET /API/PROFILE/ABOUT
+                </div>
+                <div class="cmd-large-title">
+                  {{ getSectionTitle(section) || ('about.fallback_title' | t) }}
+                </div>
+                <div class="gradient-underline"></div>
+                @if (getSectionSubtitle(section)) {
+                  <div class="cmd-output-grey">
+                    &gt; {{ getSectionSubtitle(section) }}
+                  </div>
+                }
+              </div>
+              <div class="about-content" style="margin-top: 2rem;" [innerHTML]="getSectionContent(section)"></div>
+            </div>
+          </section>
+        }
+
+        <!-- ═══════════════════════════════════════ FEATURED SKILLS ═══════════════════════════════════════ -->
+        @case ('FEATURED_SKILLS') {
+          <section id="featured-skills" class="section featured-skills-section" data-section-id="featured-skills">
+            <div class="section-inner">
+              <div class="terminal-header text-center">
+                <div class="cmd-small-green uppercase">
+                  <span class="prompt">$</span> GREP -R "EXPERTISE" /VAR/LOG/CAREER.LOG
+                </div>
+                <div class="cmd-large-title">
+                  {{ getSectionTitle(section) || ('skills.fallback_title' | t) }}
+                </div>
+                <div class="gradient-underline"></div>
+                @if (getSectionSubtitle(section)) {
+                  <div class="cmd-output-grey">
+                    &gt; {{ getSectionSubtitle(section) }}
+                  </div>
+                }
+              </div>
+
+              @if (featuredSkills().length > 0) {
+                <div class="featured-skills-grid">
+                  @for (skill of featuredSkills(); track skill.id) {
+                    <div class="featured-skill-card">
+                      <div class="featured-skill-header">
+                        @if (skill.icon) {
+                          @if (skill.icon.startsWith('http')) {
+                            <div class="featured-skill-icon">
+                              <img [src]="skill.icon" [alt]="skill.name" />
+                            </div>
+                          } @else {
+                            <div class="featured-skill-icon emoji">{{ skill.icon }}</div>
+                          }
+                        }
+                        <span class="featured-skill-category">
+                          {{ 'enum.skill_category.' + skill.category | t }}
+                        </span>
+                      </div>
+                      <h3 class="featured-skill-title">{{ getFeaturedSkillName(skill) }}</h3>
+                      <p class="featured-skill-desc">{{ getFeaturedSkillDescription(skill) }}</p>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </section>
+        }
+
+        <!-- ═══════════════════════════════════════ SKILLS ═══════════════════════════════════════ -->
+        @case ('SKILLS') {
+          <section id="skills" class="section skills-section" data-section-id="skills">
+            <div class="section-inner">
+              <div class="terminal-header text-center">
+                <div class="cmd-small-green uppercase">
+                  <span class="prompt">$</span> CAT /ETC/TECH-ECOSYSTEM.CONF
+                </div>
+                <div class="cmd-large-title">
+                  {{ getSectionTitle(section) || ('skills.fallback_title' | t) }}
+                </div>
+                <div class="gradient-underline"></div>
+                @if (getSectionSubtitle(section)) {
+                  <div class="cmd-output-grey">
+                    &gt; {{ getSectionSubtitle(section) }}
+                  </div>
+                }
+              </div>
+
+              <div class="ecosystems-grid" style="margin-top: 3rem;">
+                @for (group of skillsByCategory(); track group.category) {
+                  <div class="ecosystem-card">
+                    <h3 class="ecosystem-title">
+                      <span class="dot"></span>
+                      {{ 'enum.skill_category.' + group.category | t }}
+                    </h3>
+                    <div class="ecosystem-skills">
+                      @for (skill of group.skills; track skill.id) {
+                        <div class="ecosystem-chip" [title]="skill.description">
+                          {{ skill.name }}
+                        </div>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- ═══════════════════════════════════════ PROJECTS ═══════════════════════════════════════ -->
+        @case ('PROJECTS') {
+          <section id="projects" class="section projects-section" data-section-id="projects">
+            <div class="section-inner">
+              <div class="terminal-header text-center">
+                <div class="cmd-small-green uppercase">
+                  <span class="prompt">$</span> CURL -X GET /API/PROJECTS/HIGHLIGHTED
+                </div>
+                <div class="cmd-large-title">
+                  {{ getSectionTitle(section) || ('projects.fallback_title' | t) }}
+                </div>
+                <div class="gradient-underline"></div>
+                @if (getSectionSubtitle(section)) {
+                  <div class="cmd-output-grey">
+                    &gt; {{ getSectionSubtitle(section) }}
+                  </div>
+                }
+              </div>
+
+              <div style="margin-top: 3rem;">
+                <div class="projects-grid">
+                  @for (project of data.highlightedProjects; track project.slug) {
+                    <a [routerLink]="['/projects', project.slug]" class="project-card">
+                      <div class="project-content">
+                        <div class="project-meta">
+                          <span class="project-category">--{{ project.category | lowercase }}</span>
+                        </div>
+                        <h3 class="project-title">{{ project.title }}</h3>
+                        <p class="project-description">{{ project.shortDescription }}</p>
+                      </div>
+                      <div class="project-cta">
+                        <span class="prompt">$</span> cd {{ project.slug | lowercase }} <span class="cursor-blink">_</span>
+                      </div>
+                    </a>
+                  }
+                </div>
+                <div class="projects-actions" style="margin-top: 2rem; text-align: center;">
+                  <a routerLink="/projects" class="btn btn-outline">{{ 'projects.view_all' | t }}</a>
+                </div>
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- ═══════════════════════════════════════ TIMELINE ════════════════════════════════ -->
+        @case ('TIMELINE') {
+          <section id="timeline" class="section timeline-section">
+            <div class="section-inner">
+              <div class="section-label">{{ 'timeline.label' | t }}</div>
+              <h2 class="section-heading">{{ getSectionTitle(section) || ('timeline.fallback_title' | t) }}</h2>
+              <div class="timeline">
+                @for (event of data.timelineEvents; track event.id) {
+                  <div class="timeline-item">
+                    <div class="timeline-left">
+                      <div class="timeline-icon">{{ getTypeIcon(event.type) }}</div>
+                      <div class="timeline-line"></div>
+                    </div>
+                    <div class="timeline-card">
+                      <div class="timeline-period">
+                        {{ event.startDate | date:'yyyy' }} — {{ event.current ? ('timeline.current' | t) : (event.endDate | date:'yyyy') }}
+                      </div>
+                      <h3 class="timeline-title">{{ event.title }}</h3>
+                      <div class="timeline-subtitle">{{ event.subtitle }}</div>
+                      @if (event.description) {
+                        <p class="timeline-desc">{{ event.description }}</p>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- ═══════════════════════════════════════ CONTACT ═══════════════════════════════════════ -->
+        @case ('CONTACT') {
+          <section id="contact" class="section contact-section">
+            <div class="section-inner">
+              <div class="contact-inner">
+                <div class="contact-text">
+                  <div class="section-label">05. Connect</div>
+                  <h2 class="section-heading">{{ getSectionTitle(section) || ('contact.fallback_title' | t) }}</h2>
+                  <div class="about-content" [innerHTML]="getSectionContent(section)"></div>
+                </div>
+                <div class="contact-right">
+                @if (contactSuccess()) {
+                  <div class="form-success">
+                    <div class="success-icon">✅</div>
+                    <h3>{{ 'contact.success_title' | t }}</h3>
+                    <p>{{ 'contact.success_message' | t }}</p>
+                    <button class="btn btn-outline" (click)="contactSuccess.set(false)">{{ 'contact.new_message' | t }}</button>
+                  </div>
+                } @else {
+                  <form class="contact-form" (ngSubmit)="submitContact()">
+                    <div class="form-group">
+                      <label for="contact-name">{{ 'contact.label_name' | t }}</label>
+                      <input id="contact-name" name="name" type="text" class="form-input"
+                        [placeholder]="langService.t('contact.placeholder_name')" [value]="contactName()"
+                        (input)="contactName.set($any($event.target).value)" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="contact-email">{{ 'contact.label_email' | t }}</label>
+                      <input id="contact-email" name="email" type="email" class="form-input"
+                        [placeholder]="langService.t('contact.placeholder_email')" [value]="contactEmail()"
+                        (input)="contactEmail.set($any($event.target).value)" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="contact-message">{{ 'contact.label_message' | t }}</label>
+                      <textarea id="contact-message" name="message" class="form-input form-textarea"
+                        [placeholder]="langService.t('contact.placeholder_message')" rows="5" [value]="contactMessage()"
+                        (input)="contactMessage.set($any($event.target).value)" required></textarea>
+                    </div>
+                    @if (contactError()) {
+                      <div class="form-error">{{ contactError() }}</div>
+                    }
+                    <button type="submit" class="btn btn-primary btn-full" [disabled]="contactSubmitting()">
+                      @if (contactSubmitting()) { {{ 'contact.submitting' | t }} } @else { {{ 'contact.submit' | t }} }
+                    </button>
+                  </form>
+                }
+              </div>
+            </div>
+            </div>
+          </section>
+        }
+
+        <!-- ═══════════════════════════════════════ CUSTOM TEXT ═══════════════════════════════════════ -->
+        @case ('CUSTOM_TEXT') {
+          <section [id]="section.identifier" class="section custom-section">
+            <div class="section-inner">
+              @if (getSectionTitle(section)) {
+                <h2 class="section-heading">{{ getSectionTitle(section) }}</h2>
+              }
+              <div class="custom-content" [innerHTML]="getSectionContent(section)"></div>
+            </div>
+          </section>
+        }
+      }
+    }
+  </div>
+}

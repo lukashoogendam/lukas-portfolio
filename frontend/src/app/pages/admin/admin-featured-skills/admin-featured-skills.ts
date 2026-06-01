@@ -1,34 +1,31 @@
 import { Component, OnInit, signal, inject, ChangeDetectionStrategy } from '@angular/core';
-
 import { FormsModule } from '@angular/forms';
 import { AdminApiService } from '../../../core/services/admin-api.service';
-import { PortfolioApiService, SocialDto } from '../../../core/services/portfolio-api.service';
+import { FeaturedSkillDto } from '../../../core/services/portfolio-api.service';
 
 @Component({
-  selector: 'app-admin-socials',
+  selector: 'app-admin-featured-skills',
   imports: [FormsModule],
-  templateUrl: './admin-socials.html',
+  templateUrl: './admin-featured-skills.html',
   styleUrl: '../admin.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminSocialsComponent implements OnInit {
-  private apiService = inject(PortfolioApiService);
+export class AdminFeaturedSkillsComponent implements OnInit {
   private adminApi = inject(AdminApiService);
 
-  socials = signal<SocialDto[]>([]);
+  items = signal<FeaturedSkillDto[]>([]);
   successMessage = signal<string | null>(null);
-
   showForm = signal(false);
   isEditing = signal(false);
   formData = signal<Record<string, unknown>>({});
   editId = signal<number | null>(null);
 
   ngOnInit() {
-    this.loadSocials();
+    this.loadItems();
   }
 
-  loadSocials() {
-    this.apiService.getSocials().subscribe(res => this.socials.set(res.data));
+  loadItems() {
+    this.adminApi.getFeaturedSkills().subscribe(res => this.items.set(res.data));
   }
 
   openCreateForm() {
@@ -38,16 +35,17 @@ export class AdminSocialsComponent implements OnInit {
     this.showForm.set(true);
   }
 
-  openEditForm(social: SocialDto) {
+  openEditForm(item: FeaturedSkillDto) {
     this.isEditing.set(true);
-    this.formData.set({ ...(social as any) });
-    this.editId.set(social.id);
+    this.formData.set({ ...(item as any) });
+    this.editId.set(item.id);
     this.showForm.set(true);
   }
 
   closeForm() {
     this.showForm.set(false);
     this.formData.set({});
+    this.editId.set(null);
   }
 
   updateField(key: string, value: unknown) {
@@ -57,19 +55,19 @@ export class AdminSocialsComponent implements OnInit {
   saveItem() {
     const data = this.formData();
     if (this.isEditing()) {
-      this.adminApi.updateSocial(this.editId()!, data).subscribe(() => {
-        this.onSaveSuccess('Social bijgewerkt');
+      this.adminApi.updateFeaturedSkill(this.editId()!, data).subscribe(() => {
+        this.onSaveSuccess('Hoofdskill bijgewerkt');
       });
     } else {
-      this.adminApi.createSocial(data).subscribe(() => {
-        this.onSaveSuccess('Social aangemaakt');
+      this.adminApi.createFeaturedSkill(data).subscribe(() => {
+        this.onSaveSuccess('Hoofdskill aangemaakt');
       });
     }
   }
 
   deleteItem(id: number) {
     if (confirm('Weet je zeker dat je dit wilt verwijderen?')) {
-      this.adminApi.deleteSocial(id).subscribe(() => this.onSaveSuccess('Social verwijderd'));
+      this.adminApi.deleteFeaturedSkill(id).subscribe(() => this.onSaveSuccess('Hoofdskill verwijderd'));
     }
   }
 
@@ -77,6 +75,6 @@ export class AdminSocialsComponent implements OnInit {
     this.closeForm();
     this.successMessage.set(message);
     setTimeout(() => this.successMessage.set(null), 3000);
-    this.loadSocials();
+    this.loadItems();
   }
 }

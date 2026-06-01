@@ -9,28 +9,47 @@
       <button class="header-btn danger" (click)="logout()">Uitloggen</button>
     </div>
   </header>
-  
-  <nav class="tabs">
-    <button class="tab" [class.active]="activeTab() === 'projects'" (click)="switchTab('projects')">
-      Projects
+
+  <nav class="admin-tabs">
+    <button class="tab-btn" [class.active]="activeTab() === 'home-builder'" (click)="switchTab('home-builder')">
+      <span class="tab-icon">🏗️</span>
+      <span class="tab-label">Home Builder</span>
     </button>
-    <button class="tab" [class.active]="activeTab() === 'skills'" (click)="switchTab('skills')">
-      Skills
+    <button class="tab-btn" [class.active]="activeTab() === 'projects'" (click)="switchTab('projects')">
+      <span class="tab-icon">💼</span>
+      <span class="tab-label">Projecten</span>
     </button>
-    <button class="tab" [class.active]="activeTab() === 'socials'" (click)="switchTab('socials')">
-      Socials
+    <button class="tab-btn" [class.active]="activeTab() === 'socials'" (click)="switchTab('socials')">
+      <span class="tab-icon">🌐</span>
+      <span class="tab-label">Socials</span>
     </button>
-    <button class="tab" [class.active]="activeTab() === 'profile'" (click)="switchTab('profile')">
-      Profiel
+    <button class="tab-btn" [class.active]="activeTab() === 'skills'" (click)="switchTab('skills')">
+      <span class="tab-icon">🛠️</span>
+      <span class="tab-label">Skills</span>
+    </button>
+    <button class="tab-btn" [class.active]="activeTab() === 'featured-skills'" (click)="switchTab('featured-skills')">
+      <span class="tab-icon">⭐</span>
+      <span class="tab-label">Hoofdskills</span>
     </button>
   </nav>
-  
-  <div class="content">
+
+  <div class="tab-content">
     @switch (activeTab()) {
-      @case ('projects') { <app-admin-projects /> }
-      @case ('skills') { <app-admin-skills /> }
-      @case ('socials') { <app-admin-socials /> }
-      @case ('profile') { <app-admin-profile /> }
+      @case ('home-builder') {
+        <app-admin-home-overview />
+      }
+      @case ('projects') {
+        <app-admin-projects />
+      }
+      @case ('socials') {
+        <app-admin-socials />
+      }
+      @case ('skills') {
+        <app-admin-skills />
+      }
+      @case ('featured-skills') {
+        <app-admin-featured-skills />
+      }
     }
   </div>
 </div>

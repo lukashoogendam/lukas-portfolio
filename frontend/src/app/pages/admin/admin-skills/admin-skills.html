@@ -37,17 +37,16 @@
           </div>
           <div class="form-group">
             <label class="form-label">Categorie</label>
-            <input class="form-input" [ngModel]="formData()['category'] || ''" (ngModelChange)="updateField('category', $event)" placeholder="Backend" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Level</label>
-            <input class="form-input" [ngModel]="formData()['level'] || ''" (ngModelChange)="updateField('level', $event)" placeholder="Intermediate" />
-          </div>
-          <div class="form-group full">
-            <label class="form-label">
-              <input type="checkbox" [ngModel]="formData()['highlighted'] || false" (ngModelChange)="updateField('highlighted', $event)" />
-              Uitgelicht op profiel?
-            </label>
+            <select class="form-input" [ngModel]="formData()['category'] || ''" (ngModelChange)="updateField('category', $event)">
+              <option value="" disabled>Kies een categorie</option>
+              <option value="BACKEND">Backend</option>
+              <option value="FRONTEND">Frontend</option>
+              <option value="DATABASE">Database</option>
+              <option value="DEVOPS">DevOps</option>
+              <option value="TOOLS">Tools</option>
+              <option value="MOBILE">Mobile</option>
+              <option value="CLOUD">Cloud</option>
+            </select>
           </div>
         }
         <div class="form-group full">
@@ -68,8 +67,10 @@
   @for (skill of skills(); track skill.id) {
     <div class="item-row">
       <div class="item-info">
-        <span class="item-title">{{ skill.name }}</span>
-        <span class="item-meta">{{ skill.category }} · {{ skill.level }}</span>
+        <span class="item-title">
+          {{ skill.name }}
+        </span>
+        <span class="item-meta">{{ skill.category }}</span>
       </div>
       <div class="item-actions">
         <button class="action-btn edit" (click)="openEditForm(skill)">Bewerken</button>

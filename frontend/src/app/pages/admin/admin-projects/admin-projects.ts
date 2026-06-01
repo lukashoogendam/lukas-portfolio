@@ -1,17 +1,20 @@
-import { Component, OnInit, signal, inject, HostListener, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, signal, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminApiService } from '../../../core/services/admin-api.service';
 import { PortfolioApiService, ProjectListDto, SkillDto } from '../../../core/services/portfolio-api.service';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 
 type TranslationLang = 'nl' | 'en';
 
 @Component({
   selector: 'app-admin-projects',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: './admin-projects.html',
   styleUrl: '../admin.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(window:paste)': 'onPaste($event)'
+  }
 })
 export class AdminProjectsComponent implements OnInit {
   private apiService = inject(PortfolioApiService);
@@ -178,8 +181,29 @@ export class AdminProjectsComponent implements OnInit {
     input.value = '';
   }
 
+  // === Generic List Helpers ===
+  private getListField(key: string): any[] {
+    return (this.formData()[key] as any[]) || [];
+  }
+
+  private moveItem(key: string, index: number, direction: 'up' | 'down') {
+    const items = [...this.getListField(key)];
+    const target = direction === 'up' ? index - 1 : index + 1;
+    if (target < 0 || target >= items.length) return;
+    [items[index], items[target]] = [items[target], items[index]];
+    items.forEach((item, i) => item.sortOrder = i);
+    this.updateField(key, items);
+  }
+
+  private removeListItem(key: string, index: number) {
+    const items = [...this.getListField(key)];
+    items.splice(index, 1);
+    items.forEach((item, i) => item.sortOrder = i);
+    this.updateField(key, items);
+  }
+
   // === Images ===
-  getProjectImages(): any[] { return (this.formData()['images'] as any[]) || []; }
+  getProjectImages(): any[] { return this.getListField('images'); }
   
   updateImageTitle(index: number, title: string) {
     const images = [...this.getProjectImages()];
@@ -187,36 +211,9 @@ export class AdminProjectsComponent implements OnInit {
     this.updateField('images', images);
   }
 
-  removeProjectImage(index: number) {
-    const images = [...this.getProjectImages()];
-    images.splice(index, 1);
-    this.recalculateImageSortOrder(images);
-    this.updateField('images', images);
-  }
-
-  moveImageUp(index: number) {
-    if (index === 0) return;
-    const images = [...this.getProjectImages()];
-    const temp = images[index];
-    images[index] = images[index - 1];
-    images[index - 1] = temp;
-    this.recalculateImageSortOrder(images);
-    this.updateField('images', images);
-  }
-
-  moveImageDown(index: number) {
-    const images = [...this.getProjectImages()];
-    if (index === images.length - 1) return;
-    const temp = images[index];
-    images[index] = images[index + 1];
-    images[index + 1] = temp;
-    this.recalculateImageSortOrder(images);
-    this.updateField('images', images);
-  }
-
-  private recalculateImageSortOrder(images: any[]) {
-    images.forEach((img, i) => img.sortOrder = i);
-  }
+  removeProjectImage(index: number) { this.removeListItem('images', index); }
+  moveImageUp(index: number) { this.moveItem('images', index, 'up'); }
+  moveImageDown(index: number) { this.moveItem('images', index, 'down'); }
 
   onImageFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -238,7 +235,6 @@ export class AdminProjectsComponent implements OnInit {
     input.value = '';
   }
 
-  @HostListener('window:paste', ['$event'])
   onPaste(event: ClipboardEvent) {
     if (!this.showForm() || this.formLang() !== 'nl') return;
     const items = event.clipboardData?.items;
@@ -267,7 +263,7 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   // === Showcases ===
-  getProjectShowcases(): any[] { return (this.formData()['showcases'] as any[]) || []; }
+  getProjectShowcases(): any[] { return this.getListField('showcases'); }
 
   addProjectShowcase(type: string) {
     const showcases = [...this.getProjectShowcases()];
@@ -281,36 +277,9 @@ export class AdminProjectsComponent implements OnInit {
     this.updateField('showcases', showcases);
   }
 
-  removeProjectShowcase(index: number) {
-    const showcases = [...this.getProjectShowcases()];
-    showcases.splice(index, 1);
-    this.recalculateShowcaseSortOrder(showcases);
-    this.updateField('showcases', showcases);
-  }
-
-  moveShowcaseUp(index: number) {
-    if (index === 0) return;
-    const showcases = [...this.getProjectShowcases()];
-    const temp = showcases[index];
-    showcases[index] = showcases[index - 1];
-    showcases[index - 1] = temp;
-    this.recalculateShowcaseSortOrder(showcases);
-    this.updateField('showcases', showcases);
-  }
-
-  moveShowcaseDown(index: number) {
-    const showcases = [...this.getProjectShowcases()];
-    if (index === showcases.length - 1) return;
-    const temp = showcases[index];
-    showcases[index] = showcases[index + 1];
-    showcases[index + 1] = temp;
-    this.recalculateShowcaseSortOrder(showcases);
-    this.updateField('showcases', showcases);
-  }
-
-  private recalculateShowcaseSortOrder(showcases: any[]) {
-    showcases.forEach((sc, i) => sc.sortOrder = i);
-  }
+  removeProjectShowcase(index: number) { this.removeListItem('showcases', index); }
+  moveShowcaseUp(index: number) { this.moveItem('showcases', index, 'up'); }
+  moveShowcaseDown(index: number) { this.moveItem('showcases', index, 'down'); }
 
   onShowcaseFileSelected(event: Event, index: number) {
     const input = event.target as HTMLInputElement;
@@ -326,7 +295,7 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   // === Documents ===
-  getProjectDocuments(): any[] { return (this.formData()['documents'] as any[]) || []; }
+  getProjectDocuments(): any[] { return this.getListField('documents'); }
 
   addProjectDocument() {
     const docs = [...this.getProjectDocuments()];
@@ -340,36 +309,9 @@ export class AdminProjectsComponent implements OnInit {
     this.updateField('documents', docs);
   }
 
-  removeProjectDocument(index: number) {
-    const docs = [...this.getProjectDocuments()];
-    docs.splice(index, 1);
-    this.recalculateDocumentSortOrder(docs);
-    this.updateField('documents', docs);
-  }
-
-  moveDocumentUp(index: number) {
-    if (index === 0) return;
-    const docs = [...this.getProjectDocuments()];
-    const temp = docs[index];
-    docs[index] = docs[index - 1];
-    docs[index - 1] = temp;
-    this.recalculateDocumentSortOrder(docs);
-    this.updateField('documents', docs);
-  }
-
-  moveDocumentDown(index: number) {
-    const docs = [...this.getProjectDocuments()];
-    if (index === docs.length - 1) return;
-    const temp = docs[index];
-    docs[index] = docs[index + 1];
-    docs[index + 1] = temp;
-    this.recalculateDocumentSortOrder(docs);
-    this.updateField('documents', docs);
-  }
-
-  private recalculateDocumentSortOrder(docs: any[]) {
-    docs.forEach((doc, i) => doc.sortOrder = i);
-  }
+  removeProjectDocument(index: number) { this.removeListItem('documents', index); }
+  moveDocumentUp(index: number) { this.moveItem('documents', index, 'up'); }
+  moveDocumentDown(index: number) { this.moveItem('documents', index, 'down'); }
 
   onDocumentFileSelected(event: Event, index: number) {
     const input = event.target as HTMLInputElement;
