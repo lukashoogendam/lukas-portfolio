@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "chatbot-dashboard",
+    "title": "Chatbot + dashboard",
+    "shortDescription": "In data advanced hebben we als groep een proof of concept gemaakt voor het probleem van MIZ",
+    "category": "SCHOOL_PROJECT",
+    "status": "COMPLETED",
+    "courseName": "Data advanced 2",
+    "highlighted": true,
+    "sortOrder": 0,
+    "shortDescriptionEn": "In data advanced hebben we als groep een proof of concept gemaakt voor het probleem van MIZ",
+    "courseNameEn": "Data advanced 2"
+  },
+  {
+    "slug": "youtube-dashboard",
+    "title": "Youtube dashboard",
+    "shortDescription": "Een devops/dataoplossing om videodata inzichtelijk te maken",
+    "category": "SCHOOL_PROJECT",
+    "status": "COMPLETED",
+    "courseName": "Data advanced 1",
+    "highlighted": true,
+    "sortOrder": 0,
+    "shortDescriptionEn": "Een devops/dataoplossing om videodata inzichtelijk te maken",
+    "courseNameEn": "Data advanced 1"
+  },
+  {
+    "slug": "firsfs",
+    "title": "Webshop",
+    "shortDescription": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular",
+    "category": "SCHOOL_PROJECT",
+    "status": "COMPLETED",
+    "courseName": "First Full Stack",
+    "highlighted": true,
+    "sortOrder": 0,
+    "shortDescriptionEn": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular",
+    "courseNameEn": "First Full Stack"
+  },
+  {
+    "slug": "portfolio-website",
+    "title": "Mijn portfolio website",
+    "shortDescription": "",
+    "category": "PERSONAL_PROJECT",
+    "status": "IN_PROGRESS",
+    "courseName": null,
+    "highlighted": false,
+    "sortOrder": 0,
+    "shortDescriptionEn": "",
+    "courseNameEn": null
+  }
+]

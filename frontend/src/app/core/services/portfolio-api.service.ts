@@ -1,16 +1,13 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, forkJoin, of } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 import { LanguageService } from './language.service';
-import { environment } from '../../../environments/environment';
+
 export type ProjectCategory = 'SCHOOL_PROJECT' | 'PERSONAL_PROJECT';
 export type ProjectStatus = 'COMPLETED' | 'IN_PROGRESS';
 export type SkillCategory = 'BACKEND' | 'FRONTEND' | 'DATABASE' | 'DEVOPS' | 'TOOLS' | 'MOBILE' | 'CLOUD';
-export interface ApiResponse<T> {
-  status: number;
-  message: string;
-  data: T;
-}
+
 export interface Profile {
   name: string;
   role: string;
@@ -19,6 +16,7 @@ export interface Profile {
   summary: string;
   email: string;
 }
+
 export interface TimelineEventDto {
   id: number;
   title: string;
@@ -30,28 +28,16 @@ export interface TimelineEventDto {
   description: string;
   sortOrder: number;
 }
-export interface HomeSectionDto {
-  id: number;
-  identifier: string;
-  title: string;
-  titleEn: string;
-  subtitle: string;
-  subtitleEn: string;
-  content: string;
-  contentEn: string;
-  sortOrder: number;
-  type: 'HERO' | 'ABOUT' | 'FEATURED_SKILLS' | 'SKILLS' | 'PROJECTS' | 'TIMELINE' | 'CONTACT' | 'CUSTOM_TEXT';
-  visible: boolean;
-  showTerminal?: boolean;
-}
+
+
 export interface HomeDto {
   profile: Profile;
   highlightedProjects: ProjectListDto[];
   allSkills: SkillDto[];
   featuredSkills: FeaturedSkillDto[];
   timelineEvents: TimelineEventDto[];
-  homeSections: HomeSectionDto[];
 }
+
 export interface SkillDto {
   id: number;
   name: string;
@@ -59,6 +45,7 @@ export interface SkillDto {
   description: string;
   sortOrder: number;
 }
+
 export interface FeaturedSkillDto {
   id: number;
   name: string;
@@ -69,6 +56,7 @@ export interface FeaturedSkillDto {
   icon: string;
   sortOrder: number;
 }
+
 export interface ProjectListDto {
   slug: string;
   title: string;
@@ -79,6 +67,7 @@ export interface ProjectListDto {
   highlighted: boolean;
   sortOrder: number;
 }
+
 export interface ProjectDetailDto {
   id: number;
   slug: string;
@@ -103,11 +92,13 @@ export interface ProjectDetailDto {
   documentUrl: string | null;
   highlighted: boolean;
 }
+
 export interface ProjectImageDto {
   title: string;
   imageUrl: string;
   sortOrder: number;
 }
+
 export interface ShowcaseDto {
   id: number;
   type: string;
@@ -116,15 +107,18 @@ export interface ShowcaseDto {
   embedCode: string;
   sortOrder: number;
 }
+
 export interface DocumentDto {
   id: number;
   title: string;
   url: string;
   sortOrder: number;
 }
+
 export interface LinksDto {
   github: string;
 }
+
 export interface SocialDto {
   id: number;
   platform: string;
@@ -132,46 +126,154 @@ export interface SocialDto {
   icon: string;
   sortOrder: number;
 }
+
 export interface ContactRequest {
   name: string;
   email: string;
   message: string;
 }
+
+// Raw JSON interfaces (with bilingual fields)
+interface RawProfile extends Profile {
+  roleEn?: string;
+  focusEn?: string;
+  summaryEn?: string;
+}
+
+interface RawProjectListDto extends ProjectListDto {
+  shortDescriptionEn?: string;
+}
+
+interface RawProjectDetailDto extends ProjectDetailDto {
+  titleEn?: string;
+  shortDescriptionEn?: string;
+  descriptionEn?: string;
+  roleEn?: string;
+  highlightsEn?: string;
+  featuresEn?: string[];
+}
+
+interface RawTimelineEventDto extends TimelineEventDto {
+  titleEn?: string;
+  subtitleEn?: string;
+  descriptionEn?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class PortfolioApiService {
-  private readonly baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
   private langService = inject(LanguageService);
-  private get langParams(): HttpParams {
-    return new HttpParams().set('lang', this.langService.currentLang());
+
+  private isEn(): boolean {
+    return this.langService.currentLang() === 'en';
   }
-  getHome(): Observable<ApiResponse<HomeDto>> {
-    return this.http.get<ApiResponse<HomeDto>>(`${this.baseUrl}/home`, { params: this.langParams });
+
+  private localizeProfile(raw: RawProfile): Profile {
+    const en = this.isEn();
+    return {
+      name: raw.name,
+      role: (en && raw.roleEn) ? raw.roleEn : raw.role,
+      focus: (en && raw.focusEn) ? raw.focusEn : raw.focus,
+      location: raw.location,
+      summary: (en && raw.summaryEn) ? raw.summaryEn : raw.summary,
+      email: raw.email
+    };
   }
-  getProfile(): Observable<ApiResponse<Profile>> {
-    return this.http.get<ApiResponse<Profile>>(`${this.baseUrl}/profile`);
+
+  private localizeProjectList(raw: RawProjectListDto): ProjectListDto {
+    const en = this.isEn();
+    return {
+      ...raw,
+      shortDescription: (en && raw.shortDescriptionEn) ? raw.shortDescriptionEn : raw.shortDescription
+    };
   }
-  getSkills(): Observable<ApiResponse<SkillDto[]>> {
-    return this.http.get<ApiResponse<SkillDto[]>>(`${this.baseUrl}/skills`, { params: this.langParams });
+
+  private localizeProjectDetail(raw: RawProjectDetailDto): ProjectDetailDto {
+    const en = this.isEn();
+    return {
+      ...raw,
+      title: (en && raw.titleEn) ? raw.titleEn : raw.title,
+      shortDescription: (en && raw.shortDescriptionEn) ? raw.shortDescriptionEn : raw.shortDescription,
+      description: (en && raw.descriptionEn) ? raw.descriptionEn : raw.description,
+      role: (en && raw.roleEn) ? raw.roleEn : raw.role,
+      highlights: (en && raw.highlightsEn) ? raw.highlightsEn : raw.highlights,
+      features: (en && raw.featuresEn) ? raw.featuresEn : raw.features
+    };
   }
-  getProjects(): Observable<ApiResponse<ProjectListDto[]>> {
-    return this.http.get<ApiResponse<ProjectListDto[]>>(`${this.baseUrl}/projects`, { params: this.langParams });
+
+  private localizeTimeline(raw: RawTimelineEventDto): TimelineEventDto {
+    const en = this.isEn();
+    return {
+      ...raw,
+      title: (en && raw.titleEn) ? raw.titleEn : raw.title,
+      subtitle: (en && raw.subtitleEn) ? raw.subtitleEn : raw.subtitle,
+      description: (en && raw.descriptionEn) ? raw.descriptionEn : raw.description
+    };
   }
-  getProjectBySlug(slug: string): Observable<ApiResponse<ProjectDetailDto>> {
-    return this.http.get<ApiResponse<ProjectDetailDto>>(`${this.baseUrl}/projects/${slug}`, { params: this.langParams });
-  }
-  getSocials(): Observable<ApiResponse<SocialDto[]>> {
-    return this.http.get<ApiResponse<SocialDto[]>>(`${this.baseUrl}/socials`);
-  }
-  getProjectsBySkill(skillName: string): Observable<ApiResponse<ProjectListDto[]>> {
-    return this.http.get<ApiResponse<ProjectListDto[]>>(
-      `${this.baseUrl}/projects/by-skill/${encodeURIComponent(skillName)}`,
-      { params: this.langParams }
+
+  getHome(): Observable<HomeDto> {
+    return forkJoin({
+      profile: this.http.get<RawProfile>('/data/profile.json'),
+      projects: this.http.get<RawProjectListDto[]>('/data/projects.json'),
+      skills: this.http.get<SkillDto[]>('/data/skills.json'),
+      featuredSkills: this.http.get<FeaturedSkillDto[]>('/data/featured-skills.json'),
+      timeline: this.http.get<RawTimelineEventDto[]>('/data/timeline.json')
+    }).pipe(
+      map(data => ({
+        profile: this.localizeProfile(data.profile),
+        highlightedProjects: data.projects
+          .filter(p => p.highlighted)
+          .map(p => this.localizeProjectList(p)),
+        allSkills: data.skills,
+        featuredSkills: data.featuredSkills,
+        timelineEvents: data.timeline.map(t => this.localizeTimeline(t))
+      }))
     );
   }
-  sendContactMessage(request: ContactRequest): Observable<ApiResponse<void>> {
-    return this.http.post<ApiResponse<void>>(`${this.baseUrl}/contact`, request);
+
+  getProfile(): Observable<Profile> {
+    return this.http.get<RawProfile>('/data/profile.json').pipe(
+      map(raw => this.localizeProfile(raw))
+    );
+  }
+
+  getSkills(): Observable<SkillDto[]> {
+    return this.http.get<SkillDto[]>('/data/skills.json');
+  }
+
+  getProjects(): Observable<ProjectListDto[]> {
+    return this.http.get<RawProjectListDto[]>('/data/projects.json').pipe(
+      map(projects => projects.map(p => this.localizeProjectList(p)))
+    );
+  }
+
+  getProjectBySlug(slug: string): Observable<ProjectDetailDto> {
+    return this.http.get<RawProjectDetailDto>(`/data/projects/${slug}.json`).pipe(
+      map(raw => this.localizeProjectDetail(raw))
+    );
+  }
+
+  getSocials(): Observable<SocialDto[]> {
+    return this.http.get<SocialDto[]>('/data/socials.json');
+  }
+
+  getProjectsBySkill(skillName: string): Observable<ProjectListDto[]> {
+    // Load all projects and filter client-side by skill
+    // Since we don't have skill-to-project mapping in the list view,
+    // we return all projects for now (the skill filter can be enhanced later)
+    return this.getProjects();
+  }
+
+  sendContactMessage(request: ContactRequest): Observable<void> {
+    // Using Formspree for contact form handling
+    // Replace 'YOUR_FORMSPREE_ID' with your actual Formspree form ID
+    // Sign up at https://formspree.io to get your form endpoint
+    return this.http.post<void>('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+      name: request.name,
+      email: request.email,
+      message: request.message
+    });
   }
 }

@@ -1,0 +1,104 @@
+{
+  "id": 4,
+  "slug": "chatbot-dashboard",
+  "title": "Chatbot + dashboard",
+  "shortDescription": "In data advanced hebben we als groep een proof of concept gemaakt voor het probleem van MIZ",
+  "description": "Miz kwam met het probleem dat alarmen lastig afgesloten konden worden. Als groep moesten wij een oplossing bedenken waarmee dit probleem duidelijk zichtbaar werd. Daarom hebben wij de beschikbare data gebruikt om een custom Angular-dashboard te maken. In dit dashboard konden gebruikers de alarmdata beter analyseren. Daarnaast hebben wij een chatbot geïntegreerd om vragen over de data te kunnen stellen.\n\nVoor de chatbot hebben wij een klein Ollama-model gebruikt. De chatbot werd gekoppeld aan de Spring Boot-backend. In de backend maakten wij gebruik van semantic search, RAG en een vector database. Hierdoor kon de chatbot relevante context uit de data ophalen voordat er een antwoord werd gegenereerd.\n\n---\n\nDe werking was ongeveer als volgt:\n\n1. De gebruiker stelt een vraag in Angular.\n2. Angular stuurt deze vraag naar de Spring Boot-backend.\n3. De backend verwerkt de vraag.\n4. De backend zoekt met semantic search naar relevante informatie in de vector database.\n5. De gevonden context wordt samen met de vraag naar het Ollama-model gestuurd.\n6. Het Ollama-model gebruikt deze context om een antwoord te genereren.\n7. De backend stuurt het antwoord terug naar Angular.\n9. Angular toont het antwoord aan de gebruiker.\n\n---\n\nHelaas is de repository prive (ik heb geen rechten om dit aan te passen)",
+  "role": "Full stack developer",
+  "highlights": "- Semantic search\n- RAG (Retrieval-Augmented Generation)\n- Vector databse\n- Custom angular dashboard\n- Ollama chatbot\n- jwt authenticatie",
+  "category": "SCHOOL_PROJECT",
+  "status": "COMPLETED",
+  "startDate": null,
+  "endDate": null,
+  "repositoryUrl": "https://gitlab.inf-hsleiden.nl/Renzo/data-advance-2-miz17",
+  "techStack": [
+    "Python",
+    "Ollama",
+    "HTML",
+    "UML",
+    "Flyway",
+    "Java",
+    "CSS",
+    "Angular",
+    "Git",
+    "Javascript",
+    "PostgreSQL",
+    "Springboot"
+  ],
+  "features": [],
+  "images": [
+    {
+      "id": 90,
+      "title": "Screenshot_1778625655557",
+      "imageUrl": "/assets/uploads/b6caf64b_image.png",
+      "sortOrder": 0
+    }
+  ],
+  "showcases": [
+    {
+      "id": 30,
+      "type": "video",
+      "title": "Video 1",
+      "url": "https://www.youtube.com/embed/lASTk7QQEJo",
+      "embedCode": "",
+      "sortOrder": 0
+    },
+    {
+      "id": 31,
+      "type": "video",
+      "title": "Video 2",
+      "url": "https://www.youtube.com/embed/hKlg9CS6ngY",
+      "embedCode": "",
+      "sortOrder": 1
+    },
+    {
+      "id": 32,
+      "type": "video",
+      "title": "Video 3",
+      "url": "https://www.youtube.com/embed/lASTk7QQEJo",
+      "embedCode": "",
+      "sortOrder": 2
+    }
+  ],
+  "documents": [
+    {
+      "id": 65,
+      "title": "Resultaten webapp",
+      "url": "/assets/uploads/b5e971b3_Resultaten webapp.pdf",
+      "sortOrder": 0
+    },
+    {
+      "id": 66,
+      "title": "miz17_Ontwerpdocument",
+      "url": "/assets/uploads/d502b7f0_miz17_Ontwerpdocument.pdf",
+      "sortOrder": 1
+    }
+  ],
+  "links": {
+    "github": "https://gitlab.inf-hsleiden.nl/Renzo/data-advance-2-miz17"
+  },
+  "skillIds": [
+    2,
+    7,
+    20,
+    11,
+    22,
+    1,
+    21,
+    3,
+    10,
+    19,
+    6,
+    5
+  ],
+  "courseName": "Data advanced 2",
+  "documentUrl": null,
+  "highlighted": true,
+  "titleEn": "Chatbot + dashboard",
+  "shortDescriptionEn": "In data advanced hebben we als groep een proof of concept gemaakt voor het probleem van MIZ",
+  "descriptionEn": "Miz kwam met het probleem dat alarmen lastig afgesloten konden worden. Als groep moesten wij een oplossing bedenken waarmee dit probleem duidelijk zichtbaar werd. Daarom hebben wij de beschikbare data gebruikt om een custom Angular-dashboard te maken. In dit dashboard konden gebruikers de alarmdata beter analyseren. Daarnaast hebben wij een chatbot geïntegreerd om vragen over de data te kunnen stellen.\n\nVoor de chatbot hebben wij een klein Ollama-model gebruikt. De chatbot werd gekoppeld aan de Spring Boot-backend. In de backend maakten wij gebruik van semantic search, RAG en een vector database. Hierdoor kon de chatbot relevante context uit de data ophalen voordat er een antwoord werd gegenereerd.\n\n---\n\nDe werking was ongeveer als volgt:\n\n1. De gebruiker stelt een vraag in Angular.\n2. Angular stuurt deze vraag naar de Spring Boot-backend.\n3. De backend verwerkt de vraag.\n4. De backend zoekt met semantic search naar relevante informatie in de vector database.\n5. De gevonden context wordt samen met de vraag naar het Ollama-model gestuurd.\n6. Het Ollama-model gebruikt deze context om een antwoord te genereren.\n7. De backend stuurt het antwoord terug naar Angular.\n9. Angular toont het antwoord aan de gebruiker.\n\n---\n\nHelaas is de repository prive (ik heb geen rechten om dit aan te passen)",
+  "roleEn": "Full stack developer",
+  "highlightsEn": "- Semantic search\n- RAG (Retrieval-Augmented Generation)\n- Vector databse\n- Custom angular dashboard\n- Ollama chatbot\n- jwt authenticatie",
+  "featuresEn": [],
+  "courseNameEn": "Data advanced 2"
+}
