@@ -160,6 +160,8 @@ code, pre {
   border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
+$_method-cfg: (get: var(--accent-2), post: var(--accent), put: var(--warn), delete: var(--danger));
+
 .method-badge {
   display: inline-flex;
   align-items: center;
@@ -171,30 +173,16 @@ code, pre {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 
-  &.get {
-    background-color: color-mix(in srgb, var(--accent-2) 15%, transparent);
-    color: $method-get;
-    border: 1px solid color-mix(in srgb, var(--accent-2) 30%, transparent);
-  }
-
-  &.post {
-    background-color: color-mix(in srgb, var(--accent) 15%, transparent);
-    color: $method-post;
-    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
-  }
-
-  &.put {
-    background-color: color-mix(in srgb, var(--warn) 15%, transparent);
-    color: $method-put;
-    border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent);
-  }
-
-  &.delete {
-    background-color: color-mix(in srgb, var(--danger) 15%, transparent);
-    color: $method-delete;
-    border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
+  @each $name, $c in $_method-cfg {
+    &.#{$name} {
+      background-color: color-mix(in srgb, #{$c} 15%, transparent);
+      color: #{$c};
+      border: 1px solid color-mix(in srgb, #{$c} 30%, transparent);
+    }
   }
 }
+
+$_status-cfg: (success: var(--accent-2), error: var(--danger), warning: var(--warn));
 
 .status-badge {
   display: inline-flex;
@@ -205,19 +193,11 @@ code, pre {
   font-family: $font-mono;
   border-radius: $radius-sm;
 
-  &.success {
-    background-color: color-mix(in srgb, var(--accent-2) 15%, transparent);
-    color: $status-200;
-  }
-
-  &.error {
-    background-color: color-mix(in srgb, var(--danger) 15%, transparent);
-    color: $status-404;
-  }
-
-  &.warning {
-    background-color: color-mix(in srgb, var(--warn) 15%, transparent);
-    color: $status-400;
+  @each $name, $c in $_status-cfg {
+    &.#{$name} {
+      background-color: color-mix(in srgb, #{$c} 15%, transparent);
+      color: #{$c};
+    }
   }
 }
 
@@ -394,18 +374,19 @@ code, pre {
   }
 }
 
-.info-value {
-  p { margin: 0 0 $spacing-xs; &:last-child { margin-bottom: 0; } }
+%prose-inline {
   strong { color: $text-primary; font-weight: 600; }
   ul, ol { padding-left: $spacing-md; margin: $spacing-xs 0; }
   ul li { list-style: disc; }
   code { font-family: $font-mono; color: $accent-green; font-size: 0.85em; }
 }
 
+.info-value {
+  @extend %prose-inline;
+  p { margin: 0 0 $spacing-xs; &:last-child { margin-bottom: 0; } }
+}
+
 .docs-text {
+  @extend %prose-inline;
   p { margin: 0 0 $spacing-sm; &:last-child { margin-bottom: 0; } }
-  strong { color: $text-primary; font-weight: 600; }
-  ul, ol { padding-left: $spacing-md; margin: $spacing-xs 0; }
-  ul li { list-style: disc; }
-  code { font-family: $font-mono; color: $accent-green; font-size: 0.85em; }
 }

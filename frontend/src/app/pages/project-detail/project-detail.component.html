@@ -17,7 +17,7 @@
       <button type="button" (click)="goBack()" class="back-link">{{ 'detail.back' | t }}</button>
       <div class="hero-meta">
         <span class="category-badge">{{ 'enum.category.' + p.category | t }}</span>
-        <span class="status-badge" [class]="getStatusClass()">{{ 'enum.status.' + p.status | t }}</span>
+        <span class="project-status" [class]="getStatusClass()">{{ 'enum.status.' + p.status | t }}</span>
         @if (p.startDate) {
           <span class="date-info">{{ p.startDate }} - {{ p.endDate || ('detail.current' | t) }}</span>
         }
