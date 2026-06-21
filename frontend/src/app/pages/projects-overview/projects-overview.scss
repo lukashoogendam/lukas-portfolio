@@ -53,7 +53,7 @@
   gap: $spacing-md;
   transition: all $transition-base;
   &:hover {
-    border-color: rgba($accent-primary, 0.35);
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
     box-shadow: $shadow-md;
   }
 }
@@ -70,9 +70,9 @@
 }
 .course-badge {
   padding: 3px 12px;
-  background: rgba($accent-purple, 0.1);
+  background: color-mix(in srgb, var(--info) 10%, transparent);
   color: $accent-purple;
-  border: 1px solid rgba($accent-purple, 0.2);
+  border: 1px solid color-mix(in srgb, var(--info) 20%, transparent);
   border-radius: $radius-full;
   font-size: $font-size-xs;
   font-weight: 600;
@@ -82,9 +82,9 @@
 }
 .status-badge {
   padding: 3px 12px;
-  background: rgba($accent-primary, 0.1);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   color: $accent-primary;
-  border: 1px solid rgba($accent-primary, 0.2);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
   border-radius: $radius-full;
   font-size: $font-size-xs;
   font-weight: 600;
@@ -94,9 +94,9 @@
 }
 .course-name-badge {
   padding: 3px 12px;
-  background: rgba($accent-green, 0.1);
+  background: color-mix(in srgb, var(--accent-2) 10%, transparent);
   color: $accent-green;
-  border: 1px solid rgba($accent-green, 0.2);
+  border: 1px solid color-mix(in srgb, var(--accent-2) 20%, transparent);
   border-radius: $radius-full;
   font-size: $font-size-xs;
   font-weight: 600;
@@ -119,12 +119,12 @@
   cursor: pointer;
   transition: all $transition-fast;
   &:hover {
-    border-color: rgba($accent-primary, 0.4);
+    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
     color: $accent-primary;
   }
   &.active {
-    background: rgba($accent-primary, 0.1);
-    border-color: rgba($accent-primary, 0.3);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 30%, transparent);
     color: $accent-primary;
     font-weight: 600;
   }
@@ -161,10 +161,10 @@
   transition: all $transition-fast;
   background: linear-gradient(135deg, $accent-primary, $accent-primary-dark);
   color: #fff;
-  box-shadow: 0 2px 8px rgba($accent-primary, 0.25);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 25%, transparent);
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba($accent-primary, 0.35);
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 35%, transparent);
   }
 }
 .btn-icon {
@@ -200,7 +200,7 @@
   border-radius: $radius-sm;
   font-size: $font-size-xs;
   font-weight: 700;
-  background-color: rgba($method-get, 0.15);
+  background-color: color-mix(in srgb, var(--accent-2) 15%, transparent);
   color: $method-get;
 }
 .api-path {

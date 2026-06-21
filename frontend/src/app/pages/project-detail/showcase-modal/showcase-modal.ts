@@ -1,14 +1,14 @@
-import { Component, input, output, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, output, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
+import { ShowcaseDto } from '../../../core/services/portfolio-api.service';
 
 @Component({
   selector: 'app-showcase-modal',
   templateUrl: './showcase-modal.html',
-  styleUrl: './showcase-modal.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './showcase-modal.scss'
 })
 export class ShowcaseModalComponent {
-  sc = input<any>();
+  sc = input<ShowcaseDto>();
   close = output<void>();
 
   private sanitizer = inject(DomSanitizer);
@@ -23,8 +23,8 @@ export class ShowcaseModalComponent {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  isYouTubeUrl(url: string): boolean {
-    return url.includes('youtube.com') || url.includes('youtu.be');
+  isYouTubeUrl(url?: string): boolean {
+    return !!url && (url.includes('youtube.com') || url.includes('youtu.be'));
   }
 
   closeModal() {
