@@ -1,9 +1,8 @@
-import { Component, input, computed, signal, ChangeDetectionStrategy, ViewEncapsulation, OnInit, OnDestroy, inject, ChangeDetectorRef, ElementRef, viewChild, afterNextRender } from '@angular/core';
+import { Component, input, computed, signal, ViewEncapsulation, OnInit, OnDestroy, inject, ChangeDetectorRef, ElementRef, viewChild, afterNextRender } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 @Component({
   selector: 'app-api-terminal',
   imports: [JsonPipe],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <div class="code-window" #terminalEl>
@@ -48,7 +47,7 @@ export class ApiTerminalComponent implements OnInit, OnDestroy {
   private terminalEl = viewChild<ElementRef>('terminalEl');
 
   endpoint = input('/api/v1/resource');
-  jsonPayload = input<any>();
+  jsonPayload = input<unknown>();
 
   fullCommand = computed(() => {
     const baseUrl = 'https://lukasportfolio.site/api';
