@@ -1,23 +1,17 @@
 [
   {
-    "id": 1,
     "platform": "Github",
     "url": "https://github.com/Lukashoogendam",
-    "icon": "github",
-    "sortOrder": null
+    "icon": "github"
   },
   {
-    "id": 2,
     "platform": "Gitlab (hsleiden)",
     "url": "https://gitlab.inf-hsleiden.nl/s1142688",
-    "icon": "gitlab",
-    "sortOrder": null
+    "icon": "gitlab"
   },
   {
-    "id": 3,
     "platform": "LinkedIn",
     "url": "https://www.linkedin.com/in/lukas-hoogendam-bb271540a/",
-    "icon": "linkedin",
-    "sortOrder": null
+    "icon": "linkedin"
   }
 ]

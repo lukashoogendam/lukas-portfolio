@@ -33,14 +33,9 @@
         @if (p.courseName) {
           <span class="course-badge">📚 {{ p.courseName }}</span>
         }
-        @if (p.links && p.links.github) {
-          <a [href]="p.links.github" target="_blank" rel="noopener" class="link-btn github">
+        @if (p.repositoryUrl) {
+          <a [href]="p.repositoryUrl" target="_blank" rel="noopener" class="link-btn github">
             <span class="link-icon">⌨</span> GitHub
-          </a>
-        }
-        @if (p.documentUrl) {
-          <a [href]="p.documentUrl" target="_blank" rel="noopener" class="link-btn document">
-            <span class="link-icon">📄</span> {{ 'detail.view_assignment' | t }}
           </a>
         }
       </div>
@@ -58,35 +53,26 @@
               <p class="info-value">{{ p.role }}</p>
             </div>
           }
-          @if (p.highlights) {
+          @if (p.highlights.length > 0) {
             <div class="info-card">
               <h3 class="info-label">{{ 'detail.built' | t }}</h3>
-              <div class="info-value" [innerHTML]="p.highlights | markdown"></div>
+              <ul class="info-value highlights-list">
+                @for (hl of p.highlights; track hl) {
+                  <li>{{ hl }}</li>
+                }
+              </ul>
             </div>
           }
         </div>
       </div>
     </section>
-    @if (p.features && p.features.length > 0) {
-      <section class="section features-section">
-        <h2 class="section-title">Features</h2>
-        <div class="features-grid">
-          @for (feature of p.features; track feature) {
-            <div class="feature-item">
-              <span class="feature-check">✓</span>
-              <span class="feature-text">{{ feature }}</span>
-            </div>
-          }
-        </div>
-      </section>
-    }
     @if (p.showcases && p.showcases.length > 0) {
       <section class="section demo-section showcases-section">
         <h2 class="section-title">
           <span class="title-icon">▶</span> Live Demos & Showcases
         </h2>
         <div class="showcases-grid">
-          @for (sc of p.showcases; track sc.id) {
+          @for (sc of p.showcases; track sc.url) {
             <div class="showcase-card" (click)="openShowcaseModal(sc)">
               <div class="showcase-card-icon">
                 @if (sc.type === 'iframe') { 🌐 }
@@ -118,18 +104,22 @@
         </div>
       </section>
     }
-    @if ((p.documents && p.documents.length > 0) || p.highlights) {
+    @if ((p.documents && p.documents.length > 0) || p.highlights.length > 0) {
       <section class="section docs-section">
         <h2 class="section-title">{{ 'detail.docs' | t }}</h2>
         <div class="docs-content">
-          @if (p.highlights) {
+          @if (p.highlights.length > 0) {
             <div class="docs-card">
               <h3>{{ 'detail.tech_summary' | t }}</h3>
-              <div class="docs-text" [innerHTML]="p.highlights | markdown"></div>
+              <ul class="docs-text highlights-list">
+                @for (hl of p.highlights; track hl) {
+                  <li>{{ hl }}</li>
+                }
+              </ul>
             </div>
           }
           @if (p.documents && p.documents.length > 0) {
-            @for (doc of p.documents; track doc.id) {
+            @for (doc of p.documents; track doc.url) {
               <div class="docs-card">
                 <h3>{{ doc.title }}</h3>
                 <a [href]="doc.url" target="_blank" rel="noopener" class="docs-link">

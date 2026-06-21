@@ -1,16 +1,43 @@
 {
-  "id": 2,
   "slug": "firsfs",
-  "title": "Webshop",
-  "shortDescription": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular",
-  "description": "Door de VPN op de Hogeschool Leiden is het niet mogelijk om een demo te geven van de webshop, daarom heb ik screenshots bijgevoegd van mijn webshop.\n\n---\n\nIk heb een powerlift webshop ontworpen, omdat ik hou van powerlifting. Je kan producten toevoegen aan je winkelwagen, een order plaatsen en je orders inzien. Daarnaast is er ook nog een admin paneel om alles te beheren. Ook zit er een 'high contrast' mode bij voor slechtziende gebruikers. Als laatst is het ook mogelijk om de site te vertalen naar het Engels.",
-  "role": "Full stack developer",
-  "highlights": "Jwt authenticatie met cookies\nVeel aandacht voor security\nAdmin paneel",
+  "title": {
+    "nl": "Webshop",
+    "en": "Webshop"
+  },
+  "shortDescription": {
+    "nl": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular",
+    "en": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular"
+  },
+  "description": {
+    "nl": "Door de VPN op de Hogeschool Leiden is het niet mogelijk om een demo te geven van de webshop, daarom heb ik screenshots bijgevoegd van mijn webshop.\n\n---\n\nIk heb een powerlift webshop ontworpen, omdat ik hou van powerlifting. Je kan producten toevoegen aan je winkelwagen, een order plaatsen en je orders inzien. Daarnaast is er ook nog een admin paneel om alles te beheren. Ook zit er een 'high contrast' mode bij voor slechtziende gebruikers. Als laatst is het ook mogelijk om de site te vertalen naar het Engels.",
+    "en": "Door de VPN op de Hogeschool Leiden is het niet mogelijk om een demo te geven van de webshop, daarom heb ik screenshots bijgevoegd van mijn webshop.\n\n---\n\nIk heb een powerlift webshop ontworpen, omdat ik hou van powerlifting. Je kan producten toevoegen aan je winkelwagen, een order plaatsen en je orders inzien. Daarnaast is er ook nog een admin paneel om alles te beheren. Ook zit er een 'high contrast' mode bij voor slechtziende gebruikers. Als laatst is het ook mogelijk om de site te vertalen naar het Engels."
+  },
+  "role": {
+    "nl": "Full stack developer",
+    "en": "Full stack developer"
+  },
+  "highlights": {
+    "nl": [
+      "Jwt authenticatie met cookies",
+      "Veel aandacht voor security",
+      "Admin paneel"
+    ],
+    "en": [
+      "Jwt authenticatie met cookies",
+      "Veel aandacht voor security",
+      "Admin paneel"
+    ]
+  },
   "category": "SCHOOL_PROJECT",
   "status": "COMPLETED",
   "startDate": null,
   "endDate": null,
   "repositoryUrl": "https://gitlab.inf-hsleiden.nl/s1142688/2526_infirsfs",
+  "courseName": {
+    "nl": "First Full Stack",
+    "en": "First Full Stack"
+  },
+  "highlighted": true,
   "techStack": [
     "Javascript",
     "HTML",
@@ -25,109 +52,57 @@
     "Git",
     "Postman"
   ],
-  "features": [],
   "images": [
     {
-      "id": 78,
       "title": "Screenshot_1778611156045",
-      "imageUrl": "/assets/uploads/987dbfba_image.png",
-      "sortOrder": 0
+      "imageUrl": "/assets/uploads/987dbfba_image.png"
     },
     {
-      "id": 79,
       "title": "Screenshot 2026-05-12 2023431",
-      "imageUrl": "/assets/uploads/ccf91094_Screenshot 2026-05-12 2023431.png",
-      "sortOrder": 1
+      "imageUrl": "/assets/uploads/ccf91094_Screenshot 2026-05-12 2023431.png"
     },
     {
-      "id": 80,
       "title": "Screenshot 2026-05-12 202318",
-      "imageUrl": "/assets/uploads/194f4719_Screenshot 2026-05-12 202318.png",
-      "sortOrder": 2
+      "imageUrl": "/assets/uploads/194f4719_Screenshot 2026-05-12 202318.png"
     },
     {
-      "id": 81,
       "title": "Screenshot 2026-05-12 202242",
-      "imageUrl": "/assets/uploads/472795b8_Screenshot 2026-05-12 202242.png",
-      "sortOrder": 3
+      "imageUrl": "/assets/uploads/472795b8_Screenshot 2026-05-12 202242.png"
     },
     {
-      "id": 82,
       "title": "Screenshot_1778611185106",
-      "imageUrl": "/assets/uploads/c160b1d8_image.png",
-      "sortOrder": 4
+      "imageUrl": "/assets/uploads/c160b1d8_image.png"
     },
     {
-      "id": 83,
       "title": "Screenshot_1778611228175",
-      "imageUrl": "/assets/uploads/3d59d331_image.png",
-      "sortOrder": 5
+      "imageUrl": "/assets/uploads/3d59d331_image.png"
     },
     {
-      "id": 84,
       "title": "Screenshot_1778611261373",
-      "imageUrl": "/assets/uploads/4f140586_image.png",
-      "sortOrder": 6
+      "imageUrl": "/assets/uploads/4f140586_image.png"
     },
     {
-      "id": 85,
       "title": "Screenshot_1778611284110",
-      "imageUrl": "/assets/uploads/fe5b40c9_image.png",
-      "sortOrder": 7
+      "imageUrl": "/assets/uploads/fe5b40c9_image.png"
     },
     {
-      "id": 86,
       "title": "Screenshot_1778611299189",
-      "imageUrl": "/assets/uploads/7fd42a3d_image.png",
-      "sortOrder": 8
+      "imageUrl": "/assets/uploads/7fd42a3d_image.png"
     }
   ],
   "showcases": [],
   "documents": [
     {
-      "id": 57,
       "title": "Software ontwerp",
-      "url": "/assets/uploads/1a70315b_Software ontwerp.pdf",
-      "sortOrder": 0
+      "url": "/assets/uploads/1a70315b_Software ontwerp.pdf"
     },
     {
-      "id": 58,
       "title": "Requirements engineering",
-      "url": "/assets/uploads/d32b88c1_Requirements engineering.pdf",
-      "sortOrder": 1
+      "url": "/assets/uploads/d32b88c1_Requirements engineering.pdf"
     },
     {
-      "id": 59,
       "title": "Onderzoeksdocument",
-      "url": "/assets/uploads/c12a5cc0_Onderzoeksdocument.pdf",
-      "sortOrder": 2
+      "url": "/assets/uploads/c12a5cc0_Onderzoeksdocument.pdf"
     }
-  ],
-  "links": {
-    "github": "https://gitlab.inf-hsleiden.nl/s1142688/2526_infirsfs"
-  },
-  "skillIds": [
-    19,
-    20,
-    6,
-    3,
-    1,
-    5,
-    14,
-    21,
-    11,
-    12,
-    10,
-    16
-  ],
-  "courseName": "First Full Stack",
-  "documentUrl": null,
-  "highlighted": true,
-  "titleEn": "Webshop",
-  "shortDescriptionEn": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular",
-  "descriptionEn": "Door de VPN op de Hogeschool Leiden is het niet mogelijk om een demo te geven van de webshop, daarom heb ik screenshots bijgevoegd van mijn webshop.\n\n---\n\nIk heb een powerlift webshop ontworpen, omdat ik hou van powerlifting. Je kan producten toevoegen aan je winkelwagen, een order plaatsen en je orders inzien. Daarnaast is er ook nog een admin paneel om alles te beheren. Ook zit er een 'high contrast' mode bij voor slechtziende gebruikers. Als laatst is het ook mogelijk om de site te vertalen naar het Engels.",
-  "roleEn": "Full stack developer",
-  "highlightsEn": "Jwt authenticatie met cookies\nVeel aandacht voor security\nAdmin paneel",
-  "featuresEn": [],
-  "courseNameEn": "First Full Stack"
+  ]
 }

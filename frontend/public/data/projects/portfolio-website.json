@@ -1,16 +1,32 @@
 {
-  "id": 1,
   "slug": "portfolio-website",
-  "title": "Mijn portfolio website",
-  "shortDescription": "",
-  "description": "Deze website is mijn persoonlijke portfolio. Ik laat hier zien wie ik ben, welke projecten ik heb gemaakt en welke technieken ik gebruik. De website is gebouwd als een soort API explorer, zodat bezoekers op een interactieve manier informatie over mij en mijn werk kunnen bekijken.\n\n\n---\n\n\n**Motivatie**\n\nIk wilde een portfolio maken dat beter bij mijn studie Informatica past dan een standaard website. Omdat ik veel werk met Spring Boot en API’s, leek het mij leuk om mijn portfolio ook op die manier te presenteren.\n\n\n---\n\n\n**Doel**\n\nHet doel van deze website is om mijn projecten, vaardigheden en ontwikkeling duidelijk te laten zien. Ook wil ik hiermee laten zien dat ik frontend, backend en beheer kan combineren in één werkende applicatie.",
-  "role": "Developer",
-  "highlights": "",
+  "title": {
+    "nl": "Mijn portfolio website",
+    "en": "Mijn portfolio website"
+  },
+  "shortDescription": {
+    "nl": "",
+    "en": ""
+  },
+  "description": {
+    "nl": "Deze website is mijn persoonlijke portfolio. Ik laat hier zien wie ik ben, welke projecten ik heb gemaakt en welke technieken ik gebruik. De website is gebouwd als een soort API explorer, zodat bezoekers op een interactieve manier informatie over mij en mijn werk kunnen bekijken.\n\n\n---\n\n\n**Motivatie**\n\nIk wilde een portfolio maken dat beter bij mijn studie Informatica past dan een standaard website. Omdat ik veel werk met Spring Boot en API’s, leek het mij leuk om mijn portfolio ook op die manier te presenteren.\n\n\n---\n\n\n**Doel**\n\nHet doel van deze website is om mijn projecten, vaardigheden en ontwikkeling duidelijk te laten zien. Ook wil ik hiermee laten zien dat ik frontend, backend en beheer kan combineren in één werkende applicatie.",
+    "en": "Deze website is mijn persoonlijke portfolio. Ik laat hier zien wie ik ben, welke projecten ik heb gemaakt en welke technieken ik gebruik. De website is gebouwd als een soort API explorer, zodat bezoekers op een interactieve manier informatie over mij en mijn werk kunnen bekijken.\n\n\n---\n\n\n**Motivatie**\n\nIk wilde een portfolio maken dat beter bij mijn studie Informatica past dan een standaard website. Omdat ik veel werk met Spring Boot en API’s, leek het mij leuk om mijn portfolio ook op die manier te presenteren.\n\n\n---\n\n\n**Doel**\n\nHet doel van deze website is om mijn projecten, vaardigheden en ontwikkeling duidelijk te laten zien. Ook wil ik hiermee laten zien dat ik frontend, backend en beheer kan combineren in één werkende applicatie."
+  },
+  "role": {
+    "nl": "Developer",
+    "en": "Developer"
+  },
+  "highlights": {
+    "nl": [],
+    "en": []
+  },
   "category": "PERSONAL_PROJECT",
   "status": "IN_PROGRESS",
   "startDate": null,
   "endDate": null,
   "repositoryUrl": "https://github.com/Lukashoogendam/lukas-portfolio",
+  "courseName": null,
+  "highlighted": false,
   "techStack": [
     "HTML",
     "CSS",
@@ -26,36 +42,7 @@
     "Postman",
     "VPS/Droplets"
   ],
-  "features": [],
   "images": [],
   "showcases": [],
-  "documents": [],
-  "links": {
-    "github": "https://github.com/Lukashoogendam/lukas-portfolio"
-  },
-  "skillIds": [
-    20,
-    21,
-    13,
-    3,
-    6,
-    10,
-    1,
-    19,
-    14,
-    12,
-    5,
-    16,
-    15
-  ],
-  "courseName": null,
-  "documentUrl": null,
-  "highlighted": false,
-  "titleEn": "Mijn portfolio website",
-  "shortDescriptionEn": "",
-  "descriptionEn": "Deze website is mijn persoonlijke portfolio. Ik laat hier zien wie ik ben, welke projecten ik heb gemaakt en welke technieken ik gebruik. De website is gebouwd als een soort API explorer, zodat bezoekers op een interactieve manier informatie over mij en mijn werk kunnen bekijken.\n\n\n---\n\n\n**Motivatie**\n\nIk wilde een portfolio maken dat beter bij mijn studie Informatica past dan een standaard website. Omdat ik veel werk met Spring Boot en API’s, leek het mij leuk om mijn portfolio ook op die manier te presenteren.\n\n\n---\n\n\n**Doel**\n\nHet doel van deze website is om mijn projecten, vaardigheden en ontwikkeling duidelijk te laten zien. Ook wil ik hiermee laten zien dat ik frontend, backend en beheer kan combineren in één werkende applicatie.",
-  "roleEn": "Developer",
-  "highlightsEn": "",
-  "featuresEn": [],
-  "courseNameEn": null
+  "documents": []
 }

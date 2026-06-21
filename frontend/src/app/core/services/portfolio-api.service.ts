@@ -1,60 +1,54 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin, of } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { LanguageService } from './language.service';
+import { Observable, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { LanguageService, Language } from './language.service';
 
 export type ProjectCategory = 'SCHOOL_PROJECT' | 'PERSONAL_PROJECT';
 export type ProjectStatus = 'COMPLETED' | 'IN_PROGRESS';
 export type SkillCategory = 'BACKEND' | 'FRONTEND' | 'DATABASE' | 'DEVOPS' | 'TOOLS' | 'MOBILE' | 'CLOUD';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Public DTOs — consumed by components. Already localized to plain strings,
+// so the bilingual structure never leaks past this service.
+// ─────────────────────────────────────────────────────────────────────────────
 
 export interface Profile {
   name: string;
   role: string;
   focus: string;
   location: string;
-  summary: string;
   email: string;
-}
-
-export interface TimelineEventDto {
-  id: number;
-  title: string;
-  subtitle: string;
-  type: string;
-  startDate: string;
-  endDate: string;
-  current: boolean;
-  description: string;
-  sortOrder: number;
-}
-
-
-export interface HomeDto {
-  profile: Profile;
-  highlightedProjects: ProjectListDto[];
-  allSkills: SkillDto[];
-  featuredSkills: FeaturedSkillDto[];
-  timelineEvents: TimelineEventDto[];
+  summary: string;
 }
 
 export interface SkillDto {
-  id: number;
   name: string;
   category: SkillCategory;
   description: string;
-  sortOrder: number;
 }
 
 export interface FeaturedSkillDto {
-  id: number;
   name: string;
-  nameEn: string;
   description: string;
-  descriptionEn: string;
   category: SkillCategory;
   icon: string;
-  sortOrder: number;
+}
+
+export interface SocialDto {
+  platform: string;
+  url: string;
+  icon: string;
+}
+
+export interface TimelineEventDto {
+  title: string;
+  subtitle: string;
+  type: string;
+  startDate: string | null;
+  endDate: string | null;
+  current: boolean;
+  description: string;
 }
 
 export interface ProjectListDto {
@@ -65,66 +59,51 @@ export interface ProjectListDto {
   status: ProjectStatus;
   courseName: string | null;
   highlighted: boolean;
-  sortOrder: number;
-}
-
-export interface ProjectDetailDto {
-  id: number;
-  slug: string;
-  title: string;
-  shortDescription: string;
-  description: string;
-  role: string;
-  highlights: string;
-  category: ProjectCategory;
-  status: ProjectStatus;
-  startDate: string;
-  endDate: string;
-  repositoryUrl: string;
-  techStack: string[];
-  features: string[];
-  images: ProjectImageDto[];
-  showcases: ShowcaseDto[];
-  documents: DocumentDto[];
-  links: LinksDto;
-  skillIds?: number[];
-  courseName: string | null;
-  documentUrl: string | null;
-  highlighted: boolean;
 }
 
 export interface ProjectImageDto {
   title: string;
   imageUrl: string;
-  sortOrder: number;
 }
 
 export interface ShowcaseDto {
-  id: number;
   type: string;
   title: string;
   url: string;
   embedCode: string;
-  sortOrder: number;
 }
 
 export interface DocumentDto {
-  id: number;
   title: string;
   url: string;
-  sortOrder: number;
 }
 
-export interface LinksDto {
-  github: string;
+export interface ProjectDetailDto {
+  slug: string;
+  title: string;
+  shortDescription: string;
+  description: string;
+  role: string;
+  highlights: string[];
+  category: ProjectCategory;
+  status: ProjectStatus;
+  startDate: string | null;
+  endDate: string | null;
+  repositoryUrl: string;
+  techStack: string[];
+  images: ProjectImageDto[];
+  showcases: ShowcaseDto[];
+  documents: DocumentDto[];
+  courseName: string | null;
+  highlighted: boolean;
 }
 
-export interface SocialDto {
-  id: number;
-  platform: string;
-  url: string;
-  icon: string;
-  sortOrder: number;
+export interface HomeDto {
+  profile: Profile;
+  highlightedProjects: ProjectListDto[];
+  allSkills: SkillDto[];
+  featuredSkills: FeaturedSkillDto[];
+  timelineEvents: TimelineEventDto[];
 }
 
 export interface ContactRequest {
@@ -133,30 +112,73 @@ export interface ContactRequest {
   message: string;
 }
 
-// Raw JSON interfaces (with bilingual fields)
-interface RawProfile extends Profile {
-  roleEn?: string;
-  focusEn?: string;
-  summaryEn?: string;
+// ─────────────────────────────────────────────────────────────────────────────
+// Raw JSON shapes — the on-disk structure with bilingual { nl, en } fields.
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface Localized { nl: string; en: string; }
+interface LocalizedList { nl: string[]; en: string[]; }
+
+interface RawProfile {
+  name: string;
+  role: Localized;
+  focus: Localized;
+  location: string;
+  email: string;
+  summary: Localized;
 }
 
-interface RawProjectListDto extends ProjectListDto {
-  shortDescriptionEn?: string;
+interface RawSkill {
+  name: string;
+  category: SkillCategory;
+  description: Localized | null;
 }
 
-interface RawProjectDetailDto extends ProjectDetailDto {
-  titleEn?: string;
-  shortDescriptionEn?: string;
-  descriptionEn?: string;
-  roleEn?: string;
-  highlightsEn?: string;
-  featuresEn?: string[];
+interface RawFeaturedSkill {
+  name: Localized;
+  description: Localized;
+  category: SkillCategory;
+  icon: string;
 }
 
-interface RawTimelineEventDto extends TimelineEventDto {
-  titleEn?: string;
-  subtitleEn?: string;
-  descriptionEn?: string;
+interface RawTimelineEvent {
+  title: Localized;
+  subtitle: Localized;
+  type: string;
+  startDate: string | null;
+  endDate: string | null;
+  current: boolean;
+  description: Localized;
+}
+
+interface RawProjectList {
+  slug: string;
+  title: Localized;
+  shortDescription: Localized;
+  category: ProjectCategory;
+  status: ProjectStatus;
+  courseName: Localized | null;
+  highlighted: boolean;
+}
+
+interface RawProjectDetail {
+  slug: string;
+  title: Localized;
+  shortDescription: Localized;
+  description: Localized;
+  role: Localized;
+  highlights: LocalizedList;
+  category: ProjectCategory;
+  status: ProjectStatus;
+  startDate: string | null;
+  endDate: string | null;
+  repositoryUrl: string;
+  courseName: Localized | null;
+  highlighted: boolean;
+  techStack: string[];
+  images: ProjectImageDto[];
+  showcases: ShowcaseDto[];
+  documents: DocumentDto[];
 }
 
 @Injectable({
@@ -166,92 +188,137 @@ export class PortfolioApiService {
   private http = inject(HttpClient);
   private langService = inject(LanguageService);
 
-  private isEn(): boolean {
-    return this.langService.currentLang() === 'en';
+  private get lang(): Language {
+    return this.langService.currentLang();
   }
 
-  private localizeProfile(raw: RawProfile): Profile {
-    const en = this.isEn();
+  private pick(value: Localized): string {
+    return value?.[this.lang] ?? value?.nl ?? '';
+  }
+
+  private pickList(value: LocalizedList): string[] {
+    return value?.[this.lang] ?? value?.nl ?? [];
+  }
+
+  private pickOrNull(value: Localized | null): string | null {
+    return value ? this.pick(value) : null;
+  }
+
+  private mapProfile(raw: RawProfile): Profile {
     return {
       name: raw.name,
-      role: (en && raw.roleEn) ? raw.roleEn : raw.role,
-      focus: (en && raw.focusEn) ? raw.focusEn : raw.focus,
+      role: this.pick(raw.role),
+      focus: this.pick(raw.focus),
       location: raw.location,
-      summary: (en && raw.summaryEn) ? raw.summaryEn : raw.summary,
-      email: raw.email
+      email: raw.email,
+      summary: this.pick(raw.summary)
     };
   }
 
-  private localizeProjectList(raw: RawProjectListDto): ProjectListDto {
-    const en = this.isEn();
+  private mapSkill(raw: RawSkill): SkillDto {
     return {
-      ...raw,
-      shortDescription: (en && raw.shortDescriptionEn) ? raw.shortDescriptionEn : raw.shortDescription
+      name: raw.name,
+      category: raw.category,
+      description: raw.description ? this.pick(raw.description) : ''
     };
   }
 
-  private localizeProjectDetail(raw: RawProjectDetailDto): ProjectDetailDto {
-    const en = this.isEn();
+  private mapFeaturedSkill(raw: RawFeaturedSkill): FeaturedSkillDto {
     return {
-      ...raw,
-      title: (en && raw.titleEn) ? raw.titleEn : raw.title,
-      shortDescription: (en && raw.shortDescriptionEn) ? raw.shortDescriptionEn : raw.shortDescription,
-      description: (en && raw.descriptionEn) ? raw.descriptionEn : raw.description,
-      role: (en && raw.roleEn) ? raw.roleEn : raw.role,
-      highlights: (en && raw.highlightsEn) ? raw.highlightsEn : raw.highlights,
-      features: (en && raw.featuresEn) ? raw.featuresEn : raw.features
+      name: this.pick(raw.name),
+      description: this.pick(raw.description),
+      category: raw.category,
+      icon: raw.icon
     };
   }
 
-  private localizeTimeline(raw: RawTimelineEventDto): TimelineEventDto {
-    const en = this.isEn();
+  private mapTimeline(raw: RawTimelineEvent): TimelineEventDto {
     return {
-      ...raw,
-      title: (en && raw.titleEn) ? raw.titleEn : raw.title,
-      subtitle: (en && raw.subtitleEn) ? raw.subtitleEn : raw.subtitle,
-      description: (en && raw.descriptionEn) ? raw.descriptionEn : raw.description
+      title: this.pick(raw.title),
+      subtitle: this.pick(raw.subtitle),
+      type: raw.type,
+      startDate: raw.startDate,
+      endDate: raw.endDate,
+      current: raw.current,
+      description: this.pick(raw.description)
+    };
+  }
+
+  private mapProjectList(raw: RawProjectList): ProjectListDto {
+    return {
+      slug: raw.slug,
+      title: this.pick(raw.title),
+      shortDescription: this.pick(raw.shortDescription),
+      category: raw.category,
+      status: raw.status,
+      courseName: this.pickOrNull(raw.courseName),
+      highlighted: raw.highlighted
+    };
+  }
+
+  private mapProjectDetail(raw: RawProjectDetail): ProjectDetailDto {
+    return {
+      slug: raw.slug,
+      title: this.pick(raw.title),
+      shortDescription: this.pick(raw.shortDescription),
+      description: this.pick(raw.description),
+      role: this.pick(raw.role),
+      highlights: this.pickList(raw.highlights),
+      category: raw.category,
+      status: raw.status,
+      startDate: raw.startDate,
+      endDate: raw.endDate,
+      repositoryUrl: raw.repositoryUrl,
+      techStack: raw.techStack,
+      images: raw.images,
+      showcases: raw.showcases,
+      documents: raw.documents,
+      courseName: this.pickOrNull(raw.courseName),
+      highlighted: raw.highlighted
     };
   }
 
   getHome(): Observable<HomeDto> {
     return forkJoin({
       profile: this.http.get<RawProfile>('/data/profile.json'),
-      projects: this.http.get<RawProjectListDto[]>('/data/projects.json'),
-      skills: this.http.get<SkillDto[]>('/data/skills.json'),
-      featuredSkills: this.http.get<FeaturedSkillDto[]>('/data/featured-skills.json'),
-      timeline: this.http.get<RawTimelineEventDto[]>('/data/timeline.json')
+      projects: this.http.get<RawProjectList[]>('/data/projects.json'),
+      skills: this.http.get<RawSkill[]>('/data/skills.json'),
+      featuredSkills: this.http.get<RawFeaturedSkill[]>('/data/featured-skills.json'),
+      timeline: this.http.get<RawTimelineEvent[]>('/data/timeline.json')
     }).pipe(
       map(data => ({
-        profile: this.localizeProfile(data.profile),
+        profile: this.mapProfile(data.profile),
         highlightedProjects: data.projects
           .filter(p => p.highlighted)
-          .map(p => this.localizeProjectList(p)),
-        allSkills: data.skills,
-        featuredSkills: data.featuredSkills,
-        timelineEvents: data.timeline.map(t => this.localizeTimeline(t))
+          .map(p => this.mapProjectList(p)),
+        allSkills: data.skills.map(s => this.mapSkill(s)),
+        featuredSkills: data.featuredSkills.map(s => this.mapFeaturedSkill(s)),
+        timelineEvents: data.timeline.map(t => this.mapTimeline(t))
       }))
     );
   }
 
   getProfile(): Observable<Profile> {
     return this.http.get<RawProfile>('/data/profile.json').pipe(
-      map(raw => this.localizeProfile(raw))
+      map(raw => this.mapProfile(raw))
     );
   }
 
   getSkills(): Observable<SkillDto[]> {
-    return this.http.get<SkillDto[]>('/data/skills.json');
+    return this.http.get<RawSkill[]>('/data/skills.json').pipe(
+      map(skills => skills.map(s => this.mapSkill(s)))
+    );
   }
 
   getProjects(): Observable<ProjectListDto[]> {
-    return this.http.get<RawProjectListDto[]>('/data/projects.json').pipe(
-      map(projects => projects.map(p => this.localizeProjectList(p)))
+    return this.http.get<RawProjectList[]>('/data/projects.json').pipe(
+      map(projects => projects.map(p => this.mapProjectList(p)))
     );
   }
 
   getProjectBySlug(slug: string): Observable<ProjectDetailDto> {
-    return this.http.get<RawProjectDetailDto>(`/data/projects/${slug}.json`).pipe(
-      map(raw => this.localizeProjectDetail(raw))
+    return this.http.get<RawProjectDetail>(`/data/projects/${slug}.json`).pipe(
+      map(raw => this.mapProjectDetail(raw))
     );
   }
 
@@ -259,17 +326,13 @@ export class PortfolioApiService {
     return this.http.get<SocialDto[]>('/data/socials.json');
   }
 
-  getProjectsBySkill(skillName: string): Observable<ProjectListDto[]> {
-    // Load all projects and filter client-side by skill
-    // Since we don't have skill-to-project mapping in the list view,
-    // we return all projects for now (the skill filter can be enhanced later)
+  getProjectsBySkill(_skillName: string): Observable<ProjectListDto[]> {
+    // Skill-to-project filtering isn't modelled in the static data; return all.
     return this.getProjects();
   }
 
   sendContactMessage(request: ContactRequest): Observable<void> {
-    // Using Formspree for contact form handling
-    // Replace 'YOUR_FORMSPREE_ID' with your actual Formspree form ID
-    // Sign up at https://formspree.io to get your form endpoint
+    // Using Formspree for contact form handling.
     return this.http.post<void>('https://formspree.io/f/YOUR_FORMSPREE_ID', {
       name: request.name,
       email: request.email,

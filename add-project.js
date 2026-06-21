@@ -18,18 +18,36 @@ function isSafePath(basePath, userPath) {
 // Helper voor slug generatie
 function createSlug(text) {
     return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')           // Spaties naar dashes
-        .replace(/[^\w\-]+/g, '')       // Verwijder non-word characters
-        .replace(/\-\-+/g, '-')         // Vervang meerdere dashes
-        .replace(/^-+/, '')             // Trim dash aan begin
-        .replace(/-+$/, '');            // Trim dash aan eind
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
 }
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+// nl verplicht, en valt terug op nl
+const loc = (nl, en) => ({ nl, en: (en && en.trim()) ? en : nl });
 
+// projects.json (index) opnieuw opbouwen uit de detailbestanden (enige bron van waarheid)
+function regenerateIndex() {
+    const files = fs.readdirSync(PROJECTS_DETAIL_DIR).filter(f => f.endsWith('.json')).sort();
+    const index = files.map(f => {
+        const o = JSON.parse(fs.readFileSync(path.join(PROJECTS_DETAIL_DIR, f), 'utf8'));
+        return {
+            slug: o.slug,
+            title: o.title,
+            shortDescription: o.shortDescription,
+            category: o.category,
+            status: o.status,
+            courseName: o.courseName ?? null,
+            highlighted: !!o.highlighted
+        };
+    });
+    fs.writeFileSync(PROJECTS_LIST_FILE, JSON.stringify(index, null, 2) + '\n', 'utf8');
+    return index.length;
+}
+
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 const question = (query) => new Promise((resolve) => rl.question(query, resolve));
 
 async function run() {
@@ -40,118 +58,78 @@ async function run() {
         if (!title.trim()) throw new Error('Titel is verplicht.');
 
         const titleEn = await question('2. Project Titel (EN) [leeg = zelfde als NL]: ') || title;
-        
+
         let slug = await question(`3. URL Slug [leeg = '${createSlug(title)}']: `);
         slug = slug.trim() ? createSlug(slug) : createSlug(title);
 
         const shortDesc = await question('4. Korte beschrijving (NL): ');
-        const shortDescEn = await question('5. Korte beschrijving (EN): ');
+        const shortDescEn = await question('5. Korte beschrijving (EN) [leeg = zelfde als NL]: ');
 
         const category = await question('6. Categorie (SCHOOL_PROJECT of PERSONAL_PROJECT) [PERSONAL_PROJECT]: ') || 'PERSONAL_PROJECT';
-        
-        const imagePathsInput = await question('7. Afbeeldingen toevoegen? (geef volledige lokale paden, gescheiden door komma, of laat leeg): ');
-        
+
+        const imagePathsInput = await question('7. Afbeeldingen toevoegen? (volledige lokale paden, gescheiden door komma, of leeg): ');
+
         console.log('\n--- Bezig met verwerken... ---\n');
 
-        // 1. Zorg dat mappen bestaan
         if (!fs.existsSync(PROJECTS_DETAIL_DIR)) fs.mkdirSync(PROJECTS_DETAIL_DIR, { recursive: true });
         if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 
-        // 2. Afbeeldingen veilig kopiëren
+        // Afbeeldingen veilig kopiëren
         const uploadedImages = [];
         if (imagePathsInput.trim()) {
             const paths = imagePathsInput.split(',').map(p => p.trim());
             for (let i = 0; i < paths.length; i++) {
                 const imgPath = paths[i];
                 if (fs.existsSync(imgPath) && fs.statSync(imgPath).isFile()) {
-                    // Genereer een veilige bestandsnaam
                     const ext = path.extname(imgPath);
                     const safeName = `${slug}-${Date.now()}-${i}${ext}`;
                     const targetPath = path.join(UPLOADS_DIR, safeName);
-                    
                     if (!isSafePath(UPLOADS_DIR, targetPath)) {
                         throw new Error(`Onveilig bestandspad gedetecteerd: ${targetPath}`);
                     }
-
                     fs.copyFileSync(imgPath, targetPath);
-                    uploadedImages.push({
-                        title: `Screenshot ${i + 1}`,
-                        imageUrl: `/assets/uploads/${safeName}`,
-                        sortOrder: i + 1
-                    });
+                    uploadedImages.push({ title: `Screenshot ${i + 1}`, imageUrl: `/assets/uploads/${safeName}` });
                     console.log(`✅ Afbeelding gekopieerd: ${safeName}`);
                 } else {
-                    console.log(`⚠️ Waarschuwing: Afbeelding niet gevonden of is geen bestand: ${imgPath}`);
+                    console.log(`⚠️ Afbeelding niet gevonden of geen bestand: ${imgPath}`);
                 }
             }
         }
 
-        // 3. Project Detail JSON aanmaken
+        // Project detail JSON aanmaken (nieuwe structuur: localized {nl,en})
         const newProjectDetail = {
-            id: Date.now(), // Unieke ID genereren
-            slug: slug,
-            title: title,
-            titleEn: titleEn,
-            shortDescription: shortDesc,
-            shortDescriptionEn: shortDescEn,
-            description: "Voeg hier je volledige markdown beschrijving toe...",
-            descriptionEn: "Add your full markdown description here...",
-            role: "Mijn rol...",
-            roleEn: "My role...",
-            highlights: "- Highlight 1\n- Highlight 2",
-            highlightsEn: "- Highlight 1\n- Highlight 2",
-            category: category,
-            status: "COMPLETED",
-            startDate: new Date().toISOString().split('T')[0],
-            endDate: new Date().toISOString().split('T')[0],
-            repositoryUrl: "",
+            slug,
+            title: loc(title, titleEn),
+            shortDescription: loc(shortDesc, shortDescEn),
+            description: loc('Voeg hier je volledige markdown beschrijving toe...', 'Add your full markdown description here...'),
+            role: loc('Mijn rol...', 'My role...'),
+            highlights: { nl: ['Highlight 1', 'Highlight 2'], en: ['Highlight 1', 'Highlight 2'] },
+            category,
+            status: 'COMPLETED',
+            startDate: null,
+            endDate: null,
+            repositoryUrl: '',
+            courseName: null,
+            highlighted: true,
             techStack: [],
-            features: [],
-            featuresEn: [],
             images: uploadedImages,
             showcases: [],
-            documents: [],
-            links: {},
-            skillIds: [],
-            courseName: null,
-            documentUrl: null,
-            highlighted: true
+            documents: []
         };
 
         const detailFilePath = path.join(PROJECTS_DETAIL_DIR, `${slug}.json`);
-        fs.writeFileSync(detailFilePath, JSON.stringify(newProjectDetail, null, 2), 'utf8');
+        if (fs.existsSync(detailFilePath)) {
+            console.log(`⚠️ Let op: ${slug}.json bestond al en wordt overschreven.`);
+        }
+        fs.writeFileSync(detailFilePath, JSON.stringify(newProjectDetail, null, 2) + '\n', 'utf8');
         console.log(`✅ Project detail aangemaakt: ${detailFilePath}`);
 
-        // 4. Project List JSON updaten
-        let projectsList = [];
-        if (fs.existsSync(PROJECTS_LIST_FILE)) {
-            projectsList = JSON.parse(fs.readFileSync(PROJECTS_LIST_FILE, 'utf8'));
-        }
-
-        // Check of slug al bestaat om dubbelingen te voorkomen
-        if (projectsList.some(p => p.slug === slug)) {
-            console.log(`⚠️ Waarschuwing: Een project met slug '${slug}' bestond al in de lijst. Het is bijgewerkt in de details, maar zorg dat er geen conflicten in projects.json zijn.`);
-        } else {
-            const newListItem = {
-                slug: slug,
-                title: title,
-                titleEn: titleEn,
-                shortDescription: shortDesc,
-                shortDescriptionEn: shortDescEn,
-                category: category,
-                status: "COMPLETED",
-                courseName: null,
-                courseNameEn: null,
-                highlighted: true,
-                sortOrder: projectsList.length > 0 ? Math.max(...projectsList.map(p => p.sortOrder || 0)) + 1 : 1
-            };
-            projectsList.push(newListItem);
-            fs.writeFileSync(PROJECTS_LIST_FILE, JSON.stringify(projectsList, null, 2), 'utf8');
-            console.log(`✅ Toegevoegd aan projectenlijst: ${PROJECTS_LIST_FILE}`);
-        }
+        // Index (projects.json) opnieuw genereren uit alle detailbestanden
+        const count = regenerateIndex();
+        console.log(`✅ projects.json opnieuw gegenereerd (${count} projecten)`);
 
         console.log('\n🎉 Project succesvol toegevoegd!');
-        console.log(`Vergeet niet om de bestanden in /public/data/projects/${slug}.json verder aan te vullen (zoals je lange beschrijving en tech stack) en daarna te committen naar git.\n`);
+        console.log(`Vul /public/data/projects/${slug}.json verder aan (beschrijving, techStack, highlights) en commit daarna naar git.\n`);
 
     } catch (error) {
         console.error('\n❌ Fout bij het toevoegen van het project:', error.message);

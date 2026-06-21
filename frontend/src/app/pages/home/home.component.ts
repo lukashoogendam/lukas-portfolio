@@ -1,7 +1,7 @@
 import { Component, signal, inject, ChangeDetectionStrategy, computed, DestroyRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LowerCasePipe, DatePipe } from '@angular/common';
-import { PortfolioApiService, HomeDto, SkillDto, FeaturedSkillDto } from '../../core/services/portfolio-api.service';
+import { PortfolioApiService, HomeDto, SkillDto } from '../../core/services/portfolio-api.service';
 import { LanguageService } from '../../core/services/language.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { ApiTerminalComponent } from '../../shared/components/api-terminal/api-terminal.component';
@@ -112,16 +112,6 @@ export class HomeComponent {
     }));
   });
 
-
-  getFeaturedSkillName(skill: FeaturedSkillDto): string {
-    const isEn = this.langService.currentLang() === 'en';
-    return isEn && skill.nameEn ? skill.nameEn : skill.name;
-  }
-
-  getFeaturedSkillDescription(skill: FeaturedSkillDto): string {
-    const isEn = this.langService.currentLang() === 'en';
-    return isEn && skill.descriptionEn ? skill.descriptionEn : skill.description;
-  }
 
   getTypeIcon(type: string): string {
     switch(type) {

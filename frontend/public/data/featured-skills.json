@@ -1,12 +1,14 @@
 [
   {
-    "id": 1,
-    "name": "Security",
-    "nameEn": "Security",
-    "description": "JWT authorisatie & OWASP security.",
-    "descriptionEn": "JWT authorisatie & OWASP security.",
+    "name": {
+      "nl": "Security",
+      "en": "Security"
+    },
+    "description": {
+      "nl": "JWT authorisatie & OWASP security.",
+      "en": "JWT authorisatie & OWASP security."
+    },
     "category": "BACKEND",
-    "icon": "🛡️",
-    "sortOrder": 0
+    "icon": "🛡️"
   }
 ]

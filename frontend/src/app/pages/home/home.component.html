@@ -64,7 +64,7 @@
 
         @if (featuredSkills().length > 0) {
           <div class="featured-skills-grid" style="margin-top: 3rem;">
-            @for (skill of featuredSkills(); track skill.id) {
+            @for (skill of featuredSkills(); track skill.name) {
               <div class="featured-skill-card">
                 <div class="featured-skill-header">
                   @if (skill.icon) {
@@ -80,8 +80,8 @@
                     {{ 'enum.skill_category.' + skill.category | t }}
                   </span>
                 </div>
-                <h3 class="featured-skill-title">{{ getFeaturedSkillName(skill) }}</h3>
-                <p class="featured-skill-desc">{{ getFeaturedSkillDescription(skill) }}</p>
+                <h3 class="featured-skill-title">{{ skill.name }}</h3>
+                <p class="featured-skill-desc">{{ skill.description }}</p>
               </div>
             }
           </div>
@@ -110,7 +110,7 @@
                 {{ 'enum.skill_category.' + group.category | t }}
               </h3>
               <div class="ecosystem-skills">
-                @for (skill of group.skills; track skill.id) {
+                @for (skill of group.skills; track skill.name) {
                   <div class="ecosystem-chip" [title]="skill.description">
                     {{ skill.name }}
                   </div>
@@ -165,7 +165,7 @@
         <div class="section-label">{{ 'timeline.label' | t }}</div>
         <h2 class="section-heading">{{ 'timeline.fallback_title' | t }}</h2>
         <div class="timeline">
-          @for (event of data.timelineEvents; track event.id) {
+          @for (event of data.timelineEvents; track $index) {
             <div class="timeline-item">
               <div class="timeline-left">
                 <div class="timeline-icon">{{ getTypeIcon(event.type) }}</div>

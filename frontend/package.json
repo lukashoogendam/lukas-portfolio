@@ -4,9 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "prestart": "node scripts/validate-data.mjs && node scripts/generate-index.mjs",
     "build": "ng build",
+    "prebuild": "node scripts/validate-data.mjs && node scripts/generate-index.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "validate:data": "node scripts/validate-data.mjs",
+    "build:data": "node scripts/generate-index.mjs",
     "add-project": "node ../add-project.js"
   },
   "private": true,
