@@ -1,12 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { LanguageService, Language } from './language.service';
+import { environment } from '../../../environments/environment';
 
 export type ProjectCategory = 'SCHOOL_PROJECT' | 'PERSONAL_PROJECT';
 export type ProjectStatus = 'COMPLETED' | 'IN_PROGRESS';
-export type SkillCategory = 'BACKEND' | 'FRONTEND' | 'DATABASE' | 'DEVOPS' | 'TOOLS' | 'MOBILE' | 'CLOUD';
+export type SkillCategory = 'BACKEND' | 'FRONTEND' | 'DATABASE' | 'DATA' | 'DEVOPS' | 'TOOLS' | 'MOBILE' | 'CLOUD';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Public DTOs — consumed by components. Already localized to plain strings,
@@ -192,12 +193,27 @@ export class PortfolioApiService {
     return this.langService.currentLang();
   }
 
+  // Cache van rauwe HTTP-fetches. De statische JSON-bestanden veranderen niet
+  // tijdens een sessie en bevatten beide talen, dus we halen elk bestand
+  // hooguit één keer op en lokaliseren per subscription opnieuw met pick().
+  private rawCache = new Map<string, Observable<unknown>>();
+
+  private raw<T>(url: string): Observable<T> {
+    let stream = this.rawCache.get(url) as Observable<T> | undefined;
+    if (!stream) {
+      stream = this.http.get<T>(url).pipe(shareReplay({ bufferSize: 1, refCount: false }));
+      this.rawCache.set(url, stream);
+    }
+    return stream;
+  }
+
   private pick(value: Localized): string {
-    return value?.[this.lang] ?? value?.nl ?? '';
+    return value?.[this.lang] || value?.nl || '';
   }
 
   private pickList(value: LocalizedList): string[] {
-    return value?.[this.lang] ?? value?.nl ?? [];
+    const v = value?.[this.lang];
+    return (v && v.length) ? v : (value?.nl ?? []);
   }
 
   private pickOrNull(value: Localized | null): string | null {
@@ -280,11 +296,11 @@ export class PortfolioApiService {
 
   getHome(): Observable<HomeDto> {
     return forkJoin({
-      profile: this.http.get<RawProfile>('/data/profile.json'),
-      projects: this.http.get<RawProjectList[]>('/data/projects.json'),
-      skills: this.http.get<RawSkill[]>('/data/skills.json'),
-      featuredSkills: this.http.get<RawFeaturedSkill[]>('/data/featured-skills.json'),
-      timeline: this.http.get<RawTimelineEvent[]>('/data/timeline.json')
+      profile: this.raw<RawProfile>('/data/profile.json'),
+      projects: this.raw<RawProjectList[]>('/data/projects.json'),
+      skills: this.raw<RawSkill[]>('/data/skills.json'),
+      featuredSkills: this.raw<RawFeaturedSkill[]>('/data/featured-skills.json'),
+      timeline: this.raw<RawTimelineEvent[]>('/data/timeline.json')
     }).pipe(
       map(data => ({
         profile: this.mapProfile(data.profile),
@@ -299,41 +315,36 @@ export class PortfolioApiService {
   }
 
   getProfile(): Observable<Profile> {
-    return this.http.get<RawProfile>('/data/profile.json').pipe(
+    return this.raw<RawProfile>('/data/profile.json').pipe(
       map(raw => this.mapProfile(raw))
     );
   }
 
   getSkills(): Observable<SkillDto[]> {
-    return this.http.get<RawSkill[]>('/data/skills.json').pipe(
+    return this.raw<RawSkill[]>('/data/skills.json').pipe(
       map(skills => skills.map(s => this.mapSkill(s)))
     );
   }
 
   getProjects(): Observable<ProjectListDto[]> {
-    return this.http.get<RawProjectList[]>('/data/projects.json').pipe(
+    return this.raw<RawProjectList[]>('/data/projects.json').pipe(
       map(projects => projects.map(p => this.mapProjectList(p)))
     );
   }
 
   getProjectBySlug(slug: string): Observable<ProjectDetailDto> {
-    return this.http.get<RawProjectDetail>(`/data/projects/${slug}.json`).pipe(
+    return this.raw<RawProjectDetail>(`/data/projects/${slug}.json`).pipe(
       map(raw => this.mapProjectDetail(raw))
     );
   }
 
   getSocials(): Observable<SocialDto[]> {
-    return this.http.get<SocialDto[]>('/data/socials.json');
-  }
-
-  getProjectsBySkill(_skillName: string): Observable<ProjectListDto[]> {
-    // Skill-to-project filtering isn't modelled in the static data; return all.
-    return this.getProjects();
+    return this.raw<SocialDto[]>('/data/socials.json');
   }
 
   sendContactMessage(request: ContactRequest): Observable<void> {
-    // Using Formspree for contact form handling.
-    return this.http.post<void>('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+    // Endpoint komt uit environment; vervang YOUR_FORMSPREE_ID door je eigen form-id.
+    return this.http.post<void>(environment.formspreeEndpoint, {
       name: request.name,
       email: request.email,
       message: request.message
