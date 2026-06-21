@@ -1,49 +1,56 @@
-<nav class="navbar" [class.scrolled]="isScrolled()">
-  <div class="navbar-inner">
-    <a routerLink="/" class="navbar-brand">
-      <span class="brand-icon">&#123;&#125;</span>
-      <span class="brand-text">Lukas <span class="brand-accent">portfolio</span></span>
+<nav class="topbar" [class.scrolled]="isScrolled()">
+  <div class="topbar-inner">
+    <a routerLink="/" class="brand" (click)="scrollTo('hero')">
+      <span class="br">&#123;&#125;</span>
+      <span class="brand-text">lukas<span class="dim">&#64;portfolio</span></span>
     </a>
-    <div class="navbar-links">
-      <button class="nav-link nav-btn" (click)="scrollTo('hero')">{{ 'nav.home' | t }}</button>
-      <button class="nav-link nav-btn" (click)="scrollTo('about')">{{ 'nav.about' | t }}</button>
-      <button class="nav-link nav-btn" (click)="scrollTo('skills')">{{ 'nav.skills' | t }}</button>
-      <button class="nav-link nav-btn" (click)="scrollTo('projects')">{{ 'nav.projects' | t }}</button>
-      <button class="nav-link nav-btn" (click)="scrollTo('timeline')">{{ 'nav.experience' | t }}</button>
-      <button class="nav-link nav-btn" (click)="scrollTo('contact')">{{ 'nav.contact' | t }}</button>
+
+    <div class="topnav" aria-label="Secties">
+      <button class="topnav-link" (click)="scrollTo('about')">about</button>
+      <button class="topnav-link" (click)="scrollTo('skills')">skills</button>
+      <button class="topnav-link" (click)="scrollTo('projects')">projects</button>
+      <button class="topnav-link" (click)="scrollTo('timeline')">timeline</button>
+      <button class="topnav-link" (click)="scrollTo('contact')">contact</button>
     </div>
-    <div class="navbar-actions">
-      <div class="lang-switcher">
+
+    <div class="controls">
+      <div class="lang" role="group" aria-label="Taal">
         <button
           id="lang-nl-btn"
-          class="lang-btn"
-          [class.lang-active]="langService.currentLang() === 'nl'"
-          (click)="setLang('nl')"
-          aria-label="Switch to Dutch">
-          🇳🇱 NL
-        </button>
+          type="button"
+          [attr.aria-pressed]="langService.currentLang() === 'nl'"
+          (click)="setLang('nl')">NL</button>
         <button
           id="lang-en-btn"
-          class="lang-btn"
-          [class.lang-active]="langService.currentLang() === 'en'"
-          (click)="setLang('en')"
-          aria-label="Switch to English">
-          🇬🇧 EN
-        </button>
+          type="button"
+          [attr.aria-pressed]="langService.currentLang() === 'en'"
+          (click)="setLang('en')">EN</button>
       </div>
+
+      <button
+        class="themebtn"
+        type="button"
+        (click)="themeService.toggle()"
+        [attr.aria-label]="themeService.theme() === 'dark' ? 'Schakel naar licht thema' : 'Schakel naar donker thema'">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
+          <use [attr.href]="themeService.theme() === 'dark' ? '#i-moon' : '#i-sun'"></use>
+        </svg>
+      </button>
+
       <button class="mobile-toggle-btn" (click)="toggleMobileMenu()" aria-label="Toggle menu">
         <span class="hamburger" [class.open]="isMobileMenuOpen()"></span>
       </button>
     </div>
   </div>
+
   @if (isMobileMenuOpen()) {
     <div class="mobile-menu">
-      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('hero')">{{ 'nav.home' | t }}</button>
-      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('about')">{{ 'nav.about' | t }}</button>
-      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('skills')">{{ 'nav.skills' | t }}</button>
-      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('projects')">{{ 'nav.projects' | t }}</button>
-      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('timeline')">{{ 'nav.experience' | t }}</button>
-      <button class="nav-link nav-btn mobile-link" (click)="scrollTo('contact')">{{ 'nav.contact' | t }}</button>
+      <button class="topnav-link mobile-link" (click)="scrollTo('hero')">{{ 'nav.home' | t }}</button>
+      <button class="topnav-link mobile-link" (click)="scrollTo('about')">{{ 'nav.about' | t }}</button>
+      <button class="topnav-link mobile-link" (click)="scrollTo('skills')">{{ 'nav.skills' | t }}</button>
+      <button class="topnav-link mobile-link" (click)="scrollTo('projects')">{{ 'nav.projects' | t }}</button>
+      <button class="topnav-link mobile-link" (click)="scrollTo('timeline')">{{ 'nav.experience' | t }}</button>
+      <button class="topnav-link mobile-link" (click)="scrollTo('contact')">{{ 'nav.contact' | t }}</button>
     </div>
   }
 </nav>
