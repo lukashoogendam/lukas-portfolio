@@ -75,7 +75,7 @@ export class HomeComponent {
     ).subscribe(data => {
       this.homeData.set(data);
       const name = data?.profile.name || 'Portfolio';
-      this.title.setTitle(`${name} | Web Developer`);
+      this.title.setTitle(`${name} | Software Developer`);
       this.meta.updateTag({ name: 'description', content: data?.profile.summary || '' });
     });
 
