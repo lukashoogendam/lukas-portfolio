@@ -10,7 +10,7 @@ const PROJECTS = join(DATA, 'projects');
 
 const PROJECT_CATEGORIES = ['SCHOOL_PROJECT', 'PERSONAL_PROJECT'];
 const PROJECT_STATUSES = ['COMPLETED', 'IN_PROGRESS'];
-const SKILL_CATEGORIES = ['BACKEND', 'FRONTEND', 'DATABASE', 'DEVOPS', 'TOOLS', 'MOBILE', 'CLOUD'];
+const SKILL_CATEGORIES = ['BACKEND', 'FRONTEND', 'DATABASE', 'DATA', 'DEVOPS', 'TOOLS', 'MOBILE', 'CLOUD'];
 
 const errors = [];
 const err = (file, msg) => errors.push(`${file}: ${msg}`);

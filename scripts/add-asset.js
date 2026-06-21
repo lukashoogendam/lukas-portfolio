@@ -19,8 +19,9 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { isSafePath } = require('./cli-lib');
 
-const FRONTEND_DIR = path.join(__dirname, 'frontend');
+const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
 const UPLOADS_DIR  = path.join(FRONTEND_DIR, 'public', 'assets', 'uploads');
 const PROJECTS_DIR = path.join(FRONTEND_DIR, 'public', 'data', 'projects');
 
@@ -61,26 +62,10 @@ function shortHash(filePath) {
     return crypto.createHash('md5').update(content).digest('hex').slice(0, 8);
 }
 
-function isSafePath(basePath, targetPath) {
-    const base   = path.resolve(basePath);
-    const target = path.resolve(targetPath);
-    return target === base || target.startsWith(base + path.sep);
-}
-
 function detectType(ext) {
     if (IMAGE_EXTENSIONS.has(ext))    return 'image';
     if (DOCUMENT_EXTENSIONS.has(ext)) return 'document';
     return null;
-}
-
-function nextId(items) {
-    if (!items || items.length === 0) return 1;
-    return Math.max(...items.map(i => i.id || 0)) + 1;
-}
-
-function nextSortOrder(items) {
-    if (!items || items.length === 0) return 0;
-    return Math.max(...items.map(i => i.sortOrder ?? -1)) + 1;
 }
 
 // --- Main ---------------------------------------------------------------
@@ -151,21 +136,11 @@ function run() {
 
     if (type === 'image') {
         if (!Array.isArray(project.images)) project.images = [];
-        project.images.push({
-            id:        nextId(project.images),
-            title:     args.title,
-            imageUrl:  publicUrl,
-            sortOrder: nextSortOrder(project.images)
-        });
+        project.images.push({ title: args.title, imageUrl: publicUrl });
         console.log(`Afbeelding toegevoegd aan "${args.project}": ${args.title}`);
     } else {
         if (!Array.isArray(project.documents)) project.documents = [];
-        project.documents.push({
-            id:        nextId(project.documents),
-            title:     args.title,
-            url:       publicUrl,
-            sortOrder: nextSortOrder(project.documents)
-        });
+        project.documents.push({ title: args.title, url: publicUrl });
         console.log(`Document toegevoegd aan "${args.project}": ${args.title}`);
     }
 

@@ -1,50 +1,23 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+const { execFileSync } = require('child_process');
+const { createSlug, isSafePath } = require('./cli-lib');
 
 // Pad configuratie
-const FRONTEND_DIR = path.join(__dirname, 'frontend');
+const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
 const DATA_DIR = path.join(FRONTEND_DIR, 'public', 'data');
-const PROJECTS_LIST_FILE = path.join(DATA_DIR, 'projects.json');
 const PROJECTS_DETAIL_DIR = path.join(DATA_DIR, 'projects');
 const UPLOADS_DIR = path.join(FRONTEND_DIR, 'public', 'assets', 'uploads');
-
-// Helper voor veilige paden (Directory Traversal preventie)
-function isSafePath(basePath, userPath) {
-    const resolvedPath = path.resolve(basePath, userPath);
-    return resolvedPath.startsWith(basePath);
-}
-
-// Helper voor slug generatie
-function createSlug(text) {
-    return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w\-]+/g, '')
-        .replace(/\-\-+/g, '-')
-        .replace(/^-+/, '')
-        .replace(/-+$/, '');
-}
+const GENERATE_INDEX_SCRIPT = path.join(FRONTEND_DIR, 'scripts', 'generate-index.mjs');
 
 // nl verplicht, en valt terug op nl
 const loc = (nl, en) => ({ nl, en: (en && en.trim()) ? en : nl });
 
-// projects.json (index) opnieuw opbouwen uit de detailbestanden (enige bron van waarheid)
+// projects.json (index) opnieuw opbouwen via het canonieke generate-index script,
+// zodat er maar één implementatie van de index-projectie bestaat.
 function regenerateIndex() {
-    const files = fs.readdirSync(PROJECTS_DETAIL_DIR).filter(f => f.endsWith('.json')).sort();
-    const index = files.map(f => {
-        const o = JSON.parse(fs.readFileSync(path.join(PROJECTS_DETAIL_DIR, f), 'utf8'));
-        return {
-            slug: o.slug,
-            title: o.title,
-            shortDescription: o.shortDescription,
-            category: o.category,
-            status: o.status,
-            courseName: o.courseName ?? null,
-            highlighted: !!o.highlighted
-        };
-    });
-    fs.writeFileSync(PROJECTS_LIST_FILE, JSON.stringify(index, null, 2) + '\n', 'utf8');
-    return index.length;
+    execFileSync('node', [GENERATE_INDEX_SCRIPT], { stdio: 'inherit' });
 }
 
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
@@ -125,8 +98,7 @@ async function run() {
         console.log(`✅ Project detail aangemaakt: ${detailFilePath}`);
 
         // Index (projects.json) opnieuw genereren uit alle detailbestanden
-        const count = regenerateIndex();
-        console.log(`✅ projects.json opnieuw gegenereerd (${count} projecten)`);
+        regenerateIndex();
 
         console.log('\n🎉 Project succesvol toegevoegd!');
         console.log(`Vul /public/data/projects/${slug}.json verder aan (beschrijving, techStack, highlights) en commit daarna naar git.\n`);
