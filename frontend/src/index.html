@@ -1,14 +1,45 @@
 <!doctype html>
-<html lang="nl">
+<html lang="nl" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <title>Lukas portfolio</title>
   <meta name="description" content="Interactief portfolio van Lukas. Ontdek mijn projecten, skills en ervaring via API endpoints.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#21262E">
   <base href="/">
   <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
 </head>
 <body>
+  <!-- Inline SVG icon sprite (line style, currentColor) — referenced app-wide via <use href="#i-…"> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <g id="i-shield"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></g>
+      <g id="i-cup"><path d="M5 8h11v4.5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z M16 9h2.2a2 2 0 0 1 0 4H16 M7 3.5v1.5 M10 3.5v1.5 M13 3.5v1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-sprout"><path d="M12 21v-7 M12 14c0-3.5 2.4-6 6.5-6 0 4-2.6 6.5-6.5 6.5 M12 16c0-2.6-1.8-4.6-5-4.6 0 3 1.8 5 5 4.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-db"><path d="M12 3c3.9 0 7 1.3 7 3s-3.1 3-7 3-7-1.3-7-3 3.1-3 7-3z M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6 M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></g>
+      <g id="i-arrow"><path d="M5 12h13 M12 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-cap"><path d="M3 9l9-4 9 4-9 4-9-4z M7 11v4.2c0 1.1 2.2 2 5 2s5-.9 5-2V11 M21 9v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-case"><path d="M4 8.5h16v10a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5z M9 8.5V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5v2 M4 13h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-code"><path d="M9 7l-5 5 5 5 M15 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-terminal"><path d="M4 5.5h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1z M7 10l3 2.5-3 2.5 M13 15h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-spark"><path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></g>
+      <g id="i-mail"><path d="M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-check"><path d="M4 12.5l5 5 11-11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-gh"><path d="M12 2.6a9.4 9.4 0 0 0-3 18.3c.5.1.6-.2.6-.5v-1.7c-2.6.6-3.2-1.1-3.2-1.1-.4-1-.9-1.3-.9-1.3-.8-.5 0-.5 0-.5.9.1 1.3.9 1.3.9.8 1.3 2 .9 2.5.7.1-.6.3-.9.5-1.1-2-.2-4.2-1-4.2-4.5 0-1 .4-1.8.9-2.5-.1-.2-.4-1.1.1-2.4 0 0 .8-.2 2.5.9a8.6 8.6 0 0 1 4.5 0c1.7-1.1 2.5-.9 2.5-.9.5 1.3.2 2.2.1 2.4.6.7.9 1.5.9 2.5 0 3.5-2.1 4.3-4.2 4.5.3.3.6.8.6 1.7v2.5c0 .3.2.6.6.5A9.4 9.4 0 0 0 12 2.6z" fill="currentColor"/></g>
+      <g id="i-li"><path d="M6.2 8.5H3.7V20h2.5z M4.95 7.1a1.45 1.45 0 1 0 0-2.9 1.45 1.45 0 0 0 0 2.9z M20.3 20h-2.5v-6c0-1.5-.5-2.4-1.8-2.4-1 0-1.5.7-1.8 1.3-.1.2-.1.5-.1.9V20h-2.5s.03-9.4 0-10.4h2.5v1.5c.3-.5 1-1.3 2.5-1.3 1.8 0 3.2 1.2 3.2 3.8z" fill="currentColor"/></g>
+      <g id="i-sun"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v2 M12 19v2 M3 12h2 M19 12h2 M5.6 5.6l1.4 1.4 M17 17l1.4 1.4 M18.4 5.6 17 7 M7 17l-1.4 1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></g>
+      <g id="i-moon"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></g>
+      <g id="i-alert"><path d="M12 4l9 15.5H3z M12 10v4 M12 17v.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-globe"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 12h17 M12 3.5c2.4 2.3 3.6 5.3 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.3-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></g>
+      <g id="i-play"><path d="M5 4.5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z M10 8l4 2.5-4 2.5z M8 19h8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-puzzle"><path d="M10 4h4v2.2a1.6 1.6 0 1 0 3.2 0V4H20v4h-2.2a1.6 1.6 0 1 0 0 3.2H20V16h-2.2a1.6 1.6 0 1 0 0 3.2H20H4v-4h2.2a1.6 1.6 0 1 0 0-3.2H4V8h2.2A1.6 1.6 0 1 0 6.2 4.8V4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></g>
+      <g id="i-image"><path d="M4 5.5h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1z M8 10.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M4 16l5-4 4 3 3-2 5 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-doc"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z M14 3v4h4 M9 12h6 M9 16h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g id="i-close"><path d="M6 6l12 12 M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></g>
+      <g id="i-chart"><path d="M4 4v16h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 17v-4 M12 17v-7 M16 17v-10" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></g>
+      <g id="i-chip"><rect x="7" y="7" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 7V4 M14 7V4 M10 20v-3 M14 20v-3 M7 10H4 M7 14H4 M20 10h-3 M20 14h-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></g>
+    </defs>
+  </svg>
   <app-root></app-root>
 </body>
 </html>

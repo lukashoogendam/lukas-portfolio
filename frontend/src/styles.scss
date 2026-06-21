@@ -2,6 +2,55 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
+// ───────────────────────────────────────────────────────────────────────────
+// Frost Graphite — Nord frost-accent × Mono Graphite restraint.
+// CSS custom properties are the theme source of truth; the SCSS color vars in
+// styles/_variables.scss forward to them so the whole app follows the toggle.
+// ───────────────────────────────────────────────────────────────────────────
+:root,
+[data-theme="dark"] {
+  --ground:    #21262E;
+  --surface:   #2A313B;
+  --surface-2: #1B2027;
+  --line:      #39424F;
+  --text:      #E8ECF1;
+  --muted:     #97A2B2;
+  --accent:    #88C0D0;
+  --accent-2:  #A3BE8C;
+  --on-accent: #16202A;
+  --warn:      #E6C07B;
+  --danger:    #E0796F;
+  --info:      #B48EAD;
+  --shadow:    0 24px 60px -34px rgba(0, 0, 0, .75);
+  --grid:      rgba(136, 192, 208, .05);
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --ground:    #F4F6F8;
+  --surface:   #FFFFFF;
+  --surface-2: #EDF1F4;
+  --line:      #E0E5EB;
+  --text:      #232831;
+  --muted:     #69727F;
+  --accent:    #2E7D91;
+  --accent-2:  #5E823F;
+  --on-accent: #FFFFFF;
+  --warn:      #B07D2B;
+  --danger:    #C0564B;
+  --info:      #8B6BA8;
+  --shadow:    0 20px 50px -32px rgba(40, 60, 80, .35);
+  --grid:      rgba(46, 125, 145, .06);
+  color-scheme: light;
+}
+
+:root {
+  --sans: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --maxw: 1040px;
+  --gut: clamp(1.1rem, 4vw, 2.2rem);
+}
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -17,10 +66,37 @@ body {
   font-family: $font-family;
   background-color: $bg-primary;
   color: $text-primary;
-  line-height: 1.6;
+  line-height: 1.65;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color $transition-base, color $transition-base;
+}
+
+// Subtle dotted grid — the quiet "developer surface" backdrop.
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 1px 1px, var(--grid) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+
+:focus-visible {
+  outline: 2px solid $accent-primary;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+// Inline SVG icon sprite (defs in index.html) — size + alignment helper.
+svg.ic {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  vertical-align: -0.15em;
+  fill: none;
 }
 
 a {
@@ -43,7 +119,7 @@ code, pre {
 }
 
 ::selection {
-  background-color: rgba($accent-primary, 0.3);
+  background-color: color-mix(in srgb, var(--accent) 30%, transparent);
   color: $text-primary;
 }
 
@@ -79,9 +155,9 @@ code, pre {
   font-size: $font-size-xs;
   font-weight: 500;
   border-radius: $radius-full;
-  background-color: rgba($accent-primary, 0.15);
+  background-color: color-mix(in srgb, var(--accent) 15%, transparent);
   color: $accent-primary;
-  border: 1px solid rgba($accent-primary, 0.25);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 .method-badge {
@@ -96,27 +172,27 @@ code, pre {
   letter-spacing: 0.5px;
 
   &.get {
-    background-color: rgba($method-get, 0.15);
+    background-color: color-mix(in srgb, var(--accent-2) 15%, transparent);
     color: $method-get;
-    border: 1px solid rgba($method-get, 0.3);
+    border: 1px solid color-mix(in srgb, var(--accent-2) 30%, transparent);
   }
 
   &.post {
-    background-color: rgba($method-post, 0.15);
+    background-color: color-mix(in srgb, var(--accent) 15%, transparent);
     color: $method-post;
-    border: 1px solid rgba($method-post, 0.3);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   }
 
   &.put {
-    background-color: rgba($method-put, 0.15);
+    background-color: color-mix(in srgb, var(--warn) 15%, transparent);
     color: $method-put;
-    border: 1px solid rgba($method-put, 0.3);
+    border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent);
   }
 
   &.delete {
-    background-color: rgba($method-delete, 0.15);
+    background-color: color-mix(in srgb, var(--danger) 15%, transparent);
     color: $method-delete;
-    border: 1px solid rgba($method-delete, 0.3);
+    border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
   }
 }
 
@@ -130,54 +206,18 @@ code, pre {
   border-radius: $radius-sm;
 
   &.success {
-    background-color: rgba($status-200, 0.15);
+    background-color: color-mix(in srgb, var(--accent-2) 15%, transparent);
     color: $status-200;
   }
 
   &.error {
-    background-color: rgba($status-404, 0.15);
+    background-color: color-mix(in srgb, var(--danger) 15%, transparent);
     color: $status-404;
   }
 
   &.warning {
-    background-color: rgba($status-400, 0.15);
+    background-color: color-mix(in srgb, var(--warn) 15%, transparent);
     color: $status-400;
-  }
-}
-
-// === Site Background Gradient Blobs ===
-.site-bg-blobs {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: -1;
-  overflow: hidden;
-  background: $bg-primary;
-
-  .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.15;
-  }
-
-  .blob-1 {
-    top: -10%;
-    left: -10%;
-    width: 60vw;
-    height: 60vw;
-    background: $accent-primary;
-  }
-
-  .blob-2 {
-    bottom: -10%;
-    right: -10%;
-    width: 50vw;
-    height: 50vw;
-    background: $accent-orange;
   }
 }
 
@@ -186,35 +226,36 @@ code, pre {
   display: inline-flex;
   align-items: center;
   gap: $spacing-sm;
-  padding: 14px 28px;
+  padding: 12px 22px;
   font-size: $font-size-sm;
   font-weight: 600;
+  font-family: $font-mono;
   border-radius: $radius-lg;
   text-decoration: none;
   transition: all $transition-base;
-  border: none;
+  border: 1px solid $border-color;
   cursor: pointer;
-  font-family: $font-family;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, $accent-primary, $accent-primary-dark);
-  color: #fff;
-  box-shadow: 0 4px 20px rgba($accent-primary, 0.35);
+  background: $accent-primary;
+  color: var(--on-accent);
+  border-color: $accent-primary;
+  font-weight: 700;
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba($accent-primary, 0.5);
-    color: #fff;
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+    color: var(--on-accent);
   }
-  &:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; transform: none; filter: none; }
 }
 
 .btn-ghost {
-  background: rgba($accent-primary, 0.08);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
   color: $accent-primary;
-  border: 1px solid rgba($accent-primary, 0.25);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
   &:hover {
-    background: rgba($accent-primary, 0.15);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
     border-color: $accent-primary;
     transform: translateY(-2px);
   }
@@ -248,7 +289,7 @@ code, pre {
   &:focus {
     outline: none;
     border-color: $accent-primary;
-    box-shadow: 0 0 0 3px rgba($accent-primary, 0.15);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
   }
 
   &::placeholder { color: $text-muted; }
@@ -342,7 +383,7 @@ code, pre {
     margin: $spacing-md 0;
     color: $text-muted;
     font-style: italic;
-    background: rgba($accent-primary, 0.05);
+    background: color-mix(in srgb, var(--accent) 5%, transparent);
     border-radius: 0 $radius-sm $radius-sm 0;
   }
   a { color: $accent-primary; text-decoration: underline; }
