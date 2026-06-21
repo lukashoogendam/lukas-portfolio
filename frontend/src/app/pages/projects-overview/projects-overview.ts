@@ -53,7 +53,7 @@ export class ProjectsOverview {
       : this.apiService.getProjects();
     request.subscribe({
       next: (res) => {
-        this.projects.set(res.data);
+        this.projects.set(res);
         this.isLoading.set(false);
       },
       error: () => {

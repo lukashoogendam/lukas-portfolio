@@ -40,7 +40,7 @@ export class ProjectDetailComponent {
   private loadProject(slug: string): void {
     this.apiService.getProjectBySlug(slug).subscribe({
       next: (response) => {
-        this.project.set(response.data);
+        this.project.set(response);
         this.isLoading.set(false);
       },
       error: () => {

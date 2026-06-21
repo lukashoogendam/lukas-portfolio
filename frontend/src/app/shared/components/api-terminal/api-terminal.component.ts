@@ -1,7 +1,5 @@
 import { Component, input, computed, signal, ChangeDetectionStrategy, ViewEncapsulation, OnInit, OnDestroy, inject, ChangeDetectorRef, ElementRef, viewChild, afterNextRender } from '@angular/core';
 import { JsonPipe } from '@angular/common';
-import { environment } from '../../../../environments/environment';
-
 @Component({
   selector: 'app-api-terminal',
   imports: [JsonPipe],
@@ -53,7 +51,7 @@ export class ApiTerminalComponent implements OnInit, OnDestroy {
   jsonPayload = input<any>();
 
   fullCommand = computed(() => {
-    const baseUrl = environment.apiUrl || 'http://localhost:8080/api/v1';
+    const baseUrl = 'https://lukasportfolio.site/api';
     return `curl -X GET ${baseUrl}${this.endpoint()}`;
   });
 

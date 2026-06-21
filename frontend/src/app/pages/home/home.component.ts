@@ -1,7 +1,7 @@
 import { Component, signal, inject, ChangeDetectionStrategy, computed, DestroyRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LowerCasePipe, DatePipe } from '@angular/common';
-import { PortfolioApiService, HomeDto, HomeSectionDto, SkillDto, FeaturedSkillDto } from '../../core/services/portfolio-api.service';
+import { PortfolioApiService, HomeDto, SkillDto, FeaturedSkillDto } from '../../core/services/portfolio-api.service';
 import { LanguageService } from '../../core/services/language.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { ApiTerminalComponent } from '../../shared/components/api-terminal/api-terminal.component';
@@ -34,12 +34,6 @@ export class HomeComponent {
   contactSuccess = signal(false);
   contactError = signal<string | null>(null);
 
-  // Returns sections sorted by sortOrder, only visible ones for the home page
-  visibleSections = computed(() => {
-    return (this.homeData()?.homeSections ?? [])
-      .filter(s => s.visible)
-      .sort((a, b) => a.sortOrder - b.sortOrder);
-  });
 
   // Group all skills by category
   skillsByCategory = computed(() => {
@@ -60,11 +54,11 @@ export class HomeComponent {
     toObservable(this.langService.currentLang).pipe(
       switchMap(() => this.api.getHome()),
       takeUntilDestroyed(this.destroyRef)
-    ).subscribe(res => {
-      this.homeData.set(res.data);
-      const name = res.data?.profile.name || 'Portfolio';
+    ).subscribe(data => {
+      this.homeData.set(data);
+      const name = data?.profile.name || 'Portfolio';
       this.title.setTitle(`${name} | Web Developer`);
-      this.meta.updateTag({ name: 'description', content: res.data?.profile.summary || '' });
+      this.meta.updateTag({ name: 'description', content: data?.profile.summary || '' });
     });
   }
 
@@ -118,20 +112,6 @@ export class HomeComponent {
     }));
   });
 
-  getSectionTitle(section: HomeSectionDto): string {
-    const isEn = this.langService.currentLang() === 'en';
-    return isEn && section.titleEn ? section.titleEn : section.title;
-  }
-
-  getSectionContent(section: HomeSectionDto): string {
-    const isEn = this.langService.currentLang() === 'en';
-    return isEn && section.contentEn ? section.contentEn : section.content;
-  }
-
-  getSectionSubtitle(section: HomeSectionDto): string {
-    const isEn = this.langService.currentLang() === 'en';
-    return isEn && section.subtitleEn ? section.subtitleEn : section.subtitle;
-  }
 
   getFeaturedSkillName(skill: FeaturedSkillDto): string {
     const isEn = this.langService.currentLang() === 'en';
