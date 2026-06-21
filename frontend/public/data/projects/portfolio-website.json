@@ -5,12 +5,12 @@
     "en": "Mijn portfolio website"
   },
   "shortDescription": {
-    "nl": "",
-    "en": ""
+    "nl": "Mijn persoonlijke portfolio, opgezet als een interactieve API explorer.",
+    "en": "My personal portfolio, built as an interactive API explorer."
   },
   "description": {
     "nl": "Deze website is mijn persoonlijke portfolio. Ik laat hier zien wie ik ben, welke projecten ik heb gemaakt en welke technieken ik gebruik. De website is gebouwd als een soort API explorer, zodat bezoekers op een interactieve manier informatie over mij en mijn werk kunnen bekijken.\n\n\n---\n\n\n**Motivatie**\n\nIk wilde een portfolio maken dat beter bij mijn studie Informatica past dan een standaard website. Omdat ik veel werk met Spring Boot en API’s, leek het mij leuk om mijn portfolio ook op die manier te presenteren.\n\n\n---\n\n\n**Doel**\n\nHet doel van deze website is om mijn projecten, vaardigheden en ontwikkeling duidelijk te laten zien. Ook wil ik hiermee laten zien dat ik frontend, backend en beheer kan combineren in één werkende applicatie.",
-    "en": "Deze website is mijn persoonlijke portfolio. Ik laat hier zien wie ik ben, welke projecten ik heb gemaakt en welke technieken ik gebruik. De website is gebouwd als een soort API explorer, zodat bezoekers op een interactieve manier informatie over mij en mijn werk kunnen bekijken.\n\n\n---\n\n\n**Motivatie**\n\nIk wilde een portfolio maken dat beter bij mijn studie Informatica past dan een standaard website. Omdat ik veel werk met Spring Boot en API’s, leek het mij leuk om mijn portfolio ook op die manier te presenteren.\n\n\n---\n\n\n**Doel**\n\nHet doel van deze website is om mijn projecten, vaardigheden en ontwikkeling duidelijk te laten zien. Ook wil ik hiermee laten zien dat ik frontend, backend en beheer kan combineren in één werkende applicatie."
+    "en": "This website is my personal portfolio. It shows who I am, which projects I've built and which technologies I work with. I designed it as a kind of API explorer, so visitors can browse information about me and my work in an interactive way.\n\n\n---\n\n\n**Motivation**\n\nI wanted a portfolio that fits my Computer Science background better than a standard website. Since I work a lot with Spring Boot and APIs, presenting my portfolio in that same style felt like a natural fit.\n\n\n---\n\n\n**Goal**\n\nThe goal of this website is to clearly show my projects, skills and growth. It also lets me demonstrate that I can combine frontend, backend and hosting into one working application."
   },
   "role": {
     "nl": "Developer",
@@ -35,10 +35,10 @@
     "PostgreSQL",
     "Git",
     "Java",
-    "Javascript",
+    "JavaScript",
     "Linux",
     "Docker",
-    "Springboot",
+    "Spring Boot",
     "Postman",
     "VPS/Droplets"
   ],

@@ -2,7 +2,10 @@
   {
     "name": "Java",
     "category": "BACKEND",
-    "description": null
+    "description": {
+      "nl": "Mijn belangrijkste backendtaal voor API's en services.",
+      "en": "My main backend language for building APIs and services."
+    }
   },
   {
     "name": "Python",
@@ -10,19 +13,12 @@
     "description": null
   },
   {
-    "name": "Springboot",
+    "name": "Spring Boot",
     "category": "BACKEND",
-    "description": null
-  },
-  {
-    "name": "PostgreSQL",
-    "category": "DATABASE",
-    "description": null
-  },
-  {
-    "name": "Docker",
-    "category": "DEVOPS",
-    "description": null
+    "description": {
+      "nl": "Mijn favoriete framework om robuuste REST-API's mee te bouwen.",
+      "en": "My favourite framework for building robust REST APIs."
+    }
   },
   {
     "name": "Angular",
@@ -45,42 +41,65 @@
     "description": null
   },
   {
-    "name": "Javascript",
+    "name": "JavaScript",
     "category": "FRONTEND",
     "description": null
   },
   {
-    "name": "ETL",
-    "category": "TOOLS",
-    "description": null
+    "name": "PostgreSQL",
+    "category": "DATABASE",
+    "description": {
+      "nl": "De relationele database die ik in vrijwel al mijn projecten gebruik.",
+      "en": "The relational database I use in nearly all of my projects."
+    }
   },
   {
     "name": "Flyway",
-    "category": "TOOLS",
+    "category": "DATABASE",
     "description": null
   },
   {
-    "name": "Git",
-    "category": "TOOLS",
+    "name": "ETL",
+    "category": "DATA",
     "description": null
   },
   {
-    "name": "Linux",
-    "category": "TOOLS",
+    "name": "Looker Studio",
+    "category": "DATA",
     "description": null
   },
   {
-    "name": "Looker studio",
-    "category": "TOOLS",
+    "name": "Power BI",
+    "category": "DATA",
+    "description": null
+  },
+  {
+    "name": "Jupyter Notebook",
+    "category": "DATA",
+    "description": null
+  },
+  {
+    "name": "Docker",
+    "category": "DEVOPS",
     "description": null
   },
   {
     "name": "Nginx",
-    "category": "TOOLS",
+    "category": "DEVOPS",
     "description": null
   },
   {
-    "name": "Ollama",
+    "name": "Linux",
+    "category": "DEVOPS",
+    "description": null
+  },
+  {
+    "name": "VPS/Droplets",
+    "category": "DEVOPS",
+    "description": null
+  },
+  {
+    "name": "Git",
     "category": "TOOLS",
     "description": null
   },
@@ -90,22 +109,12 @@
     "description": null
   },
   {
-    "name": "PowerBI",
-    "category": "TOOLS",
-    "description": null
-  },
-  {
     "name": "UML",
     "category": "TOOLS",
     "description": null
   },
   {
-    "name": "VPS/Droplets",
-    "category": "TOOLS",
-    "description": null
-  },
-  {
-    "name": "Yupiter notebook",
+    "name": "Ollama",
     "category": "TOOLS",
     "description": null
   }

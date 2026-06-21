@@ -5,33 +5,33 @@
     "en": "Chatbot + dashboard"
   },
   "shortDescription": {
-    "nl": "In data advanced hebben we als groep een proof of concept gemaakt voor het probleem van MIZ",
-    "en": "In data advanced hebben we als groep een proof of concept gemaakt voor het probleem van MIZ"
+    "nl": "In Data Advanced 2 maakten we als groep een proof of concept voor MIZ, een leverancier van medische alarmsystemen.",
+    "en": "In Data Advanced 2 our group built a proof of concept for MIZ, a supplier of medical alarm systems."
   },
   "description": {
-    "nl": "Miz kwam met het probleem dat alarmen lastig afgesloten konden worden. Als groep moesten wij een oplossing bedenken waarmee dit probleem duidelijk zichtbaar werd. Daarom hebben wij de beschikbare data gebruikt om een custom Angular-dashboard te maken. In dit dashboard konden gebruikers de alarmdata beter analyseren. Daarnaast hebben wij een chatbot geïntegreerd om vragen over de data te kunnen stellen.\n\nVoor de chatbot hebben wij een klein Ollama-model gebruikt. De chatbot werd gekoppeld aan de Spring Boot-backend. In de backend maakten wij gebruik van semantic search, RAG en een vector database. Hierdoor kon de chatbot relevante context uit de data ophalen voordat er een antwoord werd gegenereerd.\n\n---\n\nDe werking was ongeveer als volgt:\n\n1. De gebruiker stelt een vraag in Angular.\n2. Angular stuurt deze vraag naar de Spring Boot-backend.\n3. De backend verwerkt de vraag.\n4. De backend zoekt met semantic search naar relevante informatie in de vector database.\n5. De gevonden context wordt samen met de vraag naar het Ollama-model gestuurd.\n6. Het Ollama-model gebruikt deze context om een antwoord te genereren.\n7. De backend stuurt het antwoord terug naar Angular.\n9. Angular toont het antwoord aan de gebruiker.\n\n---\n\nHelaas is de repository prive (ik heb geen rechten om dit aan te passen)",
-    "en": "Miz kwam met het probleem dat alarmen lastig afgesloten konden worden. Als groep moesten wij een oplossing bedenken waarmee dit probleem duidelijk zichtbaar werd. Daarom hebben wij de beschikbare data gebruikt om een custom Angular-dashboard te maken. In dit dashboard konden gebruikers de alarmdata beter analyseren. Daarnaast hebben wij een chatbot geïntegreerd om vragen over de data te kunnen stellen.\n\nVoor de chatbot hebben wij een klein Ollama-model gebruikt. De chatbot werd gekoppeld aan de Spring Boot-backend. In de backend maakten wij gebruik van semantic search, RAG en een vector database. Hierdoor kon de chatbot relevante context uit de data ophalen voordat er een antwoord werd gegenereerd.\n\n---\n\nDe werking was ongeveer als volgt:\n\n1. De gebruiker stelt een vraag in Angular.\n2. Angular stuurt deze vraag naar de Spring Boot-backend.\n3. De backend verwerkt de vraag.\n4. De backend zoekt met semantic search naar relevante informatie in de vector database.\n5. De gevonden context wordt samen met de vraag naar het Ollama-model gestuurd.\n6. Het Ollama-model gebruikt deze context om een antwoord te genereren.\n7. De backend stuurt het antwoord terug naar Angular.\n9. Angular toont het antwoord aan de gebruiker.\n\n---\n\nHelaas is de repository prive (ik heb geen rechten om dit aan te passen)"
+    "nl": "MIZ kwam met het probleem dat alarmen lastig afgesloten konden worden. Als groep moesten wij een oplossing bedenken waarmee dit probleem duidelijk zichtbaar werd. Daarom hebben wij de beschikbare data gebruikt om een custom Angular-dashboard te bouwen. In dit dashboard konden gebruikers de alarmdata beter analyseren. Daarnaast hebben wij een chatbot geïntegreerd waarmee je vragen over de data kon stellen.\n\nVoor de chatbot gebruikten wij een klein Ollama-model. De chatbot werd gekoppeld aan de Spring Boot-backend. In de backend maakten wij gebruik van semantic search, RAG en een vector database. Hierdoor kon de chatbot relevante context uit de data ophalen voordat er een antwoord werd gegenereerd.\n\n---\n\nDe werking was ongeveer als volgt:\n\n1. De gebruiker stelt een vraag in Angular.\n2. Angular stuurt deze vraag naar de Spring Boot-backend.\n3. De backend verwerkt de vraag.\n4. De backend zoekt met semantic search naar relevante informatie in de vector database.\n5. De gevonden context wordt samen met de vraag naar het Ollama-model gestuurd.\n6. Het Ollama-model gebruikt deze context om een antwoord te genereren.\n7. De backend stuurt het antwoord terug naar Angular.\n8. Angular toont het antwoord aan de gebruiker.\n\n---\n\nHelaas is de repository privé (ik heb geen rechten om dit aan te passen).",
+    "en": "MIZ raised the problem that alarms were difficult to close. As a group we had to come up with a solution that made this problem clearly visible. To do this, we used the available data to build a custom Angular dashboard that let users analyse the alarm data more effectively. We also integrated a chatbot so users could ask questions about the data.\n\nFor the chatbot we used a small Ollama model, connected to the Spring Boot backend. In the backend we used semantic search, RAG and a vector database, which let the chatbot retrieve relevant context from the data before generating an answer.\n\n---\n\nThe flow worked roughly like this:\n\n1. The user asks a question in Angular.\n2. Angular sends the question to the Spring Boot backend.\n3. The backend processes the question.\n4. The backend uses semantic search to find relevant information in the vector database.\n5. The retrieved context is sent to the Ollama model together with the question.\n6. The Ollama model uses this context to generate an answer.\n7. The backend sends the answer back to Angular.\n8. Angular shows the answer to the user.\n\n---\n\nUnfortunately the repository is private (I don't have the rights to change this)."
   },
   "role": {
     "nl": "Full stack developer",
-    "en": "Full stack developer"
+    "en": "Full-stack developer"
   },
   "highlights": {
     "nl": [
       "Semantic search",
       "RAG (Retrieval-Augmented Generation)",
-      "Vector databse",
-      "Custom angular dashboard",
-      "Ollama chatbot",
-      "jwt authenticatie"
+      "Vector database",
+      "Custom Angular-dashboard",
+      "Ollama-chatbot",
+      "JWT-authenticatie"
     ],
     "en": [
       "Semantic search",
       "RAG (Retrieval-Augmented Generation)",
-      "Vector databse",
-      "Custom angular dashboard",
+      "Vector database",
+      "Custom Angular dashboard",
       "Ollama chatbot",
-      "jwt authenticatie"
+      "JWT authentication"
     ]
   },
   "category": "SCHOOL_PROJECT",
@@ -40,8 +40,8 @@
   "endDate": null,
   "repositoryUrl": "https://gitlab.inf-hsleiden.nl/Renzo/data-advance-2-miz17",
   "courseName": {
-    "nl": "Data advanced 2",
-    "en": "Data advanced 2"
+    "nl": "Data Advanced 2",
+    "en": "Data Advanced 2"
   },
   "highlighted": true,
   "techStack": [
@@ -54,9 +54,9 @@
     "CSS",
     "Angular",
     "Git",
-    "Javascript",
+    "JavaScript",
     "PostgreSQL",
-    "Springboot"
+    "Spring Boot"
   ],
   "images": [
     {

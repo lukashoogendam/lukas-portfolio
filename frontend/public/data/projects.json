@@ -6,14 +6,14 @@
       "en": "Chatbot + dashboard"
     },
     "shortDescription": {
-      "nl": "In data advanced hebben we als groep een proof of concept gemaakt voor het probleem van MIZ",
-      "en": "In data advanced hebben we als groep een proof of concept gemaakt voor het probleem van MIZ"
+      "nl": "In Data Advanced 2 maakten we als groep een proof of concept voor MIZ, een leverancier van medische alarmsystemen.",
+      "en": "In Data Advanced 2 our group built a proof of concept for MIZ, a supplier of medical alarm systems."
     },
     "category": "SCHOOL_PROJECT",
     "status": "COMPLETED",
     "courseName": {
-      "nl": "Data advanced 2",
-      "en": "Data advanced 2"
+      "nl": "Data Advanced 2",
+      "en": "Data Advanced 2"
     },
     "highlighted": true
   },
@@ -24,8 +24,8 @@
       "en": "Webshop"
     },
     "shortDescription": {
-      "nl": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular",
-      "en": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular"
+      "nl": "Voor het vak \"First Full Stack\" bouwde ik een volledige webshop in Spring Boot en Angular.",
+      "en": "For the course \"First Full Stack\" I built a complete webshop using Spring Boot and Angular."
     },
     "category": "SCHOOL_PROJECT",
     "status": "COMPLETED",
@@ -42,8 +42,8 @@
       "en": "Mijn portfolio website"
     },
     "shortDescription": {
-      "nl": "",
-      "en": ""
+      "nl": "Mijn persoonlijke portfolio, opgezet als een interactieve API explorer.",
+      "en": "My personal portfolio, built as an interactive API explorer."
     },
     "category": "PERSONAL_PROJECT",
     "status": "IN_PROGRESS",
@@ -57,14 +57,14 @@
       "en": "Youtube dashboard"
     },
     "shortDescription": {
-      "nl": "Een devops/dataoplossing om videodata inzichtelijk te maken",
-      "en": "Een devops/dataoplossing om videodata inzichtelijk te maken"
+      "nl": "Een DevOps-/dataoplossing die YouTube-videodata inzichtelijk maakt.",
+      "en": "A DevOps and data solution that turns YouTube video data into insight."
     },
     "category": "SCHOOL_PROJECT",
     "status": "COMPLETED",
     "courseName": {
-      "nl": "Data advanced 1",
-      "en": "Data advanced 1"
+      "nl": "Data Advanced 1",
+      "en": "Data Advanced 1"
     },
     "highlighted": true
   }

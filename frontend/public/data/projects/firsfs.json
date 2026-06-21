@@ -5,27 +5,27 @@
     "en": "Webshop"
   },
   "shortDescription": {
-    "nl": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular",
-    "en": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular"
+    "nl": "Voor het vak \"First Full Stack\" bouwde ik een volledige webshop in Spring Boot en Angular.",
+    "en": "For the course \"First Full Stack\" I built a complete webshop using Spring Boot and Angular."
   },
   "description": {
-    "nl": "Door de VPN op de Hogeschool Leiden is het niet mogelijk om een demo te geven van de webshop, daarom heb ik screenshots bijgevoegd van mijn webshop.\n\n---\n\nIk heb een powerlift webshop ontworpen, omdat ik hou van powerlifting. Je kan producten toevoegen aan je winkelwagen, een order plaatsen en je orders inzien. Daarnaast is er ook nog een admin paneel om alles te beheren. Ook zit er een 'high contrast' mode bij voor slechtziende gebruikers. Als laatst is het ook mogelijk om de site te vertalen naar het Engels.",
-    "en": "Door de VPN op de Hogeschool Leiden is het niet mogelijk om een demo te geven van de webshop, daarom heb ik screenshots bijgevoegd van mijn webshop.\n\n---\n\nIk heb een powerlift webshop ontworpen, omdat ik hou van powerlifting. Je kan producten toevoegen aan je winkelwagen, een order plaatsen en je orders inzien. Daarnaast is er ook nog een admin paneel om alles te beheren. Ook zit er een 'high contrast' mode bij voor slechtziende gebruikers. Als laatst is het ook mogelijk om de site te vertalen naar het Engels."
+    "nl": "Door de VPN op de Hogeschool Leiden is het niet mogelijk om een live demo van de webshop te geven, daarom heb ik screenshots bijgevoegd.\n\n---\n\nIk heb een powerlifting-webshop ontworpen, omdat ik zelf van powerlifting hou. Bezoekers kunnen producten aan hun winkelwagen toevoegen, een order plaatsen en hun bestellingen inzien. Daarnaast is er een adminpaneel om alles te beheren. De site heeft ook een 'high contrast'-modus voor slechtziende gebruikers en is volledig naar het Engels te vertalen.",
+    "en": "Because of the VPN at Leiden University of Applied Sciences it isn't possible to give a live demo of the webshop, so I've added screenshots instead.\n\n---\n\nI designed a powerlifting webshop, because powerlifting is one of my hobbies. Visitors can add products to their cart, place an order and view their past orders. There's also an admin panel to manage everything. The site includes a high-contrast mode for visually impaired users and can be fully translated into English."
   },
   "role": {
     "nl": "Full stack developer",
-    "en": "Full stack developer"
+    "en": "Full-stack developer"
   },
   "highlights": {
     "nl": [
-      "Jwt authenticatie met cookies",
+      "JWT-authenticatie met cookies",
       "Veel aandacht voor security",
-      "Admin paneel"
+      "Adminpaneel"
     ],
     "en": [
-      "Jwt authenticatie met cookies",
-      "Veel aandacht voor security",
-      "Admin paneel"
+      "JWT authentication with cookies",
+      "Strong focus on security",
+      "Admin panel"
     ]
   },
   "category": "SCHOOL_PROJECT",
@@ -39,12 +39,12 @@
   },
   "highlighted": true,
   "techStack": [
-    "Javascript",
+    "JavaScript",
     "HTML",
     "PostgreSQL",
     "Angular",
     "Java",
-    "Springboot",
+    "Spring Boot",
     "Linux",
     "CSS",
     "UML",

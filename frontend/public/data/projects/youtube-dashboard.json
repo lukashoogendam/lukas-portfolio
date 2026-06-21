@@ -5,31 +5,31 @@
     "en": "Youtube dashboard"
   },
   "shortDescription": {
-    "nl": "Een devops/dataoplossing om videodata inzichtelijk te maken",
-    "en": "Een devops/dataoplossing om videodata inzichtelijk te maken"
+    "nl": "Een DevOps-/dataoplossing die YouTube-videodata inzichtelijk maakt.",
+    "en": "A DevOps and data solution that turns YouTube video data into insight."
   },
   "description": {
-    "nl": "Tijdens Data Advanced leer je om een IT-oplossing te maken die data omzet in bruikbare informatie.\n\nHierbij ontwikkel je zelf een dashboard dat inzicht geeft over videopopulariteit, maak je een batchproces dat dagelijks nieuwe videodata verzamelt en opslaat, en leer je machine learning technieken zoals clustering, classificatie en NLP (Natural Language Processing). \n\nDaarnaast maak je een data-architectuurontwerp, houd je je bezig met benchmarking en leer je om aandacht te besteden aan markstandaarden zoals ISO 25000, ISO 27000 en de GDPR.",
-    "en": "Tijdens Data Advanced leer je om een IT-oplossing te maken die data omzet in bruikbare informatie.\n\nHierbij ontwikkel je zelf een dashboard dat inzicht geeft over videopopulariteit, maak je een batchproces dat dagelijks nieuwe videodata verzamelt en opslaat, en leer je machine learning technieken zoals clustering, classificatie en NLP (Natural Language Processing). \n\nDaarnaast maak je een data-architectuurontwerp, houd je je bezig met benchmarking en leer je om aandacht te besteden aan markstandaarden zoals ISO 25000, ISO 27000 en de GDPR."
+    "nl": "Tijdens Data Advanced leer je om een IT-oplossing te maken die data omzet in bruikbare informatie.\n\nIk ontwikkelde een dashboard dat inzicht geeft in videopopulariteit, bouwde een batchproces dat dagelijks nieuwe videodata verzamelt en opslaat, en paste machine learning-technieken toe zoals clustering, classificatie en NLP (Natural Language Processing).\n\nDaarnaast maakte ik een data-architectuurontwerp, hield ik me bezig met benchmarking en besteedde ik aandacht aan marktstandaarden zoals ISO 25000, ISO 27000 en de GDPR.",
+    "en": "During Data Advanced you learn to build an IT solution that turns raw data into useful information.\n\nI developed a dashboard that gives insight into video popularity, built a batch process that collects and stores new video data every day, and applied machine learning techniques such as clustering, classification and NLP (Natural Language Processing).\n\nI also created a data architecture design, worked on benchmarking, and paid attention to market standards such as ISO 25000, ISO 27000 and the GDPR."
   },
   "role": {
-    "nl": "Data analist / devops developer",
-    "en": "Data analist / devops developer"
+    "nl": "Data-analist / DevOps-developer",
+    "en": "Data analyst / DevOps developer"
   },
   "highlights": {
     "nl": [
-      "sentiment classifier",
-      "data clustering",
-      "volledige pipeline die elke avond gedraaid wordt",
-      "gilab pipeline met docker images",
-      "looker studio dashboard"
+      "Sentiment classifier",
+      "Data clustering",
+      "Volledige pipeline die elke avond draait",
+      "GitLab-pipeline met Docker-images",
+      "Looker Studio-dashboard"
     ],
     "en": [
-      "sentiment classifier",
-      "data clustering",
-      "volledige pipeline die elke avond gedraaid wordt",
-      "gilab pipeline met docker images",
-      "looker studio dashboard"
+      "Sentiment classifier",
+      "Data clustering",
+      "Full pipeline that runs every evening",
+      "GitLab pipeline with Docker images",
+      "Looker Studio dashboard"
     ]
   },
   "category": "SCHOOL_PROJECT",
@@ -38,19 +38,19 @@
   "endDate": null,
   "repositoryUrl": "https://gitlab.inf-hsleiden.nl/s1142688/data-advanced1",
   "courseName": {
-    "nl": "Data advanced 1",
-    "en": "Data advanced 1"
+    "nl": "Data Advanced 1",
+    "en": "Data Advanced 1"
   },
   "highlighted": true,
   "techStack": [
     "UML",
     "Python",
-    "Looker studio",
+    "Looker Studio",
     "Git",
     "PostgreSQL",
     "Docker",
     "Linux",
-    "Yupiter notebook"
+    "Jupyter Notebook"
   ],
   "images": [
     {
