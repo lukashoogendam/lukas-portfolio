@@ -121,24 +121,28 @@
         <p class="lead">// git log --oneline · {{ 'timeline.lead' | t }}</p>
         <div class="gitlog" aria-label="Tijdlijn van ervaring en educatie">
           @for (event of data.timelineEvents; track $index) {
-            <div class="commit" [class.head]="event.current">
+            <div class="commit" [class.head]="event.current" [attr.data-type]="event.type">
               <div class="rail" aria-hidden="true"><span class="node"></span><span class="line"></span></div>
               <div class="commit-body">
-                <div class="commit-head">
-                  <span class="commit-hash">{{ commitHash(event, $index) }}</span>
-                  <span class="when">
-                    {{ event.startDate | date:'yyyy' }} —
-                    {{ event.current ? ('timeline.current' | t) : (event.endDate | date:'yyyy') }}
+                <div class="commit-meta">
+                  <span class="commit-year">
+                    {{ event.startDate | date:'yyyy' }}
+                    @if (event.current) { — {{ 'timeline.current' | t }} }
+                    @else if (event.endDate && event.endDate !== event.startDate) { — {{ event.endDate | date:'yyyy' }} }
                   </span>
                   @if (event.current) { <span class="cur">current</span> }
+                  <span class="commit-hash">{{ commitHash(event, $index) }}</span>
                 </div>
                 <h3 class="commit-title">
                   <svg class="ic tic" viewBox="0 0 24 24" aria-hidden="true"><use [attr.href]="'#' + timelineIcon(event.type)"></use></svg>
                   {{ event.title }}
                 </h3>
-                <p class="commit-msg">
-                  {{ event.subtitle }}@if (event.description) { · {{ event.description }} }
-                </p>
+                @if (event.subtitle) {
+                  <p class="commit-org">{{ event.subtitle }}</p>
+                }
+                @if (event.description) {
+                  <p class="commit-msg">{{ event.description }}</p>
+                }
               </div>
             </div>
           }
