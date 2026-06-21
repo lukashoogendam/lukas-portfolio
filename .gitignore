@@ -15,3 +15,4 @@ backend/uploads/
 
 # Environment secrets
 .env
+.playwright-mcp/
