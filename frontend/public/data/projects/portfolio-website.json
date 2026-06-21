@@ -2,7 +2,7 @@
   "slug": "portfolio-website",
   "title": {
     "nl": "Mijn portfolio website",
-    "en": "Mijn portfolio website"
+    "en": "My portfolio website"
   },
   "shortDescription": {
     "nl": "Mijn persoonlijke portfolio, opgezet als een interactieve API explorer.",
@@ -17,8 +17,18 @@
     "en": "Developer"
   },
   "highlights": {
-    "nl": [],
-    "en": []
+    "nl": [
+      "Zelf gehost op een VPS met Nginx",
+      "Spring Boot-backend met REST-API",
+      "Angular-frontend als interactieve API explorer",
+      "Volledig tweetalig (NL/EN)"
+    ],
+    "en": [
+      "Self-hosted on a VPS with Nginx",
+      "Spring Boot backend with a REST API",
+      "Angular frontend as an interactive API explorer",
+      "Fully bilingual (NL/EN)"
+    ]
   },
   "category": "PERSONAL_PROJECT",
   "status": "IN_PROGRESS",

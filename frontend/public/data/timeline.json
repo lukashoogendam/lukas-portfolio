@@ -1,1 +1,70 @@
-[]
+[
+  {
+    "title": {
+      "nl": "Software Developer (werkstudent)",
+      "en": "Software Developer (part-time)"
+    },
+    "organization": {
+      "nl": "Lionsville",
+      "en": "Lionsville"
+    },
+    "description": {
+      "nl": "Ik bouw mee aan een intern HR-systeem, zowel de backend (.NET) als de frontend (React). Ik doe regelmatig PR reviews en overleg met de klant en het developmentteam.",
+      "en": "I help build an internal HR system, both the backend (.NET) and the frontend (React). I regularly do PR reviews and coordinate with the client and the development team."
+    },
+    "type": "WORK",
+    "startDate": "2025",
+    "endDate": null
+  },
+  {
+    "title": {
+      "nl": "Propedeuse behaald",
+      "en": "Foundation year (propedeuse) completed"
+    },
+    "organization": {
+      "nl": "Hogeschool Leiden",
+      "en": "Leiden University of Applied Sciences"
+    },
+    "description": {
+      "nl": "Mijn propedeuse Informatica behaald, het volledige eerste studiejaar.",
+      "en": "Completed the propedeuse (full first-year diploma) of my Computer Science programme."
+    },
+    "type": "MILESTONE",
+    "startDate": "2025",
+    "endDate": "2025"
+  },
+  {
+    "title": {
+      "nl": "HBO Informatica",
+      "en": "BSc Computer Science"
+    },
+    "organization": {
+      "nl": "Hogeschool Leiden",
+      "en": "Leiden University of Applied Sciences"
+    },
+    "description": {
+      "nl": "Voltijdopleiding Informatica met een focus op software development en backend.",
+      "en": "Full-time Computer Science programme with a focus on software development and backend."
+    },
+    "type": "EDUCATION",
+    "startDate": "2024",
+    "endDate": null
+  },
+  {
+    "title": {
+      "nl": "Havo",
+      "en": "Havo (senior general secondary education)"
+    },
+    "organization": {
+      "nl": "Christelijk College de Populier",
+      "en": "Christelijk College de Populier"
+    },
+    "description": {
+      "nl": "Havodiploma behaald.",
+      "en": "Obtained my havo diploma."
+    },
+    "type": "EDUCATION",
+    "startDate": "2017",
+    "endDate": "2022"
+  }
+]
