@@ -1,4 +1,4 @@
-import { Component, signal, inject, ChangeDetectionStrategy, effect } from '@angular/core';
+import { Component, signal, inject, effect } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -14,8 +14,7 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
   selector: 'app-project-detail',
   imports: [MarkdownPipe, ShowcaseModalComponent, TranslatePipe],
   templateUrl: './project-detail.component.html',
-  styleUrl: './project-detail.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './project-detail.component.scss'
 })
 export class ProjectDetailComponent {
   project = signal<ProjectDetailDto | null>(null);

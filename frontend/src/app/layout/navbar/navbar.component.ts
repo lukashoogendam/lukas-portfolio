@@ -1,12 +1,12 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, Router, NavigationEnd } from '@angular/router';
 import { LanguageService } from '../../core/services/language.service';
+import { ThemeService } from '../../core/services/theme.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, TranslatePipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
@@ -16,13 +16,14 @@ import { filter } from 'rxjs/operators';
 })
 export class NavbarComponent {
   langService = inject(LanguageService);
+  themeService = inject(ThemeService);
   router = inject(Router);
   isMobileMenuOpen = signal(false);
   isScrolled = signal(false);
   isHomePage = signal(true);
 
   constructor() {
-    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((e: any) => {
+    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((e: NavigationEnd) => {
       this.isHomePage.set(e.url === '/' || e.url === '');
     });
   }

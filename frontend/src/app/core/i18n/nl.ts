@@ -18,6 +18,13 @@ export const nl = {
 
   // Skills
   'skills.fallback_title': 'Skills & Technologieën',
+  'skills.core_title': 'Hoofdskills',
+  'skills.core_lead': 'mijn expertise',
+  'skills.all_title': 'Vaardigheden',
+  'skills.all_lead': 'alles waar ik mee gewerkt heb',
+  'skills.units_tech': 'technologieën',
+  'skills.units_cat': 'categorieën',
+  'skills.divider': 'en verder',
 
   // Projects
   'projects.fallback_title': 'Uitgelichte Projecten',
@@ -26,10 +33,12 @@ export const nl = {
   // Timeline
   'timeline.label': 'Carrière',
   'timeline.fallback_title': 'Ervaring & Educatie',
+  'timeline.lead': 'opleiding & projecten in de tijd',
   'timeline.current': 'Heden',
 
   // Contact
   'contact.fallback_title': 'Neem Contact Op',
+  'contact.intro': 'Geen ingewikkelde flow. Stuur gewoon een request, ik reageer doorgaans binnen een dag.',
   'contact.success_title': 'Bericht verstuurd!',
   'contact.success_message': 'Bedankt voor je bericht. Ik neem zo snel mogelijk contact met je op.',
   'contact.new_message': 'Nieuw bericht',
@@ -39,7 +48,7 @@ export const nl = {
   'contact.placeholder_name': 'Jouw naam',
   'contact.placeholder_email': 'jouw@email.nl',
   'contact.placeholder_message': 'Schrijf hier je bericht...',
-  'contact.submit': 'Bericht Versturen ✉️',
+  'contact.submit': 'Verstuur bericht',
   'contact.submitting': 'Versturen...',
   'contact.error': 'Er is iets misgegaan. Probeer het opnieuw.',
 
@@ -49,7 +58,6 @@ export const nl = {
   'overview.error_message': 'De projecten konden niet geladen worden.',
   'overview.title': 'Mijn Projecten',
   'overview.subtitle_suffix': 'gerealiseerde projecten en concepten',
-  'overview.filter_label': 'Gefilterd op skill:',
   'overview.view_details': 'Bekijk details',
   'overview.empty': 'Nog geen projecten toegevoegd.',
   'overview.back': '← Terug',
@@ -61,14 +69,12 @@ export const nl = {
   'detail.error_message': 'Het opgevraagde project bestaat niet of kon niet geladen worden.',
   'detail.back': '← Terug',
   'detail.current': 'Heden',
-  'detail.view_assignment': 'Opdracht bekijken',
   'detail.about': 'Over dit project',
   'detail.my_role': 'Mijn rol',
   'detail.built': 'Wat er is gebouwd',
   'detail.view_demo': 'Demo bekijken',
   'detail.click_to_open': 'Klik om te openen',
   'detail.docs': 'Documentatie & Notities',
-  'detail.tech_summary': 'Technische samenvatting',
   'detail.lightbox_alt': 'Screenshot vergroot',
   'detail.view_doc': 'Bekijk',
 
@@ -82,6 +88,7 @@ export const nl = {
   'enum.skill_category.BACKEND': 'Backend',
   'enum.skill_category.FRONTEND': 'Frontend',
   'enum.skill_category.DATABASE': 'Database',
+  'enum.skill_category.DATA': 'Data',
   'enum.skill_category.DEVOPS': 'DevOps',
   'enum.skill_category.TOOLS': 'Tools',
   'enum.skill_category.MOBILE': 'Mobile',

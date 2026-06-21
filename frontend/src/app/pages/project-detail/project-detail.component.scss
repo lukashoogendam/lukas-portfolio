@@ -9,8 +9,13 @@
 .back-link {
   display: inline-flex;
   align-items: center;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
   color: $text-muted;
   text-decoration: none;
+  font-family: $font-mono;
   font-size: $font-size-sm;
   margin-bottom: $spacing-lg;
   transition: color $transition-fast;
@@ -28,9 +33,9 @@
 }
 .category-badge {
   padding: 4px 12px;
-  background: rgba($accent-primary, 0.1);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   color: $accent-primary;
-  border: 1px solid rgba($accent-primary, 0.2);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
   border-radius: $radius-full;
   font-size: $font-size-xs;
   font-weight: 600;
@@ -38,21 +43,21 @@
   letter-spacing: 0.5px;
   white-space: nowrap;
 }
-.status-badge {
+.project-status {
   padding: 4px 12px;
   border-radius: $radius-full;
   font-size: $font-size-xs;
   font-weight: 600;
   white-space: nowrap;
   &.completed {
-    background: rgba($accent-green, 0.1);
+    background: color-mix(in srgb, var(--accent-2) 10%, transparent);
     color: $accent-green;
-    border: 1px solid rgba($accent-green, 0.2);
+    border: 1px solid color-mix(in srgb, var(--accent-2) 20%, transparent);
   }
   &.in-progress {
-    background: rgba($accent-yellow, 0.1);
+    background: color-mix(in srgb, var(--warn) 10%, transparent);
     color: $accent-yellow;
-    border: 1px solid rgba($accent-yellow, 0.2);
+    border: 1px solid color-mix(in srgb, var(--warn) 20%, transparent);
   }
 }
 .date-info {
@@ -96,7 +101,7 @@
   transition: all $transition-fast;
   &:hover {
     border-color: $accent-primary;
-    background-color: rgba($accent-primary, 0.08);
+    background-color: color-mix(in srgb, var(--accent) 8%, transparent);
   }
 }
 .hero-links {
@@ -128,17 +133,17 @@
     color: $accent-purple;
     &:hover {
       border-color: $accent-purple;
-      background-color: rgba($accent-purple, 0.08);
+      background-color: color-mix(in srgb, var(--info) 8%, transparent);
     }
   }
   &.demo {
     background: linear-gradient(135deg, $accent-primary, $accent-primary-dark);
     color: #fff;
     border: none;
-    box-shadow: 0 4px 12px rgba($accent-primary, 0.3);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 30%, transparent);
     &:hover {
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba($accent-primary, 0.4);
+      box-shadow: 0 6px 20px color-mix(in srgb, var(--accent) 40%, transparent);
     }
   }
 }
@@ -212,7 +217,7 @@
   border-radius: $radius-md;
   transition: border-color $transition-fast;
   &:hover {
-    border-color: rgba($accent-green, 0.3);
+    border-color: color-mix(in srgb, var(--accent-2) 30%, transparent);
   }
   .feature-check {
     color: $accent-green;
@@ -246,7 +251,7 @@
     transform: translateY(-2px);
     box-shadow: $shadow-lg;
     .showcase-card-icon {
-      background-color: rgba($accent-primary, 0.2);
+      background-color: color-mix(in srgb, var(--accent) 20%, transparent);
       color: $accent-primary;
     }
   }
@@ -325,7 +330,7 @@
   transition: all $transition-fast;
   &:hover {
     color: $accent-red;
-    background: rgba($accent-red, 0.1);
+    background: color-mix(in srgb, var(--danger) 10%, transparent);
   }
 }
 .showcase-modal-body {
@@ -422,7 +427,7 @@
   word-break: break-all;
   transition: background-color $transition-fast;
   &:hover {
-    background-color: rgba($accent-primary, 0.1);
+    background-color: color-mix(in srgb, var(--accent) 10%, transparent);
   }
   .external-icon {
     margin-left: auto;

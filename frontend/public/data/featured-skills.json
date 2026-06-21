@@ -1,12 +1,50 @@
 [
   {
-    "id": 1,
-    "name": "Security",
-    "nameEn": "Security",
-    "description": "JWT authorisatie & OWASP security.",
-    "descriptionEn": "JWT authorisatie & OWASP security.",
+    "name": {
+      "nl": "REST API's",
+      "en": "REST APIs"
+    },
+    "description": {
+      "nl": "REST-API's bouwen, van datamodel tot werkend endpoint.",
+      "en": "Building REST APIs, from data model to a working endpoint."
+    },
     "category": "BACKEND",
-    "icon": "🛡️",
-    "sortOrder": 0
+    "icon": "globe"
+  },
+  {
+    "name": {
+      "nl": "AI & RAG",
+      "en": "AI & RAG"
+    },
+    "description": {
+      "nl": "Slimme features met semantic search en RAG, zoals een chatbot op eigen data.",
+      "en": "Smart features with semantic search and RAG, like a chatbot over your own data."
+    },
+    "category": "BACKEND",
+    "icon": "chip"
+  },
+  {
+    "name": {
+      "nl": "Data-analyse",
+      "en": "Data analysis"
+    },
+    "description": {
+      "nl": "Ruwe data omzetten naar inzicht met ETL-pijplijnen en dashboards.",
+      "en": "Turning raw data into insight with ETL pipelines and dashboards."
+    },
+    "category": "DATA",
+    "icon": "chart"
+  },
+  {
+    "name": {
+      "nl": "Security",
+      "en": "Security"
+    },
+    "description": {
+      "nl": "API's beveiligen met JWT-authenticatie en de OWASP-richtlijnen.",
+      "en": "Securing APIs with JWT authentication and the OWASP guidelines."
+    },
+    "category": "BACKEND",
+    "icon": "shield"
   }
 ]

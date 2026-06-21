@@ -63,7 +63,7 @@
   transition: all $transition-fast;
   &:hover {
     color: $accent-red;
-    background: rgba($accent-red, 0.1);
+    background: color-mix(in srgb, var(--danger) 10%, transparent);
   }
 }
 

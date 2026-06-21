@@ -1,213 +1,170 @@
 @use '../../../styles/variables' as *;
-.navbar {
+
+.topbar {
   position: sticky;
   top: 0;
   z-index: $z-navbar;
-  background-color: rgba($bg-tertiary, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid transparent;
-  transition: all $transition-base;
+  background: color-mix(in srgb, var(--ground) 85%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid $border-color;
+  transition: border-color $transition-base;
 
   &.scrolled {
-    background-color: rgba($bg-tertiary, 0.97);
-    border-bottom-color: $border-color;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    background: color-mix(in srgb, var(--ground) 94%, transparent);
   }
 }
-.navbar-inner {
-  max-width: $breakpoint-xl;
+
+.topbar-inner {
+  max-width: var(--maxw);
   margin: 0 auto;
-  padding: 0 $spacing-lg;
-  height: 64px;
+  padding: 0.6rem var(--gut);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: $spacing-xl;
+  gap: 1.2rem;
+  font-family: $font-mono;
+  font-size: 0.84rem;
 }
-.navbar-brand {
-  display: flex;
+
+.brand {
+  display: inline-flex;
   align-items: center;
-  gap: $spacing-sm;
-  text-decoration: none;
-  color: $text-primary;
+  gap: 0.45rem;
   font-weight: 700;
-  font-size: $font-size-lg;
-  transition: opacity $transition-fast;
-  &:hover {
-    opacity: 0.85;
-    color: $text-primary;
-  }
-  .brand-icon {
-    font-family: $font-mono;
-    font-size: $font-size-xl;
-    color: $accent-primary;
-  }
-  .brand-accent {
-    color: $accent-primary;
-  }
-}
-.navbar-links {
-  display: flex;
-  align-items: center;
-  gap: $spacing-xs;
-}
-.nav-link {
-  padding: $spacing-sm $spacing-md;
-  font-size: $font-size-sm;
-  font-weight: 500;
-  color: $text-secondary;
-  border-radius: $radius-md;
-  transition: all $transition-fast;
+  white-space: nowrap;
+  color: $text-primary;
   text-decoration: none;
-  &:hover {
-    color: $text-primary;
-    background-color: $bg-hover;
-  }
-  &.active {
-    color: $text-primary;
-    background-color: rgba($accent-primary, 0.1);
-  }
+
+  .br { color: $accent-primary; }
+  .dim { color: $text-muted; font-weight: 400; }
+
+  &:hover { color: $text-primary; }
 }
-.navbar-actions {
+
+.topnav {
+  margin-left: auto;
+  display: flex;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+
+  @media (max-width: $breakpoint-md) { display: none; }
+}
+
+.topnav-link {
+  font-family: $font-mono;
+  font-size: 0.84rem;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: $text-muted;
+  cursor: pointer;
+  transition: color $transition-fast;
+
+  &:hover { color: $accent-primary; }
+}
+
+.controls {
   display: flex;
   align-items: center;
-  gap: $spacing-sm;
+  gap: 0.6rem;
+
+  @media (max-width: $breakpoint-md) { margin-left: auto; }
 }
-.lang-switcher {
+
+.lang {
   display: flex;
-  align-items: center;
-  gap: 2px;
-  background-color: $bg-secondary;
   border: 1px solid $border-color;
   border-radius: $radius-md;
-  padding: 2px;
+  overflow: hidden;
+
+  button {
+    font: inherit;
+    font-family: $font-mono;
+    background: transparent;
+    color: $text-muted;
+    border: 0;
+    padding: 0.15rem 0.5rem;
+    cursor: pointer;
+    transition: color $transition-fast, background $transition-fast;
+
+    &[aria-pressed="true"] {
+      background: $accent-primary;
+      color: var(--on-accent);
+      font-weight: 700;
+    }
+  }
 }
-.lang-btn {
-  padding: 4px $spacing-sm;
-  font-size: 12px;
-  font-weight: 600;
-  color: $text-secondary;
+
+.themebtn {
   background: transparent;
-  border: none;
-  border-radius: calc(#{$radius-md} - 2px);
-  cursor: pointer;
-  transition: all $transition-fast;
-  letter-spacing: 0.03em;
-  &:hover {
-    color: $text-primary;
-    background-color: $bg-hover;
-  }
-  &.lang-active {
-    color: $accent-primary;
-    background-color: rgba($accent-primary, 0.12);
-  }
-}
-.nav-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: $font-family;
-  padding: $spacing-sm $spacing-md;
-  font-size: $font-size-sm;
-  font-weight: 500;
+  border: 1px solid $border-color;
+  color: $text-primary;
   border-radius: $radius-md;
-  text-decoration: none;
-  transition: all $transition-fast;
-  color: $text-secondary;
-  &:hover {
-    color: $text-primary;
-    background-color: $bg-hover;
-  }
+  width: 30px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color $transition-fast, color $transition-fast;
+
+  &:hover { border-color: $accent-primary; color: $accent-primary; }
 }
-.swagger-btn {
-  color: $accent-green;
-  border: 1px solid rgba($accent-green, 0.3);
-  background-color: rgba($accent-green, 0.08);
-  &:hover {
-    background-color: rgba($accent-green, 0.15);
-    color: $accent-green;
-  }
-}
+
 .mobile-toggle-btn {
   display: none;
-  background: none;
-  border: none;
+  background: transparent;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  width: 30px;
+  height: 28px;
+  padding: 0;
+  place-items: center;
   cursor: pointer;
-  padding: $spacing-xs;
-  width: 32px;
-  height: 32px;
+
+  @media (max-width: $breakpoint-md) { display: grid; }
+}
+
+.hamburger {
   position: relative;
-  z-index: 100;
-  .hamburger {
-    display: block;
-    width: 24px;
+  width: 14px;
+  height: 2px;
+  background: $text-primary;
+  border-radius: 2px;
+  transition: background $transition-fast;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 14px;
     height: 2px;
-    background-color: $text-primary;
-    position: relative;
-    transition: all $transition-fast;
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      width: 24px;
-      height: 2px;
-      background-color: $text-primary;
-      left: 0;
-      transition: all $transition-fast;
-    }
-    &::before { top: -6px; }
-    &::after { bottom: -6px; }
-    &.open {
-      background-color: transparent;
-      &::before {
-        top: 0;
-        transform: rotate(45deg);
-      }
-      &::after {
-        bottom: 0;
-        transform: rotate(-45deg);
-      }
-    }
+    background: $text-primary;
+    border-radius: 2px;
+    transition: transform $transition-fast;
+  }
+  &::before { top: -5px; }
+  &::after { top: 5px; }
+
+  &.open {
+    background: transparent;
+    &::before { transform: translateY(5px) rotate(45deg); }
+    &::after { transform: translateY(-5px) rotate(-45deg); }
   }
 }
+
 .mobile-menu {
-  display: none;
+  display: flex;
   flex-direction: column;
-  padding: $spacing-md $spacing-lg;
-  background-color: rgba($bg-secondary, 0.98);
-  backdrop-filter: blur(16px);
+  gap: 0.2rem;
+  padding: 0.6rem var(--gut) 1rem;
   border-top: 1px solid $border-color;
-  border-bottom: 1px solid $border-color;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  box-shadow: $shadow-md;
+  background: color-mix(in srgb, var(--ground) 96%, transparent);
+
+  @media (min-width: $breakpoint-md) { display: none; }
+
   .mobile-link {
-    padding: $spacing-md;
-    font-size: $font-size-base;
-    text-align: center;
-    border-radius: 0;
-    border-bottom: 1px solid rgba($border-color, 0.5);
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-}
-@media (max-width: $breakpoint-md) {
-  .navbar-links {
-    display: none;
-  }
-  .navbar-inner {
-    padding: 0 $spacing-md;
-  }
-  .mobile-toggle-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .mobile-menu {
-    display: flex;
+    text-align: left;
+    padding: 0.5rem 0;
   }
 }

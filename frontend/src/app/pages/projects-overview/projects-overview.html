@@ -6,7 +6,7 @@
   </div>
   } @else if (hasError()) {
   <div class="error-state">
-    <div class="error-icon">⚠️</div>
+    <div class="error-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"></use></svg></div>
     <h2>{{ 'overview.error_title' | t }}</h2>
     <p>{{ 'overview.error_message' | t }}</p>
     <a class="btn btn-primary" (click)="goBack()">{{ 'overview.back' | t }}</a>
@@ -18,16 +18,6 @@
     <p class="hero-subtitle">
       {{ projects().length }} {{ 'overview.subtitle_suffix' | t }}
     </p>
-    @if (skillFilter()) {
-    <div class="filter-banner"
-      style="margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.75rem; background: rgba(var(--primary-color-rgb), 0.1); border: 1px solid rgba(var(--primary-color-rgb), 0.2); padding: 0.5rem 1rem; border-radius: 8px; color: var(--primary-color);">
-      <span class="filter-icon">⚡</span>
-      <span>{{ 'overview.filter_label' | t }} <strong>{{ skillFilter() }}</strong></span>
-      <a routerLink="/projects" class="clear-filter-btn"
-        style="color: var(--text-muted); text-decoration: none; font-size: 1.2rem; line-height: 1; padding-left: 0.5rem; border-left: 1px solid rgba(var(--text-muted-rgb), 0.2); cursor: pointer;">&times;</a>
-    </div>
-    }
-    @if (!skillFilter()) {
     <div class="category-tabs">
       @for (cat of categoryValues; track cat) {
       <button class="category-tab" [class.active]="activeCategory() === cat" (click)="setCategory(cat)">
@@ -35,7 +25,6 @@
       </button>
       }
     </div>
-    }
   </section>
   <section class="section">
     <div class="projects-list">
@@ -45,7 +34,7 @@
           <div class="project-meta">
             <span class="course-badge">{{ 'enum.category.' + project.category | t }}</span>
             @if (project.courseName) {
-            <span class="course-name-badge">📚 {{ project.courseName }}</span>
+            <span class="course-name-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cap"></use></svg> {{ project.courseName }}</span>
             }
             <span class="status-badge">{{ 'enum.status.' + project.status | t }}</span>
           </div>
@@ -56,9 +45,9 @@
         }
         <div class="project-footer">
           <a [routerLink]="['/projects', project.slug]" class="linked-project-btn">
-            <span class="btn-icon">📂</span>
+            <svg class="ic btn-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-case"></use></svg>
             {{ 'overview.view_details' | t }}
-            <span class="btn-arrow">→</span>
+            <svg class="ic btn-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"></use></svg>
           </a>
         </div>
       </div>

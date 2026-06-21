@@ -1,17 +1,18 @@
 @use '../../../../styles/variables' as *;
 
 .code-window {
-  display: inline-flex;
+  display: flex;
+  width: 100%;
   flex-direction: column;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  box-shadow: var(--shadow);
   font-family: $font-mono;
-  min-width: 320px;
+  min-width: 0;
   max-width: 100%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   

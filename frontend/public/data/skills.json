@@ -1,178 +1,121 @@
 [
   {
-    "id": 1,
     "name": "Java",
     "category": "BACKEND",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": {
+      "nl": "Mijn belangrijkste backendtaal voor API's en services.",
+      "en": "My main backend language for building APIs and services."
+    }
   },
   {
-    "id": 2,
     "name": "Python",
     "category": "BACKEND",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": null
   },
   {
-    "id": 5,
-    "name": "Springboot",
+    "name": "Spring Boot",
     "category": "BACKEND",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": {
+      "nl": "Mijn favoriete framework om robuuste REST-API's mee te bouwen.",
+      "en": "My favourite framework for building robust REST APIs."
+    }
   },
   {
-    "id": 6,
-    "name": "PostgreSQL",
-    "category": "DATABASE",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
-  },
-  {
-    "id": 12,
-    "name": "Docker",
-    "category": "DEVOPS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
-  },
-  {
-    "id": 3,
     "name": "Angular",
     "category": "FRONTEND",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": null
   },
   {
-    "id": 21,
     "name": "CSS",
     "category": "FRONTEND",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": null
   },
   {
-    "id": 4,
     "name": "Flutter",
     "category": "FRONTEND",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": null
   },
   {
-    "id": 20,
     "name": "HTML",
     "category": "FRONTEND",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": null
   },
   {
-    "id": 19,
-    "name": "Javascript",
+    "name": "JavaScript",
     "category": "FRONTEND",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": null
   },
   {
-    "id": 9,
-    "name": "ETL",
-    "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "name": "PostgreSQL",
+    "category": "DATABASE",
+    "description": {
+      "nl": "De relationele database die ik in vrijwel al mijn projecten gebruik.",
+      "en": "The relational database I use in nearly all of my projects."
+    }
   },
   {
-    "id": 22,
     "name": "Flyway",
-    "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "category": "DATABASE",
+    "description": null
   },
   {
-    "id": 10,
+    "name": "ETL",
+    "category": "DATA",
+    "description": null
+  },
+  {
+    "name": "Looker Studio",
+    "category": "DATA",
+    "description": null
+  },
+  {
+    "name": "Power BI",
+    "category": "DATA",
+    "description": null
+  },
+  {
+    "name": "Jupyter Notebook",
+    "category": "DATA",
+    "description": null
+  },
+  {
+    "name": "Docker",
+    "category": "DEVOPS",
+    "description": null
+  },
+  {
+    "name": "Nginx",
+    "category": "DEVOPS",
+    "description": null
+  },
+  {
+    "name": "Linux",
+    "category": "DEVOPS",
+    "description": null
+  },
+  {
+    "name": "VPS/Droplets",
+    "category": "DEVOPS",
+    "description": null
+  },
+  {
     "name": "Git",
     "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": null
   },
   {
-    "id": 14,
-    "name": "Linux",
-    "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
-  },
-  {
-    "id": 17,
-    "name": "Looker studio",
-    "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
-  },
-  {
-    "id": 13,
-    "name": "Nginx",
-    "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
-  },
-  {
-    "id": 7,
-    "name": "Ollama",
-    "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
-  },
-  {
-    "id": 16,
     "name": "Postman",
     "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": null
   },
   {
-    "id": 18,
-    "name": "PowerBI",
-    "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
-  },
-  {
-    "id": 11,
     "name": "UML",
     "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": null
   },
   {
-    "id": 15,
-    "name": "VPS/Droplets",
+    "name": "Ollama",
     "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
-  },
-  {
-    "id": 8,
-    "name": "Yupiter notebook",
-    "category": "TOOLS",
-    "description": null,
-    "sortOrder": 0,
-    "descriptionEn": null
+    "description": null
   }
 ]

@@ -6,18 +6,18 @@
     </div>
   } @else if (hasError()) {
     <div class="error-state">
-      <div class="error-icon">⚠️</div>
+      <div class="error-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"></use></svg></div>
       <h2>{{ 'detail.error_title' | t }}</h2>
       <p>{{ 'detail.error_message' | t }}</p>
-      <a (click)="goBack()" class="btn btn-primary">{{ 'detail.back' | t }}</a>
+      <button type="button" (click)="goBack()" class="btn btn-primary">{{ 'detail.back' | t }}</button>
     </div>
   } @else {
     @if (project(); as p) {
     <section class="hero-section">
-      <a (click)="goBack()" class="back-link">{{ 'detail.back' | t }}</a>
+      <button type="button" (click)="goBack()" class="back-link">{{ 'detail.back' | t }}</button>
       <div class="hero-meta">
         <span class="category-badge">{{ 'enum.category.' + p.category | t }}</span>
-        <span class="status-badge" [class]="getStatusClass()">{{ 'enum.status.' + p.status | t }}</span>
+        <span class="project-status" [class]="getStatusClass()">{{ 'enum.status.' + p.status | t }}</span>
         @if (p.startDate) {
           <span class="date-info">{{ p.startDate }} - {{ p.endDate || ('detail.current' | t) }}</span>
         }
@@ -31,16 +31,11 @@
       </div>
       <div class="hero-links">
         @if (p.courseName) {
-          <span class="course-badge">📚 {{ p.courseName }}</span>
+          <span class="course-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cap"></use></svg> {{ p.courseName }}</span>
         }
-        @if (p.links && p.links.github) {
-          <a [href]="p.links.github" target="_blank" rel="noopener" class="link-btn github">
-            <span class="link-icon">⌨</span> GitHub
-          </a>
-        }
-        @if (p.documentUrl) {
-          <a [href]="p.documentUrl" target="_blank" rel="noopener" class="link-btn document">
-            <span class="link-icon">📄</span> {{ 'detail.view_assignment' | t }}
+        @if (p.repositoryUrl) {
+          <a [href]="p.repositoryUrl" target="_blank" rel="noopener" class="link-btn github">
+            <svg class="ic link-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-gh"></use></svg> GitHub
           </a>
         }
       </div>
@@ -58,41 +53,34 @@
               <p class="info-value">{{ p.role }}</p>
             </div>
           }
-          @if (p.highlights) {
+          @if (p.highlights.length > 0) {
             <div class="info-card">
               <h3 class="info-label">{{ 'detail.built' | t }}</h3>
-              <div class="info-value" [innerHTML]="p.highlights | markdown"></div>
+              <ul class="info-value highlights-list">
+                @for (hl of p.highlights; track $index) {
+                  <li>{{ hl }}</li>
+                }
+              </ul>
             </div>
           }
         </div>
       </div>
     </section>
-    @if (p.features && p.features.length > 0) {
-      <section class="section features-section">
-        <h2 class="section-title">Features</h2>
-        <div class="features-grid">
-          @for (feature of p.features; track feature) {
-            <div class="feature-item">
-              <span class="feature-check">✓</span>
-              <span class="feature-text">{{ feature }}</span>
-            </div>
-          }
-        </div>
-      </section>
-    }
     @if (p.showcases && p.showcases.length > 0) {
       <section class="section demo-section showcases-section">
         <h2 class="section-title">
-          <span class="title-icon">▶</span> Live Demos & Showcases
+          <svg class="ic title-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-play"></use></svg> Live Demos & Showcases
         </h2>
         <div class="showcases-grid">
-          @for (sc of p.showcases; track sc.id) {
+          @for (sc of p.showcases; track $index) {
             <div class="showcase-card" (click)="openShowcaseModal(sc)">
               <div class="showcase-card-icon">
-                @if (sc.type === 'iframe') { 🌐 }
-                @else if (sc.type === 'video') { 🎬 }
-                @else if (sc.type === 'embed') { 🧩 }
-                @else { 🖼️ }
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
+                  @if (sc.type === 'iframe') { <use href="#i-globe"></use> }
+                  @else if (sc.type === 'video') { <use href="#i-play"></use> }
+                  @else if (sc.type === 'embed') { <use href="#i-puzzle"></use> }
+                  @else { <use href="#i-image"></use> }
+                </svg>
               </div>
               <div class="showcase-card-content">
                  <h3>{{ sc.title || ('detail.view_demo' | t) }}</h3>
@@ -107,7 +95,7 @@
       <section class="section screenshots-section">
         <h2 class="section-title">Screenshots</h2>
         <div class="screenshots-grid">
-          @for (image of p.images; track image.imageUrl) {
+          @for (image of p.images; track $index) {
             <div class="screenshot-card" (click)="openLightbox(image.imageUrl)">
               <img [src]="image.imageUrl" [alt]="image.title || 'Screenshot'" loading="lazy" />
               @if (image.title) {
@@ -118,24 +106,18 @@
         </div>
       </section>
     }
-    @if ((p.documents && p.documents.length > 0) || p.highlights) {
+    @if (p.documents && p.documents.length > 0) {
       <section class="section docs-section">
         <h2 class="section-title">{{ 'detail.docs' | t }}</h2>
         <div class="docs-content">
-          @if (p.highlights) {
-            <div class="docs-card">
-              <h3>{{ 'detail.tech_summary' | t }}</h3>
-              <div class="docs-text" [innerHTML]="p.highlights | markdown"></div>
-            </div>
-          }
           @if (p.documents && p.documents.length > 0) {
-            @for (doc of p.documents; track doc.id) {
+            @for (doc of p.documents; track $index) {
               <div class="docs-card">
                 <h3>{{ doc.title }}</h3>
                 <a [href]="doc.url" target="_blank" rel="noopener" class="docs-link">
-                  <span class="link-icon">📄</span>
+                  <svg class="ic link-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-doc"></use></svg>
                   {{ 'detail.view_doc' | t }} {{ doc.title }}
-                  <span class="external-icon">↗</span>
+                  <svg class="ic external-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"></use></svg>
                 </a>
               </div>
             }
@@ -145,7 +127,7 @@
     }
     @if (lightboxImage()) {
       <div class="lightbox-overlay" (click)="closeLightbox()">
-        <button class="lightbox-close" (click)="closeLightbox()">✕</button>
+        <button class="lightbox-close" (click)="closeLightbox()" aria-label="Sluiten"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-close"></use></svg></button>
         <img [src]="lightboxImage()" [alt]="langService.t('detail.lightbox_alt')" />
       </div>
     }

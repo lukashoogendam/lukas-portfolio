@@ -1,50 +1,71 @@
 [
   {
     "slug": "chatbot-dashboard",
-    "title": "Chatbot + dashboard",
-    "shortDescription": "In data advanced hebben we als groep een proof of concept gemaakt voor het probleem van MIZ",
+    "title": {
+      "nl": "Chatbot + dashboard",
+      "en": "Chatbot + dashboard"
+    },
+    "shortDescription": {
+      "nl": "In Data Advanced 2 maakten we als groep een proof of concept voor MIZ, een leverancier van medische alarmsystemen.",
+      "en": "In Data Advanced 2 our group built a proof of concept for MIZ, a supplier of medical alarm systems."
+    },
     "category": "SCHOOL_PROJECT",
     "status": "COMPLETED",
-    "courseName": "Data advanced 2",
-    "highlighted": true,
-    "sortOrder": 0,
-    "shortDescriptionEn": "In data advanced hebben we als groep een proof of concept gemaakt voor het probleem van MIZ",
-    "courseNameEn": "Data advanced 2"
-  },
-  {
-    "slug": "youtube-dashboard",
-    "title": "Youtube dashboard",
-    "shortDescription": "Een devops/dataoplossing om videodata inzichtelijk te maken",
-    "category": "SCHOOL_PROJECT",
-    "status": "COMPLETED",
-    "courseName": "Data advanced 1",
-    "highlighted": true,
-    "sortOrder": 0,
-    "shortDescriptionEn": "Een devops/dataoplossing om videodata inzichtelijk te maken",
-    "courseNameEn": "Data advanced 1"
+    "courseName": {
+      "nl": "Data Advanced 2",
+      "en": "Data Advanced 2"
+    },
+    "highlighted": true
   },
   {
     "slug": "firsfs",
-    "title": "Webshop",
-    "shortDescription": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular",
+    "title": {
+      "nl": "Webshop",
+      "en": "Webshop"
+    },
+    "shortDescription": {
+      "nl": "Voor het vak \"First Full Stack\" bouwde ik een volledige webshop in Spring Boot en Angular.",
+      "en": "For the course \"First Full Stack\" I built a complete webshop using Spring Boot and Angular."
+    },
     "category": "SCHOOL_PROJECT",
     "status": "COMPLETED",
-    "courseName": "First Full Stack",
-    "highlighted": true,
-    "sortOrder": 0,
-    "shortDescriptionEn": "Voor het vak \"First full stack\" moest ik een website bouwen in springboot en angular",
-    "courseNameEn": "First Full Stack"
+    "courseName": {
+      "nl": "First Full Stack",
+      "en": "First Full Stack"
+    },
+    "highlighted": true
   },
   {
     "slug": "portfolio-website",
-    "title": "Mijn portfolio website",
-    "shortDescription": "",
+    "title": {
+      "nl": "Mijn portfolio website",
+      "en": "Mijn portfolio website"
+    },
+    "shortDescription": {
+      "nl": "Mijn persoonlijke portfolio, opgezet als een interactieve API explorer.",
+      "en": "My personal portfolio, built as an interactive API explorer."
+    },
     "category": "PERSONAL_PROJECT",
     "status": "IN_PROGRESS",
     "courseName": null,
-    "highlighted": false,
-    "sortOrder": 0,
-    "shortDescriptionEn": "",
-    "courseNameEn": null
+    "highlighted": false
+  },
+  {
+    "slug": "youtube-dashboard",
+    "title": {
+      "nl": "Youtube dashboard",
+      "en": "Youtube dashboard"
+    },
+    "shortDescription": {
+      "nl": "Een DevOps-/dataoplossing die YouTube-videodata inzichtelijk maakt.",
+      "en": "A DevOps and data solution that turns YouTube video data into insight."
+    },
+    "category": "SCHOOL_PROJECT",
+    "status": "COMPLETED",
+    "courseName": {
+      "nl": "Data Advanced 1",
+      "en": "Data Advanced 1"
+    },
+    "highlighted": true
   }
 ]

@@ -1,9 +1,17 @@
 {
   "name": "Lukas Hoogendam",
-  "role": "Software developer",
-  "focus": "Backend development",
+  "role": {
+    "nl": "Software developer",
+    "en": "Software developer"
+  },
+  "focus": {
+    "nl": "Backend development",
+    "en": "Backend development"
+  },
   "location": "Den Haag, NL",
   "email": "lukashoogendam@gmail.com",
-  "roleEn": "Software developer",
-  "focusEn": "Backend development"
+  "summary": {
+    "nl": "Tweedejaars Informaticastudent aan de Hogeschool Leiden met een sterke voorkeur voor backend development. Ik werk graag met Java en Spring Boot en vind het leuk om uit te zoeken hoe data door een systeem loopt en hoe je dat snel en betrouwbaar houdt. Naast mijn studie werk ik als werkstudent in een echt team, waar ik bouw aan zowel de backend als de frontend en regelmatig code van anderen review.",
+    "en": "Second-year Computer Science student at Leiden University of Applied Sciences with a strong preference for backend development. I enjoy working with Java and Spring Boot, and I like figuring out how data flows through a system and how to keep that fast and reliable. Alongside my studies I work as a part-time developer in a real team, building both backend and frontend and regularly reviewing my teammates' code."
+  }
 }
