@@ -1,243 +1,223 @@
 @if (homeData(); as data) {
-  <div class="home">
-    <!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
-    <section id="hero" class="section hero-section" #terminalSection data-section-id="hero">
-      <div class="section-inner slide-in-down layout-2col">
-        <div class="hero-content text-center">
-          <div class="hero-badge">{{ 'hero.badge' | t }}</div>
-          <h1 class="hero-title">
-            {{ data.profile.name }}<br>
-            {{ data.profile.role }}
-          </h1>
-          <div class="gradient-underline"></div>
-          <p class="hero-subtitle">
-            {{ data.profile.focus }}
-          </p>
-          <div class="hero-actions">
-            <button class="btn btn-primary" (click)="scrollTo('projects')">
-              {{ 'hero.cta_work' | t }}
-            </button>
-            <button class="btn btn-outline" (click)="scrollTo('contact')">
-              {{ 'hero.cta_contact' | t }}
-            </button>
-          </div>
-        </div>
+  <main class="wrap">
 
-        <div class="terminal-col">
-          <app-api-terminal 
-            endpoint="/profile/summary" 
-            [jsonPayload]="data.profile"
-            title="bash">
-          </app-api-terminal>
+    <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+    <section id="hero" class="hero" aria-label="Introductie">
+      <p class="prompt"><span class="s">&#10095;</span> whoami</p>
+      <h1 class="name">{{ data.profile.name }}<span class="caret" aria-hidden="true"></span></h1>
+      <p class="role"><span class="c">//</span> {{ data.profile.role }} · {{ data.profile.location }}</p>
+      <span class="hero-badge"><span class="dot" aria-hidden="true"></span> {{ 'hero.badge' | t }}</span>
+      <div class="cta-row">
+        <button class="btn btn-primary" (click)="scrollTo('projects')">$ {{ 'hero.cta_work' | t }}</button>
+        <button class="btn" (click)="scrollTo('contact')">$ {{ 'hero.cta_contact' | t }}</button>
+      </div>
+
+      <div class="hero-pane">
+        <app-api-terminal endpoint="/profile" [jsonPayload]="heroPayload()" title="bash"></app-api-terminal>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
+    <section id="about" class="block">
+      <p class="route"><span class="s">&#10095;</span> <span class="v">GET</span> /api/profile/summary</p>
+      <h2>{{ 'about.fallback_title' | t }}</h2>
+      <div class="about">
+        <div class="about-prose" [innerHTML]="data.profile.summary"></div>
+        <div class="meta-card" aria-label="Profielgegevens">
+          <div class="row"><span class="k">name</span><span class="val">{{ data.profile.name }}</span></div>
+          <div class="row"><span class="k">role</span><span class="val">{{ data.profile.role }}</span></div>
+          <div class="row"><span class="k">focus</span><span class="val">{{ data.profile.focus }}</span></div>
+          <div class="row"><span class="k">location</span><span class="val">{{ data.profile.location }}</span></div>
+          <div class="row"><span class="k">status</span><span class="val accent">200 OK · open</span></div>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════ ABOUT ═══════════════════════════════════════ -->
-    <section id="about" class="section about-section" data-section-id="about">
-      <div class="section-inner">
-        <div class="terminal-header text-center">
-          <div class="cmd-small-green uppercase">
-            <span class="prompt">$</span> CURL -X GET /API/PROFILE/ABOUT
-          </div>
-          <div class="cmd-large-title">
-            {{ 'about.fallback_title' | t }}
-          </div>
-          <div class="gradient-underline"></div>
-        </div>
-        <div class="about-content" style="margin-top: 2rem;" [innerHTML]="data.profile.summary"></div>
-      </div>
-    </section>
+    <!-- ═══════════════════════════ SKILLS ═══════════════════════════ -->
+    <section id="skills" class="block">
+      <!-- Hoofdskills — de stack waar ik op leid -->
+      <p class="route"><span class="s">&#10095;</span> <span class="v">GET</span> /api/skills/core</p>
+      <h2 class="tight">{{ 'skills.core_title' | t }}</h2>
+      <p class="lead">// {{ 'skills.core_lead' | t }}</p>
 
-    <!-- ═══════════════════════════════════════ FEATURED SKILLS ═══════════════════════════════════════ -->
-    <section id="featured-skills" class="section featured-skills-section" data-section-id="featured-skills">
-      <div class="section-inner">
-        <div class="terminal-header text-center">
-          <div class="cmd-small-green uppercase">
-            <span class="prompt">$</span> GREP -R "EXPERTISE" /VAR/LOG/CAREER.LOG
-          </div>
-          <div class="cmd-large-title">
-            {{ 'skills.fallback_title' | t }}
-          </div>
-          <div class="gradient-underline"></div>
-        </div>
-
-        @if (featuredSkills().length > 0) {
-          <div class="featured-skills-grid" style="margin-top: 3rem;">
-            @for (skill of featuredSkills(); track skill.name) {
-              <div class="featured-skill-card">
-                <div class="featured-skill-header">
-                  @if (skill.icon) {
-                    @if (skill.icon.startsWith('http')) {
-                      <div class="featured-skill-icon">
-                        <img [src]="skill.icon" [alt]="skill.name" />
-                      </div>
-                    } @else {
-                      <div class="featured-skill-icon emoji">{{ skill.icon }}</div>
-                    }
-                  }
-                  <span class="featured-skill-category">
-                    {{ 'enum.skill_category.' + skill.category | t }}
-                  </span>
-                </div>
-                <h3 class="featured-skill-title">{{ skill.name }}</h3>
-                <p class="featured-skill-desc">{{ skill.description }}</p>
+      @if (featuredSkills().length > 0) {
+        <div class="feat-grid">
+          @for (skill of featuredSkills(); track skill.name) {
+            <div class="feat-card core">
+              <div class="ic-wrap">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><use [attr.href]="'#' + skillIcon(skill)"></use></svg>
               </div>
-            }
+              <div class="cat">{{ 'enum.skill_category.' + skill.category | t }}</div>
+              <h3>{{ skill.name }}</h3>
+              <p>{{ skill.description }}</p>
+            </div>
+          }
+        </div>
+      }
+
+      <div class="skills-split">{{ 'skills.divider' | t }}</div>
+
+      <!-- Vaardigheden — de volledige toolkit -->
+      <p class="route"><span class="s">&#10095;</span> <span class="v">GET</span> /api/skills</p>
+      <h2 class="tight">{{ 'skills.all_title' | t }}</h2>
+      <p class="lead">
+        // {{ 'skills.all_lead' | t }} ·
+        <span class="n">{{ totalSkills() }}</span> {{ 'skills.units_tech' | t }} in
+        <span class="n">{{ totalCategories() }}</span> {{ 'skills.units_cat' | t }}
+      </p>
+      <div class="toolkit" aria-label="Alle vaardigheden per categorie">
+        @for (group of skillsByCategory(); track group.category) {
+          <div class="trow">
+            <span class="cat-label">
+              {{ 'enum.skill_category.' + group.category | t }} <span class="cnt">{{ group.skills.length }}</span>
+            </span>
+            <span class="chips">
+              @for (name of group.skills; track name) {
+                <span class="chip">{{ name }}</span>
+              }
+            </span>
           </div>
         }
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════ SKILLS ═══════════════════════════════════════ -->
-    <section id="skills" class="section skills-section" data-section-id="skills">
-      <div class="section-inner">
-        <div class="terminal-header text-center">
-          <div class="cmd-small-green uppercase">
-            <span class="prompt">$</span> CAT /ETC/TECH-ECOSYSTEM.CONF
-          </div>
-          <div class="cmd-large-title">
-            {{ 'nav.skills' | t }}
-          </div>
-          <div class="gradient-underline"></div>
-        </div>
-
-        <div class="ecosystems-grid" style="margin-top: 3rem;">
-          @for (group of skillsByCategory(); track group.category) {
-            <div class="ecosystem-card">
-              <h3 class="ecosystem-title">
-                <span class="dot"></span>
-                {{ 'enum.skill_category.' + group.category | t }}
-              </h3>
-              <div class="ecosystem-skills">
-                @for (skill of group.skills; track skill.name) {
-                  <div class="ecosystem-chip" [title]="skill.description">
-                    {{ skill.name }}
-                  </div>
-                }
-              </div>
+    <!-- ═══════════════════════════ PROJECTS ═══════════════════════════ -->
+    <section id="projects" class="block">
+      <p class="route"><span class="s">&#10095;</span> <span class="v">GET</span> /api/projects?featured=true</p>
+      <h2>{{ 'projects.fallback_title' | t }}</h2>
+      <div class="proj-list">
+        @for (project of data.highlightedProjects; track project.slug) {
+          <article class="proj">
+            <div class="proj-head">
+              <span class="run">$ run {{ project.slug | lowercase }}</span>
+              <span class="proj-tags">
+                @if (project.courseName) { <span class="tag">{{ project.courseName }}</span> }
+                <span class="tag" [class.ok]="project.status === 'COMPLETED'">
+                  {{ 'enum.status.' + project.status | t }}
+                </span>
+              </span>
             </div>
-          }
-        </div>
+            <h3>{{ project.title }}</h3>
+            <p><span class="gt">&gt;</span> {{ project.shortDescription }}</p>
+            <a class="proj-open" [routerLink]="['/projects', project.slug]">
+              {{ 'overview.view_details' | t }}
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"></use></svg>
+            </a>
+          </article>
+        }
       </div>
+      <a class="all-link" routerLink="/projects">
+        <span class="s">&#10095;</span>
+        {{ 'projects.view_all' | t }}
+        <svg class="ic arr" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"></use></svg>
+      </a>
     </section>
 
-    <!-- ═══════════════════════════════════════ PROJECTS ═══════════════════════════════════════ -->
-    <section id="projects" class="section projects-section" data-section-id="projects">
-      <div class="section-inner">
-        <div class="terminal-header text-center">
-          <div class="cmd-small-green uppercase">
-            <span class="prompt">$</span> CURL -X GET /API/PROJECTS/HIGHLIGHTED
-          </div>
-          <div class="cmd-large-title">
-            {{ 'projects.fallback_title' | t }}
-          </div>
-          <div class="gradient-underline"></div>
-        </div>
-
-        <div style="margin-top: 3rem;">
-          <div class="projects-grid">
-            @for (project of data.highlightedProjects; track project.slug) {
-              <a [routerLink]="['/projects', project.slug]" class="project-card">
-                <div class="project-content">
-                  <div class="project-meta">
-                    <span class="project-category">--{{ project.category | lowercase }}</span>
-                  </div>
-                  <h3 class="project-title">{{ project.title }}</h3>
-                  <p class="project-description">{{ project.shortDescription }}</p>
-                </div>
-                <div class="project-cta">
-                  <span class="prompt">$</span> cd {{ project.slug | lowercase }} <span class="cursor-blink">_</span>
-                </div>
-              </a>
-            }
-          </div>
-          <div class="projects-actions" style="margin-top: 2rem; text-align: center;">
-            <a routerLink="/projects" class="btn btn-outline">{{ 'projects.view_all' | t }}</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════ TIMELINE ════════════════════════════════ -->
-    <section id="timeline" class="section timeline-section">
-      <div class="section-inner">
-        <div class="section-label">{{ 'timeline.label' | t }}</div>
-        <h2 class="section-heading">{{ 'timeline.fallback_title' | t }}</h2>
-        <div class="timeline">
+    <!-- ═══════════════════════════ TIMELINE ═══════════════════════════ -->
+    @if (data.timelineEvents.length > 0) {
+      <section id="timeline" class="block">
+        <p class="route"><span class="s">&#10095;</span> <span class="v">GET</span> /api/timeline</p>
+        <h2 class="tight">{{ 'timeline.fallback_title' | t }}</h2>
+        <p class="lead">// git log --oneline · {{ 'timeline.lead' | t }}</p>
+        <div class="gitlog" aria-label="Tijdlijn van ervaring en educatie">
           @for (event of data.timelineEvents; track $index) {
-            <div class="timeline-item">
-              <div class="timeline-left">
-                <div class="timeline-icon">{{ getTypeIcon(event.type) }}</div>
-                <div class="timeline-line"></div>
-              </div>
-              <div class="timeline-card">
-                <div class="timeline-period">
-                  {{ event.startDate | date:'yyyy' }} — {{ event.current ? ('timeline.current' | t) : (event.endDate | date:'yyyy') }}
+            <div class="commit" [class.head]="event.current">
+              <div class="rail" aria-hidden="true"><span class="node"></span><span class="line"></span></div>
+              <div class="commit-body">
+                <div class="commit-head">
+                  <span class="commit-hash">{{ commitHash(event, $index) }}</span>
+                  <span class="when">
+                    {{ event.startDate | date:'yyyy' }} —
+                    {{ event.current ? ('timeline.current' | t) : (event.endDate | date:'yyyy') }}
+                  </span>
+                  @if (event.current) { <span class="cur">current</span> }
                 </div>
-                <h3 class="timeline-title">{{ event.title }}</h3>
-                <div class="timeline-subtitle">{{ event.subtitle }}</div>
-                @if (event.description) {
-                  <p class="timeline-desc">{{ event.description }}</p>
-                }
+                <h3 class="commit-title">
+                  <svg class="ic tic" viewBox="0 0 24 24" aria-hidden="true"><use [attr.href]="'#' + timelineIcon(event.type)"></use></svg>
+                  {{ event.title }}
+                </h3>
+                <p class="commit-msg">
+                  {{ event.subtitle }}@if (event.description) { · {{ event.description }} }
+                </p>
               </div>
             </div>
           }
         </div>
-      </div>
-    </section>
+      </section>
+    }
 
-    <!-- ═══════════════════════════════════════ CONTACT ═══════════════════════════════════════ -->
-    <section id="contact" class="section contact-section">
-      <div class="section-inner">
-        <div class="contact-inner">
-          <div class="contact-text">
-            <div class="section-label">05. Connect</div>
-            <h2 class="section-heading">{{ 'contact.fallback_title' | t }}</h2>
-            <div class="about-content">
-              Neem gerust contact met me op via het formulier of stuur me direct een e-mail.
+    <!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+    <section id="contact" class="block">
+      <p class="route"><span class="s">&#10095;</span> <span class="v">POST</span> /api/contact</p>
+      <h2>{{ 'contact.fallback_title' | t }}</h2>
+      <div class="contact-grid">
+        <div class="contact-intro">
+          <p>{{ 'contact.intro' | t }}</p>
+          @if (data.profile.email) {
+            <div class="meta-card">
+              <div class="row"><span class="k">email</span><span class="val">{{ data.profile.email }}</span></div>
             </div>
-          </div>
-          <div class="contact-right">
-          @if (contactSuccess()) {
-            <div class="form-success">
-              <div class="success-icon">✅</div>
-              <h3>{{ 'contact.success_title' | t }}</h3>
-              <p>{{ 'contact.success_message' | t }}</p>
-              <button class="btn btn-outline" (click)="contactSuccess.set(false)">{{ 'contact.new_message' | t }}</button>
-            </div>
-          } @else {
-            <form class="contact-form" (ngSubmit)="submitContact()">
-              <div class="form-group">
-                <label for="contact-name">{{ 'contact.label_name' | t }}</label>
-                <input id="contact-name" name="name" type="text" class="form-input"
-                  [placeholder]="langService.t('contact.placeholder_name')" [value]="contactName()"
-                  (input)="contactName.set($any($event.target).value)" required />
-              </div>
-              <div class="form-group">
-                <label for="contact-email">{{ 'contact.label_email' | t }}</label>
-                <input id="contact-email" name="email" type="email" class="form-input"
-                  [placeholder]="langService.t('contact.placeholder_email')" [value]="contactEmail()"
-                  (input)="contactEmail.set($any($event.target).value)" required />
-              </div>
-              <div class="form-group">
-                <label for="contact-message">{{ 'contact.label_message' | t }}</label>
-                <textarea id="contact-message" name="message" class="form-input form-textarea"
-                  [placeholder]="langService.t('contact.placeholder_message')" rows="5" [value]="contactMessage()"
-                  (input)="contactMessage.set($any($event.target).value)" required></textarea>
-              </div>
-              @if (contactError()) {
-                <div class="form-error">{{ contactError() }}</div>
+          }
+          @if (socials().length > 0) {
+            <div class="social-row">
+              @for (social of socials(); track social.url) {
+                <a [href]="social.url" target="_blank" rel="noopener" [attr.aria-label]="social.platform">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use [attr.href]="'#' + socialIcon(social.platform)"></use></svg>
+                </a>
               }
-              <button type="submit" class="btn btn-primary btn-full" [disabled]="contactSubmitting()">
-                @if (contactSubmitting()) { {{ 'contact.submitting' | t }} } @else { {{ 'contact.submit' | t }} }
-              </button>
-            </form>
+            </div>
           }
         </div>
-      </div>
+
+        @if (contactSuccess()) {
+          <div class="form-success">
+            <svg class="ic success-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg>
+            <h3>{{ 'contact.success_title' | t }}</h3>
+            <p>{{ 'contact.success_message' | t }}</p>
+            <button class="btn" (click)="contactSuccess.set(false)">{{ 'contact.new_message' | t }}</button>
+          </div>
+        } @else {
+          <form class="req-body" [formGroup]="contactForm" (ngSubmit)="submitContact()">
+            <div class="brace">&#123;</div>
+            <div class="field">
+              <label for="contact-name">"name":</label>
+              <input id="contact-name" type="text" formControlName="name"
+                [placeholder]="langService.t('contact.placeholder_name')"
+                [class.invalid]="contactForm.controls.name.touched && contactForm.controls.name.invalid" />
+            </div>
+            <div class="field">
+              <label for="contact-email">"email":</label>
+              <input id="contact-email" type="email" formControlName="email"
+                [placeholder]="langService.t('contact.placeholder_email')"
+                [class.invalid]="contactForm.controls.email.touched && contactForm.controls.email.invalid" />
+            </div>
+            <div class="field">
+              <label for="contact-message">"message":</label>
+              <textarea id="contact-message" rows="4" formControlName="message"
+                [placeholder]="langService.t('contact.placeholder_message')"
+                [class.invalid]="contactForm.controls.message.touched && contactForm.controls.message.invalid"></textarea>
+            </div>
+            <div class="brace">&#125;</div>
+            @if (contactError()) { <div class="form-error">{{ contactError() }}</div> }
+            <button type="submit" class="btn btn-primary btn-full" [disabled]="contactSubmitting()">
+              @if (contactSubmitting()) { {{ 'contact.submitting' | t }} } @else {
+                $ {{ 'contact.submit' | t }}
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"></use></svg>
+              }
+            </button>
+          </form>
+        }
       </div>
     </section>
 
-  </div>
+  </main>
+
+  <footer class="foot">
+    <div class="foot-inner">
+      <span>main<span class="br2">*</span></span>
+      <span>~/lukas-portfolio</span>
+      <span class="sp"></span>
+      <span>© 2026 {{ data.profile.name }}</span>
+    </div>
+  </footer>
 }
