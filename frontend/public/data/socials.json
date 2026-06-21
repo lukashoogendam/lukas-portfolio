@@ -1,11 +1,11 @@
 [
   {
-    "platform": "Github",
+    "platform": "GitHub",
     "url": "https://github.com/Lukashoogendam",
     "icon": "github"
   },
   {
-    "platform": "Gitlab (hsleiden)",
+    "platform": "GitLab (HS Leiden)",
     "url": "https://gitlab.inf-hsleiden.nl/s1142688",
     "icon": "gitlab"
   },
