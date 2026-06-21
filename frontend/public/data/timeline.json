@@ -4,7 +4,7 @@
       "nl": "Software Developer (werkstudent)",
       "en": "Software Developer (part-time)"
     },
-    "organization": {
+    "subtitle": {
       "nl": "Lionsville",
       "en": "Lionsville"
     },
@@ -14,14 +14,15 @@
     },
     "type": "WORK",
     "startDate": "2025",
-    "endDate": null
+    "endDate": null,
+    "current": true
   },
   {
     "title": {
       "nl": "Propedeuse behaald",
       "en": "Foundation year (propedeuse) completed"
     },
-    "organization": {
+    "subtitle": {
       "nl": "Hogeschool Leiden",
       "en": "Leiden University of Applied Sciences"
     },
@@ -31,14 +32,15 @@
     },
     "type": "MILESTONE",
     "startDate": "2025",
-    "endDate": "2025"
+    "endDate": "2025",
+    "current": false
   },
   {
     "title": {
       "nl": "HBO Informatica",
       "en": "BSc Computer Science"
     },
-    "organization": {
+    "subtitle": {
       "nl": "Hogeschool Leiden",
       "en": "Leiden University of Applied Sciences"
     },
@@ -48,14 +50,15 @@
     },
     "type": "EDUCATION",
     "startDate": "2024",
-    "endDate": null
+    "endDate": null,
+    "current": true
   },
   {
     "title": {
       "nl": "Havo",
       "en": "Havo (senior general secondary education)"
     },
-    "organization": {
+    "subtitle": {
       "nl": "Christelijk College de Populier",
       "en": "Christelijk College de Populier"
     },
@@ -65,6 +68,7 @@
     },
     "type": "EDUCATION",
     "startDate": "2017",
-    "endDate": "2022"
+    "endDate": "2022",
+    "current": false
   }
 ]
