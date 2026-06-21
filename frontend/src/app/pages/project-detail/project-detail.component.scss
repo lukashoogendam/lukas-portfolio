@@ -66,7 +66,7 @@
   font-family: $font-mono;
 }
 .hero-title {
-  font-size: $font-size-4xl;
+  font-size: clamp(1.5rem, 5vw, $font-size-4xl);
   font-weight: 700;
   color: $text-primary;
   line-height: 1.2;
@@ -489,9 +489,6 @@
   .project-detail {
     padding: $spacing-md;
   }
-  .hero-title {
-    font-size: $font-size-2xl;
-  }
   .features-grid {
     grid-template-columns: 1fr;
   }
@@ -503,6 +500,37 @@
   }
   .hero-links {
     flex-direction: column;
+  }
+  .hero-intro {
+    font-size: $font-size-base;
+  }
+  .showcases-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .project-detail {
+    padding: $spacing-sm $spacing-md;
+  }
+  .section-title {
+    font-size: $font-size-lg;
+  }
+  .showcase-modal-overlay {
+    padding: $spacing-xs;
+  }
+  .showcase-modal-content {
+    height: 92vh;
+  }
+  .showcase-modal-header {
+    padding: $spacing-sm $spacing-md;
+    h3 { font-size: $font-size-base; }
+  }
+  .hero-meta {
+    gap: $spacing-xs;
+  }
+  .info-card {
+    padding: $spacing-md;
   }
 }
 

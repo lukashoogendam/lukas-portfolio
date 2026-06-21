@@ -19,7 +19,7 @@
   margin-bottom: $spacing-3xl;
 }
 .hero-title {
-  font-size: $font-size-4xl;
+  font-size: clamp(1.6rem, 5.5vw, $font-size-4xl);
   font-weight: 700;
   color: $text-primary;
   line-height: 1.2;
@@ -219,10 +219,23 @@
   .projects-page {
     padding: $spacing-md;
   }
-  .hero-title {
-    font-size: $font-size-3xl;
-  }
   .project-footer {
     flex-direction: column;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .projects-page {
+    padding: $spacing-sm $spacing-md;
+  }
+  .hero-subtitle {
+    font-size: $font-size-sm;
+  }
+  .project-card {
+    padding: $spacing-md;
+  }
+  .category-tab {
+    padding: 4px 12px;
+    font-size: $font-size-xs;
   }
 }
