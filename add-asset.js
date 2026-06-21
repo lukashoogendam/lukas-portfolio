@@ -62,7 +62,9 @@ function shortHash(filePath) {
 }
 
 function isSafePath(basePath, targetPath) {
-    return path.resolve(targetPath).startsWith(path.resolve(basePath));
+    const base   = path.resolve(basePath);
+    const target = path.resolve(targetPath);
+    return target === base || target.startsWith(base + path.sep);
 }
 
 function detectType(ext) {
@@ -108,7 +110,16 @@ function run() {
         printUsageAndExit(`--type moet "image" of "document" zijn, niet "${type}".`);
     }
 
+    if (!/^[a-z0-9-]+$/.test(args.project)) {
+        printUsageAndExit(
+            `Ongeldige slug "${args.project}". Gebruik alleen kleine letters, cijfers en streepjes.`
+        );
+    }
+
     const projectFile = path.join(PROJECTS_DIR, `${args.project}.json`);
+    if (!isSafePath(PROJECTS_DIR, projectFile)) {
+        printUsageAndExit('Onveilig projectpad gedetecteerd.');
+    }
     if (!fs.existsSync(projectFile)) {
         printUsageAndExit(
             `Project "${args.project}" niet gevonden. Controleer of ${projectFile} bestaat.`
@@ -117,8 +128,9 @@ function run() {
 
     // Genereer unieke bestandsnaam: <hash>_<originele naam>
     const hash     = shortHash(filePath);
-    const original = path.basename(filePath);
-    const destName = `${hash}_${original}`;
+    // Maak de bestandsnaam URL-veilig: spaties, #, ? e.d. breken de asset-URL.
+    const safeName = path.basename(filePath).replace(/[^a-zA-Z0-9._-]/g, '-');
+    const destName = `${hash}_${safeName}`;
     const destPath = path.join(UPLOADS_DIR, destName);
 
     if (!isSafePath(UPLOADS_DIR, destPath)) {
