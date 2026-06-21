@@ -31,13 +31,3 @@ jobs:
           tags: |
             lukas05/portfolio-frontend:latest
             lukas05/portfolio-frontend:${{ github.sha }}
-
-      - name: Build and push backend
-        uses: docker/build-push-action@v6
-        with:
-          context: ./backend
-          file: ./backend/Dockerfile
-          push: true
-          tags: |
-            lukas05/portfolio-backend:latest
-            lukas05/portfolio-backend:${{ github.sha }}
