@@ -1,4 +1,4 @@
-import { Component, signal, inject, effect } from '@angular/core';
+import { Component, signal, inject, effect, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -16,7 +16,7 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.scss'
 })
-export class ProjectDetailComponent {
+export class ProjectDetailComponent implements OnDestroy {
   project = signal<ProjectDetailDto | null>(null);
   isLoading = signal(true);
   hasError = signal(false);
@@ -66,6 +66,10 @@ export class ProjectDetailComponent {
 
   closeShowcaseModal(): void {
     this.activeShowcaseModal.set(null);
+    document.body.style.overflow = '';
+  }
+
+  ngOnDestroy(): void {
     document.body.style.overflow = '';
   }
 
