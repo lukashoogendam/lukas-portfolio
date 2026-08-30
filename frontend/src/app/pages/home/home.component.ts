@@ -1,15 +1,14 @@
-import { Component, signal, inject, computed, DestroyRef } from '@angular/core';
+import { Component, signal, inject, computed, effect, DestroyRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LowerCasePipe, DatePipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PortfolioApiService, HomeDto, SkillCategory, SocialDto, TimelineEventDto, FeaturedSkillDto } from '../../core/services/portfolio-api.service';
+import { PortfolioApiService, SkillCategory, SocialDto, TimelineEventDto, FeaturedSkillDto } from '../../core/services/portfolio-api.service';
 import { LanguageService } from '../../core/services/language.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { ApiTerminalComponent } from '../../shared/components/api-terminal/api-terminal.component';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { loadOnLangChange } from '../../core/composables/load-on-lang-change';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +23,11 @@ export class HomeComponent {
   meta = inject(Meta);
   private destroyRef = inject(DestroyRef);
 
-  homeData = signal<HomeDto | null>(null);
+  private homeResource = loadOnLangChange(() => this.api.getHome());
+  homeData = this.homeResource.data;
+  isLoading = this.homeResource.isLoading;
+  hasError = this.homeResource.hasError;
+
   socials = signal<SocialDto[]>([]);
 
   // Contact form (reactive — so the form actually binds and submit fires)
@@ -69,14 +72,11 @@ export class HomeComponent {
   });
 
   constructor() {
-    toObservable(this.langService.currentLang).pipe(
-      switchMap(() => this.api.getHome()),
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe(data => {
-      this.homeData.set(data);
-      const name = data?.profile.name || 'Portfolio';
-      this.title.setTitle(`${name} | Software Developer`);
-      this.meta.updateTag({ name: 'description', content: data?.profile.summary || '' });
+    effect(() => {
+      const data = this.homeData();
+      if (!data) return;
+      this.title.setTitle(`${data.profile.name || 'Portfolio'} | Software Developer`);
+      this.meta.updateTag({ name: 'description', content: data.profile.summary || '' });
     });
 
     this.api.getSocials().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({

@@ -1,14 +1,13 @@
-import { Component, signal, inject, effect } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import {
-  PortfolioApiService,
-  ProjectDetailDto,
-} from '../../core/services/portfolio-api.service';
+import { EMPTY } from 'rxjs';
+import { PortfolioApiService } from '../../core/services/portfolio-api.service';
 import { LanguageService } from '../../core/services/language.service';
 import { MarkdownPipe } from '../../core/pipes/markdown.pipe';
 import { ShowcaseModalComponent } from './showcase-modal/showcase-modal';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { loadOnLangChange } from '../../core/composables/load-on-lang-change';
 
 @Component({
   selector: 'app-project-detail',
@@ -17,37 +16,20 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
   styleUrl: './project-detail.component.scss'
 })
 export class ProjectDetailComponent {
-  project = signal<ProjectDetailDto | null>(null);
-  isLoading = signal(true);
-  hasError = signal(false);
-  lightboxImage = signal<string | null>(null);
   private route = inject(ActivatedRoute);
   private apiService = inject(PortfolioApiService);
   langService = inject(LanguageService);
   private location = inject(Location);
 
-  constructor() {
-    effect(() => {
-      const slug = this.route.snapshot.paramMap.get('slug');
-      this.langService.currentLang(); 
-      if (slug) {
-        this.loadProject(slug);
-      }
-    });
-  }
+  private projectResource = loadOnLangChange(() => {
+    const slug = this.route.snapshot.paramMap.get('slug');
+    return slug ? this.apiService.getProjectBySlug(slug) : EMPTY;
+  });
+  project = this.projectResource.data;
+  isLoading = this.projectResource.isLoading;
+  hasError = this.projectResource.hasError;
 
-  private loadProject(slug: string): void {
-    this.apiService.getProjectBySlug(slug).subscribe({
-      next: (response) => {
-        this.project.set(response);
-        this.isLoading.set(false);
-      },
-      error: () => {
-        this.hasError.set(true);
-        this.isLoading.set(false);
-      }
-    });
-  }
+  lightboxImage = signal<string | null>(null);
 
   openLightbox(imageUrl: string): void {
     this.lightboxImage.set(imageUrl);
