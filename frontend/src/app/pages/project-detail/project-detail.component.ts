@@ -1,4 +1,5 @@
 import { Component, signal, inject, effect } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -25,11 +26,12 @@ export class ProjectDetailComponent {
   private apiService = inject(PortfolioApiService);
   langService = inject(LanguageService);
   private location = inject(Location);
+  private paramMap = toSignal(this.route.paramMap);
 
   constructor() {
     effect(() => {
-      const slug = this.route.snapshot.paramMap.get('slug');
-      this.langService.currentLang(); 
+      const slug = this.paramMap()?.get('slug');
+      this.langService.currentLang();
       if (slug) {
         this.loadProject(slug);
       }
@@ -37,6 +39,9 @@ export class ProjectDetailComponent {
   }
 
   private loadProject(slug: string): void {
+    this.project.set(null);
+    this.hasError.set(false);
+    this.isLoading.set(true);
     this.apiService.getProjectBySlug(slug).subscribe({
       next: (response) => {
         this.project.set(response);
