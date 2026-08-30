@@ -110,17 +110,15 @@
       <section class="section docs-section">
         <h2 class="section-title">{{ 'detail.docs' | t }}</h2>
         <div class="docs-content">
-          @if (p.documents && p.documents.length > 0) {
-            @for (doc of p.documents; track $index) {
-              <div class="docs-card">
-                <h3>{{ doc.title }}</h3>
-                <a [href]="doc.url" target="_blank" rel="noopener" class="docs-link">
-                  <svg class="ic link-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-doc"></use></svg>
-                  {{ 'detail.view_doc' | t }} {{ doc.title }}
-                  <svg class="ic external-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"></use></svg>
-                </a>
-              </div>
-            }
+          @for (doc of p.documents; track $index) {
+            <div class="docs-card">
+              <h3>{{ doc.title }}</h3>
+              <a [href]="doc.url" target="_blank" rel="noopener" class="docs-link">
+                <svg class="ic link-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-doc"></use></svg>
+                {{ 'detail.view_doc' | t }} {{ doc.title }}
+                <svg class="ic external-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"></use></svg>
+              </a>
+            </div>
           }
         </div>
       </section>

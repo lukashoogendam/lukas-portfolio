@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
   PortfolioApiService,
   ProjectDetailDto,
+  ShowcaseDto,
 } from '../../core/services/portfolio-api.service';
 import { LanguageService } from '../../core/services/language.service';
 import { MarkdownPipe } from '../../core/pipes/markdown.pipe';
@@ -57,9 +58,9 @@ export class ProjectDetailComponent {
     this.lightboxImage.set(null);
   }
 
-  activeShowcaseModal = signal<any | null>(null);
+  activeShowcaseModal = signal<ShowcaseDto | null>(null);
 
-  openShowcaseModal(sc: any): void {
+  openShowcaseModal(sc: ShowcaseDto): void {
     this.activeShowcaseModal.set(sc);
     document.body.style.overflow = 'hidden';
   }
