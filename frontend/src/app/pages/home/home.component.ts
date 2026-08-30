@@ -26,6 +26,8 @@ export class HomeComponent {
 
   homeData = signal<HomeDto | null>(null);
   socials = signal<SocialDto[]>([]);
+  isLoading = signal(true);
+  hasError = signal(false);
 
   // Contact form (reactive — so the form actually binds and submit fires)
   private fb = inject(FormBuilder);
@@ -70,13 +72,23 @@ export class HomeComponent {
 
   constructor() {
     toObservable(this.langService.currentLang).pipe(
-      switchMap(() => this.api.getHome()),
+      switchMap(() => {
+        this.isLoading.set(true);
+        return this.api.getHome();
+      }),
       takeUntilDestroyed(this.destroyRef)
-    ).subscribe(data => {
-      this.homeData.set(data);
-      const name = data?.profile.name || 'Portfolio';
-      this.title.setTitle(`${name} | Software Developer`);
-      this.meta.updateTag({ name: 'description', content: data?.profile.summary || '' });
+    ).subscribe({
+      next: data => {
+        this.homeData.set(data);
+        const name = data?.profile.name || 'Portfolio';
+        this.title.setTitle(`${name} | Software Developer`);
+        this.meta.updateTag({ name: 'description', content: data?.profile.summary || '' });
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.hasError.set(true);
+        this.isLoading.set(false);
+      }
     });
 
     this.api.getSocials().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({

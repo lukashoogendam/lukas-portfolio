@@ -12,6 +12,10 @@ export const en: Record<TranslationKey, string> = {
   'hero.cta_work': 'View my work',
   'hero.cta_contact': 'Get in touch',
 
+  'home.loading': 'Loading page...',
+  'home.error_title': 'Something went wrong',
+  'home.error_message': 'The data could not be loaded.',
+
   'about.subtitle': 'Discover my background and motivations',
   'about.fallback_title': 'Who am I?',
 
