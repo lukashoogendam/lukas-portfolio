@@ -40,6 +40,9 @@ export class ProjectDetailComponent {
         this.project.set(null);
         this.hasError.set(false);
         this.isLoading.set(true);
+        this.lightboxImage.set(null);
+        this.activeShowcaseModal.set(null);
+        document.body.style.overflow = '';
         return this.apiService.getProjectBySlug(slug).pipe(
           catchError(() => {
             this.hasError.set(true);
