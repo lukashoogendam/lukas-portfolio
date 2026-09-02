@@ -1,7 +1,8 @@
-import { Component, signal, inject, effect } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, signal, inject, DestroyRef } from '@angular/core';
+import { toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { combineLatest, switchMap, map, filter, catchError, EMPTY } from 'rxjs';
 import {
   PortfolioApiService,
   ProjectDetailDto,
@@ -26,31 +27,31 @@ export class ProjectDetailComponent {
   private apiService = inject(PortfolioApiService);
   langService = inject(LanguageService);
   private location = inject(Location);
-  private paramMap = toSignal(this.route.paramMap);
+  private destroyRef = inject(DestroyRef);
 
   constructor() {
-    effect(() => {
-      const slug = this.paramMap()?.get('slug');
-      this.langService.currentLang();
-      if (slug) {
-        this.loadProject(slug);
-      }
-    });
-  }
-
-  private loadProject(slug: string): void {
-    this.project.set(null);
-    this.hasError.set(false);
-    this.isLoading.set(true);
-    this.apiService.getProjectBySlug(slug).subscribe({
-      next: (response) => {
-        this.project.set(response);
-        this.isLoading.set(false);
-      },
-      error: () => {
-        this.hasError.set(true);
-        this.isLoading.set(false);
-      }
+    combineLatest([
+      this.route.paramMap.pipe(map((params) => params.get('slug'))),
+      toObservable(this.langService.currentLang)
+    ]).pipe(
+      map(([slug]) => slug),
+      filter((slug): slug is string => !!slug),
+      switchMap((slug) => {
+        this.project.set(null);
+        this.hasError.set(false);
+        this.isLoading.set(true);
+        return this.apiService.getProjectBySlug(slug).pipe(
+          catchError(() => {
+            this.hasError.set(true);
+            this.isLoading.set(false);
+            return EMPTY;
+          })
+        );
+      }),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe((response) => {
+      this.project.set(response);
+      this.isLoading.set(false);
     });
   }
 
