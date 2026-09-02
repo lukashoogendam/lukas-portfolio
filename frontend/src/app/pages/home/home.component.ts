@@ -8,7 +8,7 @@ import { Title, Meta } from '@angular/platform-browser';
 import { ApiTerminalComponent } from '../../shared/components/api-terminal/api-terminal.component';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs';
+import { switchMap, catchError, EMPTY } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -74,21 +74,22 @@ export class HomeComponent {
     toObservable(this.langService.currentLang).pipe(
       switchMap(() => {
         this.isLoading.set(true);
-        return this.api.getHome();
+        this.hasError.set(false);
+        return this.api.getHome().pipe(
+          catchError(() => {
+            this.hasError.set(true);
+            this.isLoading.set(false);
+            return EMPTY;
+          })
+        );
       }),
       takeUntilDestroyed(this.destroyRef)
-    ).subscribe({
-      next: data => {
-        this.homeData.set(data);
-        const name = data?.profile.name || 'Portfolio';
-        this.title.setTitle(`${name} | Software Developer`);
-        this.meta.updateTag({ name: 'description', content: data?.profile.summary || '' });
-        this.isLoading.set(false);
-      },
-      error: () => {
-        this.hasError.set(true);
-        this.isLoading.set(false);
-      }
+    ).subscribe(data => {
+      this.homeData.set(data);
+      const name = data?.profile.name || 'Portfolio';
+      this.title.setTitle(`${name} | Software Developer`);
+      this.meta.updateTag({ name: 'description', content: data?.profile.summary || '' });
+      this.isLoading.set(false);
     });
 
     this.api.getSocials().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
