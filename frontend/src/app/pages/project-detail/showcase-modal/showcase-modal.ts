@@ -1,4 +1,4 @@
-import { Component, input, output, inject } from '@angular/core';
+import { Component, computed, input, output, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
 import { ShowcaseDto } from '../../../core/services/portfolio-api.service';
 
@@ -54,10 +54,10 @@ export class ShowcaseModalComponent {
 
   private sanitizer = inject(DomSanitizer);
 
-  getSafeEmbedHtml(embedCode?: string): SafeHtml {
-    if (!embedCode) return '';
-    return this.sanitizer.bypassSecurityTrustHtml(sanitizeEmbedCode(embedCode));
-  }
+  safeEmbedHtml = computed<SafeHtml>(() => {
+    const embedCode = this.sc()?.embedCode;
+    return embedCode ? this.sanitizer.bypassSecurityTrustHtml(sanitizeEmbedCode(embedCode)) : '';
+  });
 
   getSafeDemoUrl(url?: string): SafeResourceUrl {
     if (!url) return '';
