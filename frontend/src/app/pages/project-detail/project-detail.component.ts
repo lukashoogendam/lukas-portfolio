@@ -30,6 +30,7 @@ export class ProjectDetailComponent {
   private destroyRef = inject(DestroyRef);
 
   constructor() {
+    let previousSlug: string | null = null;
     combineLatest([
       this.route.paramMap.pipe(map((params) => params.get('slug'))),
       toObservable(this.langService.currentLang)
@@ -37,12 +38,16 @@ export class ProjectDetailComponent {
       map(([slug]) => slug),
       filter((slug): slug is string => !!slug),
       switchMap((slug) => {
+        const slugChanged = slug !== previousSlug;
+        previousSlug = slug;
         this.project.set(null);
         this.hasError.set(false);
         this.isLoading.set(true);
-        this.lightboxImage.set(null);
-        this.activeShowcaseModal.set(null);
-        document.body.style.overflow = '';
+        if (slugChanged) {
+          this.lightboxImage.set(null);
+          this.activeShowcaseModal.set(null);
+          document.body.style.overflow = '';
+        }
         return this.apiService.getProjectBySlug(slug).pipe(
           catchError(() => {
             this.hasError.set(true);
