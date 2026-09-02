@@ -6,6 +6,7 @@ import { PortfolioApiService, HomeDto, SkillCategory, SocialDto, TimelineEventDt
 import { LanguageService } from '../../core/services/language.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { ApiTerminalComponent } from '../../shared/components/api-terminal/api-terminal.component';
+import { LoadingErrorStateComponent } from '../../shared/components/loading-error-state/loading-error-state.component';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { switchMap, catchError, EMPTY } from 'rxjs';
@@ -13,7 +14,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, ApiTerminalComponent, LowerCasePipe, DatePipe, TranslatePipe, ReactiveFormsModule],
+  imports: [RouterLink, ApiTerminalComponent, LoadingErrorStateComponent, LowerCasePipe, DatePipe, TranslatePipe, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
