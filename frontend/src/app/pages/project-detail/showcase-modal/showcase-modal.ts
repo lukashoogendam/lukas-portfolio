@@ -4,7 +4,7 @@ import { ShowcaseDto } from '../../../core/services/portfolio-api.service';
 
 // Tags that can execute code or load/navigate outside the embed's own markup.
 // Removed wholesale (including their content) rather than just unwrapped.
-const DISALLOWED_TAGS = ['script', 'iframe', 'object', 'embed', 'applet', 'base', 'form'];
+const DISALLOWED_TAGS = ['script', 'iframe', 'object', 'embed', 'applet', 'base', 'form', 'noscript'];
 
 // Attributes that can execute code: inline event handlers and javascript: URLs.
 const URL_ATTRIBUTES = new Set(['href', 'src', 'action', 'formaction', 'xlink:href']);
