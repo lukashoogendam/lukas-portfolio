@@ -20,6 +20,9 @@ const DISALLOWED_TAGS = [
   'animate',
   'animateTransform',
   'animateMotion',
+  // Both can load or beacon out to an external resource on render.
+  'link',
+  'style',
 ];
 
 // Attributes that can execute code: inline event handlers and javascript: URLs.
