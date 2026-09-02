@@ -28,6 +28,21 @@ const DISALLOWED_TAGS = [
 // Attributes that can execute code: inline event handlers and javascript: URLs.
 const URL_ATTRIBUTES = new Set(['href', 'src', 'action', 'formaction', 'xlink:href']);
 
+// Schemes allowed in URL_ATTRIBUTES. Denylisting javascript: alone still lets
+// data: and others through, and a denylist regex can be bypassed by a scheme
+// with whitespace/control characters hidden inside it that browsers strip
+// before navigating. Resolving through URL and checking its protocol sidesteps
+// both: it normalizes the same way the browser does.
+const ALLOWED_URL_SCHEMES = new Set(['http:', 'https:', 'mailto:']);
+
+function isAllowedUrl(value: string): boolean {
+  try {
+    return ALLOWED_URL_SCHEMES.has(new URL(value, document.baseURI).protocol);
+  } catch {
+    return false;
+  }
+}
+
 @Component({
   selector: 'app-showcase-modal',
   templateUrl: './showcase-modal.html',
@@ -74,7 +89,7 @@ function sanitizeEmbedCode(html: string): string {
       const name = attr.name.toLowerCase();
       if (name.startsWith('on') || name === 'srcdoc') {
         node.removeAttribute(attr.name);
-      } else if (URL_ATTRIBUTES.has(name) && /^\s*javascript:/i.test(attr.value)) {
+      } else if (URL_ATTRIBUTES.has(name) && !isAllowedUrl(attr.value)) {
         node.removeAttribute(attr.name);
       }
     }
