@@ -1,16 +1,10 @@
 <div class="projects-page">
   @if (isLoading()) {
-  <div class="loading-state">
-    <div class="loading-spinner"></div>
-    <p>{{ 'overview.loading' | t }}</p>
-  </div>
+  <app-loading-error-state mode="loading" i18nPrefix="overview" />
   } @else if (hasError()) {
-  <div class="error-state">
-    <div class="error-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"></use></svg></div>
-    <h2>{{ 'overview.error_title' | t }}</h2>
-    <p>{{ 'overview.error_message' | t }}</p>
+  <app-loading-error-state mode="error" i18nPrefix="overview">
     <a class="btn btn-primary" (click)="goBack()">{{ 'overview.back' | t }}</a>
-  </div>
+  </app-loading-error-state>
   } @else {
   <section class="hero-section">
     <a class="back-link" (click)="goBack()">{{ 'overview.back' | t }}</a>

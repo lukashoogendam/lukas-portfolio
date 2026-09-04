@@ -42,13 +42,10 @@
           }
         }
         @case ('embed') {
-          <iframe
-            [srcdoc]="getSafeEmbedHtml(sc()?.embedCode)"
-            title="Embedded demo"
-            sandbox="allow-scripts"
-            loading="lazy"
-          >
-          </iframe>
+          <div
+            class="demo-embed"
+            [innerHTML]="safeEmbedHtml()"
+          ></div>
         }
         @default {
           @if (sc()?.url) {

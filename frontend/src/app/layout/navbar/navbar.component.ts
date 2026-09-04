@@ -1,9 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink, Router, NavigationEnd } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { LanguageService } from '../../core/services/language.service';
 import { ThemeService } from '../../core/services/theme.service';
+import { ScrollService } from '../../core/services/scroll.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -17,16 +17,9 @@ import { filter } from 'rxjs/operators';
 export class NavbarComponent {
   langService = inject(LanguageService);
   themeService = inject(ThemeService);
-  router = inject(Router);
+  scrollService = inject(ScrollService);
   isMobileMenuOpen = signal(false);
   isScrolled = signal(false);
-  isHomePage = signal(true);
-
-  constructor() {
-    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((e: NavigationEnd) => {
-      this.isHomePage.set(e.url === '/' || e.url === '');
-    });
-  }
 
   onScroll() {
     this.isScrolled.set(window.scrollY > 20);
@@ -34,17 +27,7 @@ export class NavbarComponent {
 
   scrollTo(sectionId: string): void {
     this.closeMobileMenu();
-    if (this.isHomePage()) {
-      const el = document.getElementById(sectionId);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      this.router.navigate(['/']).then(() => {
-        setTimeout(() => {
-          const el = document.getElementById(sectionId);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 300);
-      });
-    }
+    this.scrollService.scrollToId(sectionId);
   }
 
   setLang(lang: 'nl' | 'en'): void {
