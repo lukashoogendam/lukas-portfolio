@@ -4,6 +4,7 @@ import { LowerCasePipe, DatePipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PortfolioApiService, HomeDto, SkillCategory, SocialDto, TimelineEventDto, FeaturedSkillDto } from '../../core/services/portfolio-api.service';
 import { LanguageService } from '../../core/services/language.service';
+import { ScrollService } from '../../core/services/scroll.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { ApiTerminalComponent } from '../../shared/components/api-terminal/api-terminal.component';
 import { LoadingErrorStateComponent } from '../../shared/components/loading-error-state/loading-error-state.component';
@@ -21,6 +22,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class HomeComponent {
   api = inject(PortfolioApiService);
   langService = inject(LanguageService);
+  private scrollService = inject(ScrollService);
   title = inject(Title);
   meta = inject(Meta);
   private destroyRef = inject(DestroyRef);
@@ -100,8 +102,7 @@ export class HomeComponent {
   }
 
   scrollTo(id: string): void {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    this.scrollService.scrollToId(id);
   }
 
   // Icon ids available in the sprite (frontend/src/index.html).
