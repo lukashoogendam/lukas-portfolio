@@ -44,7 +44,7 @@
         @case ('embed') {
           <div
             class="demo-embed"
-            [innerHTML]="getSafeEmbedHtml(sc()?.embedCode)"
+            [innerHTML]="safeEmbedHtml()"
           ></div>
         }
         @default {
