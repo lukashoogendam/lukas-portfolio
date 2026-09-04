@@ -3,10 +3,11 @@ import { Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PortfolioApiService, ProjectCategory } from '../../core/services/portfolio-api.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { LoadingErrorStateComponent } from '../../shared/components/loading-error-state/loading-error-state.component';
 import { loadOnLangChange } from '../../core/composables/load-on-lang-change';
 @Component({
   selector: 'app-projects-overview',
-  imports: [RouterLink, TranslatePipe],
+  imports: [RouterLink, TranslatePipe, LoadingErrorStateComponent],
   templateUrl: './projects-overview.html',
   styleUrl: './projects-overview.scss'
 })
