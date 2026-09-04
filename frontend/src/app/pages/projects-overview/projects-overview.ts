@@ -4,9 +4,10 @@ import { RouterLink } from '@angular/router';
 import { PortfolioApiService, ProjectListDto, ProjectCategory } from '../../core/services/portfolio-api.service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { LoadingErrorStateComponent } from '../../shared/components/loading-error-state/loading-error-state.component';
 @Component({
   selector: 'app-projects-overview',
-  imports: [RouterLink, TranslatePipe],
+  imports: [RouterLink, TranslatePipe, LoadingErrorStateComponent],
   templateUrl: './projects-overview.html',
   styleUrl: './projects-overview.scss'
 })
