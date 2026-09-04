@@ -1,6 +1,47 @@
-import { Component, input, output, inject } from '@angular/core';
+import { Component, computed, input, output, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
 import { ShowcaseDto } from '../../../core/services/portfolio-api.service';
+
+// Tags that can execute code or load/navigate outside the embed's own markup.
+// Removed wholesale (including their content) rather than just unwrapped.
+const DISALLOWED_TAGS = [
+  'script',
+  'iframe',
+  'object',
+  'embed',
+  'applet',
+  'base',
+  'form',
+  'noscript',
+  // SVG SMIL animation elements can rewrite a sibling's href/xlink:href via
+  // their own attributeName/values/to attributes after the DOM is built,
+  // bypassing the attribute checks below.
+  'set',
+  'animate',
+  'animateTransform',
+  'animateMotion',
+  // Both can load or beacon out to an external resource on render.
+  'link',
+  'style',
+];
+
+// Attributes that can execute code: inline event handlers and javascript: URLs.
+const URL_ATTRIBUTES = new Set(['href', 'src', 'action', 'formaction', 'xlink:href']);
+
+// Schemes allowed in URL_ATTRIBUTES. Denylisting javascript: alone still lets
+// data: and others through, and a denylist regex can be bypassed by a scheme
+// with whitespace/control characters hidden inside it that browsers strip
+// before navigating. Resolving through URL and checking its protocol sidesteps
+// both: it normalizes the same way the browser does.
+const ALLOWED_URL_SCHEMES = new Set(['http:', 'https:', 'mailto:']);
+
+function isAllowedUrl(value: string): boolean {
+  try {
+    return ALLOWED_URL_SCHEMES.has(new URL(value, document.baseURI).protocol);
+  } catch {
+    return false;
+  }
+}
 
 @Component({
   selector: 'app-showcase-modal',
@@ -13,10 +54,10 @@ export class ShowcaseModalComponent {
 
   private sanitizer = inject(DomSanitizer);
 
-  getSafeEmbedHtml(embedCode?: string): SafeHtml {
-    if (!embedCode) return '';
-    return this.sanitizer.bypassSecurityTrustHtml(embedCode);
-  }
+  safeEmbedHtml = computed<SafeHtml>(() => {
+    const embedCode = this.sc()?.embedCode;
+    return embedCode ? this.sanitizer.bypassSecurityTrustHtml(sanitizeEmbedCode(embedCode)) : '';
+  });
 
   getSafeDemoUrl(url?: string): SafeResourceUrl {
     if (!url) return '';
@@ -30,4 +71,30 @@ export class ShowcaseModalComponent {
   closeModal() {
     this.close.emit();
   }
+}
+
+// embedCode comes from project JSON data and is trusted only as far as the
+// repo's own content pipeline; sanitize it before it's ever passed to
+// bypassSecurityTrustHtml so a compromised or malformed embed can't run code.
+function sanitizeEmbedCode(html: string): string {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+
+  const removeSelector = [...DISALLOWED_TAGS, 'meta[http-equiv]'].join(',');
+  doc.querySelectorAll(removeSelector).forEach((el) => el.remove());
+
+  const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_ELEMENT);
+  let node = walker.nextNode() as Element | null;
+  while (node) {
+    for (const attr of Array.from(node.attributes)) {
+      const name = attr.name.toLowerCase();
+      if (name.startsWith('on') || name === 'srcdoc') {
+        node.removeAttribute(attr.name);
+      } else if (URL_ATTRIBUTES.has(name) && !isAllowedUrl(attr.value)) {
+        node.removeAttribute(attr.name);
+      }
+    }
+    node = walker.nextNode() as Element | null;
+  }
+
+  return doc.body.innerHTML;
 }
