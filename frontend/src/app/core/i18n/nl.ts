@@ -12,6 +12,11 @@ export const nl = {
   'hero.cta_work': 'Bekijk mijn werk',
   'hero.cta_contact': 'Neem contact op',
 
+  // Home loading/error states
+  'home.loading': 'Pagina laden...',
+  'home.error_title': 'Er ging iets mis',
+  'home.error_message': 'De gegevens konden niet geladen worden.',
+
   // About
   'about.subtitle': 'Ontdek mijn achtergrond en drijfveren',
   'about.fallback_title': 'Wie ben ik?',

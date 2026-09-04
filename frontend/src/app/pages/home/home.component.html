@@ -1,4 +1,8 @@
-@if (homeData(); as data) {
+@if (isLoading()) {
+  <app-loading-error-state mode="loading" i18nPrefix="home" />
+} @else if (hasError()) {
+  <app-loading-error-state mode="error" i18nPrefix="home" />
+} @else if (homeData(); as data) {
   <main class="wrap">
 
     <!-- ═══════════════════════════ HERO ═══════════════════════════ -->

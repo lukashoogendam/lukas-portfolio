@@ -12,10 +12,11 @@ import { LanguageService } from '../../core/services/language.service';
 import { MarkdownPipe } from '../../core/pipes/markdown.pipe';
 import { ShowcaseModalComponent } from './showcase-modal/showcase-modal';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { LoadingErrorStateComponent } from '../../shared/components/loading-error-state/loading-error-state.component';
 
 @Component({
   selector: 'app-project-detail',
-  imports: [MarkdownPipe, ShowcaseModalComponent, TranslatePipe],
+  imports: [MarkdownPipe, ShowcaseModalComponent, TranslatePipe, LoadingErrorStateComponent],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.scss'
 })
