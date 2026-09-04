@@ -1,4 +1,4 @@
-import { Component, signal, inject, DestroyRef } from '@angular/core';
+import { Component, signal, inject, DestroyRef, OnDestroy } from '@angular/core';
 import { toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -20,7 +20,7 @@ import { LoadingErrorStateComponent } from '../../shared/components/loading-erro
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.scss'
 })
-export class ProjectDetailComponent {
+export class ProjectDetailComponent implements OnDestroy {
   project = signal<ProjectDetailDto | null>(null);
   isLoading = signal(true);
   hasError = signal(false);
@@ -82,6 +82,10 @@ export class ProjectDetailComponent {
 
   closeShowcaseModal(): void {
     this.activeShowcaseModal.set(null);
+    document.body.style.overflow = '';
+  }
+
+  ngOnDestroy(): void {
     document.body.style.overflow = '';
   }
 
