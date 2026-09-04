@@ -1,10 +1,10 @@
-import { Component, signal, computed, inject, effect } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { PortfolioApiService, ProjectListDto, ProjectCategory } from '../../core/services/portfolio-api.service';
-import { LanguageService } from '../../core/services/language.service';
+import { PortfolioApiService, ProjectCategory } from '../../core/services/portfolio-api.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { LoadingErrorStateComponent } from '../../shared/components/loading-error-state/loading-error-state.component';
+import { loadOnLangChange } from '../../core/composables/load-on-lang-change';
 @Component({
   selector: 'app-projects-overview',
   imports: [RouterLink, TranslatePipe, LoadingErrorStateComponent],
@@ -12,14 +12,15 @@ import { LoadingErrorStateComponent } from '../../shared/components/loading-erro
   styleUrl: './projects-overview.scss'
 })
 export class ProjectsOverview {
-  projects = signal<ProjectListDto[]>([]);
-  isLoading = signal(true);
-  hasError = signal(false);
-  activeCategory = signal<'ALL' | ProjectCategory>('ALL');
-
   private apiService = inject(PortfolioApiService);
-  private langService = inject(LanguageService);
   private location = inject(Location);
+
+  private projectsResource = loadOnLangChange(() => this.apiService.getProjects());
+  projects = computed(() => this.projectsResource.data() ?? []);
+  isLoading = this.projectsResource.isLoading;
+  hasError = this.projectsResource.hasError;
+
+  activeCategory = signal<'ALL' | ProjectCategory>('ALL');
 
   readonly categoryValues: ('ALL' | ProjectCategory)[] = ['ALL', 'SCHOOL_PROJECT', 'PERSONAL_PROJECT'];
 
@@ -29,29 +30,8 @@ export class ProjectsOverview {
     return this.projects().filter(p => p.category === cat);
   });
 
-  constructor() {
-    effect(() => {
-      this.langService.currentLang();
-      this.loadProjects();
-    });
-  }
-
   setCategory(cat: 'ALL' | ProjectCategory): void {
     this.activeCategory.set(cat);
-  }
-
-  private loadProjects(): void {
-    this.isLoading.set(true);
-    this.apiService.getProjects().subscribe({
-      next: (res) => {
-        this.projects.set(res);
-        this.isLoading.set(false);
-      },
-      error: () => {
-        this.hasError.set(true);
-        this.isLoading.set(false);
-      }
-    });
   }
 
   goBack(): void {
